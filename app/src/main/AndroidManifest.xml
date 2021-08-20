@@ -28,15 +28,7 @@
         <activity android:name=".MadeActivity" />
         <activity android:name=".BelongActivity" />
         <activity android:name=".MBselectedActivity" />
-        <activity
-            android:name=".UserAccountActivity"
-            android:label="@string/title_activity_user_account"
-            android:theme="@style/Theme.OurFriendlyMeeting.NoActionBar" />
-        <activity android:name=".UseAccountActivity" />
-        <activity
-            android:name=".AccountUseActivity"
-            android:label="@string/title_activity_account_use"
-            android:theme="@style/Theme.OurFriendlyMeeting.NoActionBar" />
+
         <activity android:name=".CenterActivity" />
         <activity android:name=".FindActivity" />
         <activity android:name=".Join1Activity" />
