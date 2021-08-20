@@ -3,6 +3,7 @@ package com.example.ourfriendlymeeting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.ourfriendlymeeting.databinding.ActivityMainBinding
 import kotlin.concurrent.thread
@@ -16,8 +17,10 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(2000)
             runOnUiThread{
         showProgress(false)
-            showButtons(true)}
+            showButtons(true)
+            Log.d("system111","메롱!")}
         }
+
         val intent1 = Intent(this,JoinActivity::class.java)
         val intent2 = Intent(this,FindActivity::class.java)
         val intent3 = Intent(this,CenterActivity::class.java)
