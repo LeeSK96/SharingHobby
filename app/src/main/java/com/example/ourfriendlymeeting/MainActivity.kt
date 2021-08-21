@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.ourfriendlymeeting.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -13,6 +16,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        var connector = DBConnector()
+        CoroutineScope(Dispatchers.Default).launch {
+            var userData = connector.getData<Account>("651295262929965")
+            if( userData != null) {
+                // 여기서 작업 처리
+            }
+        }
+
+
         thread(start=true){
         Thread.sleep(2000)
             runOnUiThread{

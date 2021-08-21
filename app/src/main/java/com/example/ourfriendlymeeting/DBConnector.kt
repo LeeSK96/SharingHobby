@@ -1,8 +1,15 @@
 package com.example.ourfriendlymeeting
 
+import com.google.android.gms.tasks.Tasks.await
+import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
 data class Account(val ID: String, val PW: String, val USER_email: String, val USER_phone: String, val USER_image: String, val Nickname: String)
@@ -14,109 +21,64 @@ data class Administrator(val Leader: String, val ImageChange: String, val GroupM
 class DBConnector{
     val db = Firebase.firestore
 
-    fun setAccountData(data : Account) {
-        val dataToInsert = hashMapOf(
-            "ID" to data.ID,
-            "PW" to data.PW,
-            "USER_email" to data.USER_email,
-            "USER_phone" to data.USER_phone,
-            "USER_image" to data.USER_image,
-            "Nickname" to data.Nickname,
-            "timestamp" to FieldValue.serverTimestamp()
-        )
 
+    fun setAccountData(data : Account) {
         val doc = db.collection("Users").document()
 
-        doc.set(dataToInsert)
+        doc.set(data)
 
         db.collection("Users").document("NicknameList").collection("data").document(data.Nickname)
             .set(mapOf("uid" to doc.id, "timestamp" to FieldValue.serverTimestamp()))
+
     }
 
     fun setSmallGroupData(data : SmallGroup) {
-        val dataToInsert = hashMapOf(
-            "Leader" to data.Leader,
-            "User" to data.User,
-            "Explain" to data.Explain,
-            "Location" to data.Location,
-            "Photo" to data.Photo,
-            "timestamp" to FieldValue.serverTimestamp()
-        )
 
         db.collection("SmallGroup").document()
-            .set(dataToInsert)
+            .set(data)
     }
 
     fun setMyPageData(data : MyPage) {
-        val dataToInsert = hashMapOf(
-            "ID" to data.ID,
-            "PW" to data.PW,
-            "MySmallGroup" to data.MySmallGroup,
-            "CS" to data.CS,
-            "Settings" to data.Settings,
-            "ImageChange" to data.ImageChange,
-            "timestamp" to FieldValue.serverTimestamp()
-        )
 
         db.collection("MyPage").document()
-            .set(dataToInsert)
+            .set(data)
     }
 
     fun setNodeData(data : Node) {
-        val dataToInsert = hashMapOf(
-            "GPS_X" to data.GPS_X,
-            "GPS_Y" to data.GPS_Y,
-            "Category" to data.Category,
-            "NodeName" to data.NodeName,
-            "NodeImage" to data.NodeImage,
-            "CurrentOwner" to data.CurrentOwner,
-            "timestamp" to FieldValue.serverTimestamp()
-        )
 
         db.collection("Node").document()
-            .set(dataToInsert)
+            .set(data)
     }
 
     fun setAdministratorData(data : Administrator) {
-        val dataToInsert = hashMapOf(
-            "Leader" to data.Leader,
-            "ImageChange" to data.ImageChange,
-            "GroupMemberChange" to data.GroupMemberChange,
-            "GroupExplainChange" to data.GroupExplainChange,
-            "GroupLocationChange" to data.GroupLocationChange,
-            "timestamp" to FieldValue.serverTimestamp()
-        )
 
         db.collection("Administrator").document()
-            .set(dataToInsert)
+            .set(data)
     }
     // 동기 작업 / 비동기 작업
-    /*
-    fun getAccountData(uid: String) : Account? {
-        db.collection("Users").document(uid)
-            .get()
-            .addOnSuccessListener {
+    // 네트워크 작업을 동기로 실행하면 안드로이드에서 오류를 발생시킨다
 
+    //var data = getData<Account>("123")
+    suspend inline fun <reified T> getData(docName : String) : T? {
+        return try {
+            var collectionName = when (T::class){
+                Account::class -> "Users"
+                Administrator::class -> "Administrator"
+                SmallGroup::class -> "SmallGroup"
+                MyPage::class -> "MyPage"
+                Node::class -> "Node"
+                else -> throw Exception("Class Not Defined")
             }
-            .addOnFailureListener {
-                // TODO: Return On Failure
-            }
-        val dataToInsert = hashMapOf(
-            "ID" to data.ID,
-            "PW" to data.PW,
-            "USER_email" to data.USER_email,
-            "USER_phone" to data.USER_phone,
-            "USER_image" to data.USER_image,
-            "Nickname" to data.Nickname,
-            "timestamp" to FieldValue.serverTimestamp()
-        )
-
-        val doc = db.collection("Users").document()
-
-        doc.set(dataToInsert)
-
-        db.collection("Users").document("NicknameList").collection("data").document(data.Nickname)
-            .set(mapOf("uid" to doc.id, "timestamp" to FieldValue.serverTimestamp()))
+            var doc = db.collection(collectionName).document(docName)
+                .get().await()
+            doc.toObject<T>()
+        } catch (e: FirebaseException) {
+            null
+        }
     }
-     */
+
+    fun deleteData(collectionName:String , docName: String){
+        db.collection(collectionName).document(docName).delete()
+    }
+
 }
