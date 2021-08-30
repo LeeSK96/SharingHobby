@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

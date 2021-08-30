@@ -116,17 +116,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="20sp"
-                android:text="성함" />
+                android:text="email"
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/accountname"
+                android:id="@+id/userEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="홍길동" />
+                android:hint="~~~~@~~~~"
+                android:inputType="textPersonName" />
         </LinearLayout>
         <Space
             android:layout_width="match_parent"

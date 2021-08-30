@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

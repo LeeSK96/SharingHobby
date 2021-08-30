@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.ourfriendlymeeting.databinding.ActivityCenterBinding
 
-class CenterActivity : BaseActivity() {
+class CenterActivity : com.example.SharingHobby.BaseActivity() {
     val PERM_FINE_LOCATION=100;
     var location_state=false;
     val binding by lazy { ActivityCenterBinding.inflate(layoutInflater) }

@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.content.ContentValues
 import android.content.Intent
@@ -16,7 +16,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.jar.Manifest
 
-class MadeGroup2Activity : BaseActivity() {
+class MadeGroup2Activity : com.example.SharingHobby.BaseActivity() {
     val PERM_STOREAGE =99
     val PERM_CAMERA =100
     val REQ_CAMERA =101

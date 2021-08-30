@@ -1,3 +1,3 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 data class Memo1(var no:Int,var title:String , var timestamp:Long)

@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +15,9 @@ class BelongActivity : AppCompatActivity() {
         setContentView(binding.root)
         uid=intent.getIntExtra("from1",0)
         var data:MutableList<Memo1> =loadData()
-        var adapter =CustomAdapter()
-        adapter.listData =data
-        binding.recyclerView.adapter = adapter
+        //var adapter =CustomAdapter()
+        //adapter.listData =data
+       // binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
     }

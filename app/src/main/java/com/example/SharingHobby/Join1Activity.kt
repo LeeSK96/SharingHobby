@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +15,16 @@ class Join1Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var checkID=false;
+        var userId =""
+        var userPassword =""
+        var nickname =""
+        var pressedId:String =""
+        var usertelNumber:String="00000000000";
+        var boolId =false;
+        var boolPw =false;
+        var boolNn =false;
+        var boolemail =false;
+        var boolgender =false;
         var gender=""
         var data = listOf("성별선택","남자","여자")
         var adapter =ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data)
@@ -28,9 +37,8 @@ class Join1Activity : AppCompatActivity() {
                 id: Long
             ) {
                 gender=data[position]
-                Log.d("from1",gender)
+                boolgender=true;
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -39,14 +47,15 @@ class Join1Activity : AppCompatActivity() {
         binding.checkId.setOnClickListener {
             //if (데이터베이스에서 가져올것 == binding.accountId.text.tostring()){토스트 메세지 출력 이미 있는 아이디 }
             //else checkID=true
-            var userId ="dlwodb95"
             if(userId==binding.accountId.text.toString()) {Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
                 .show(); binding.checkId.text="중복확인"}
-            else{checkID=true; binding.checkId.text="OK!!"}
+            else{boolId=true; binding.checkId.text="OK!!"; userId=binding.accountId.text.toString() }
         }
         binding.joinus.setOnClickListener {
-            //if(!checkID)
-            //if(gender)
+            if(boolId&&boolPw&&boolNn&&boolemail&&boolgender){}
+            var OurDB = DBConnector();
+            var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"1",binding.nickname.text.toString());
+            OurDB.setAccountData(accountdata);
             Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
 
 

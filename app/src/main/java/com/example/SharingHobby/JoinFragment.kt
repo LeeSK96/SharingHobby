@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class FragmentD : Fragment() {
+class JoinFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -14,7 +14,7 @@ class FragmentD : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_d, container, false)
+        return inflater.inflate(R.layout.fragment_join, container, false)
     }
 
 }

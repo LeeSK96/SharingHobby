@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.FirebaseException
@@ -22,36 +22,29 @@ class DBConnector{
     val db = Firebase.firestore
 
 
-    fun setAccountData(data : Account) {
+    fun setAccountData(data : Account) {// 해당 함수 부터 아래 4개는 데이터 insert
         val doc = db.collection("Users").document()
-
         doc.set(data)
-
-        db.collection("Users").document("NicknameList").collection("data").document(data.Nickname)
-            .set(mapOf("uid" to doc.id, "timestamp" to FieldValue.serverTimestamp()))
-
+        db.collection("Users").document("NicknameList").collection("data").document(data.ID)
+            .set(mapOf("uid" to doc.id))
     }
 
     fun setSmallGroupData(data : SmallGroup) {
-
         db.collection("SmallGroup").document()
             .set(data)
     }
 
     fun setMyPageData(data : MyPage) {
-
         db.collection("MyPage").document()
             .set(data)
     }
 
     fun setNodeData(data : Node) {
-
         db.collection("Node").document()
             .set(data)
     }
 
     fun setAdministratorData(data : Administrator) {
-
         db.collection("Administrator").document()
             .set(data)
     }
@@ -59,7 +52,7 @@ class DBConnector{
     // 네트워크 작업을 동기로 실행하면 안드로이드에서 오류를 발생시킨다
 
     //var data = getData<Account>("123")
-    suspend inline fun <reified T> getData(docName : String) : T? {
+    suspend inline fun <reified T> getData(docName : String) : T? {// 데이터 가져오는 작업
         return try {
             var collectionName = when (T::class){
                 Account::class -> "Users"
@@ -77,7 +70,8 @@ class DBConnector{
         }
     }
 
-    fun deleteData(collectionName:String , docName: String){
+
+    fun deleteData(collectionName:String , docName: String){//데이터 지움
         db.collection(collectionName).document(docName).delete()
     }
 

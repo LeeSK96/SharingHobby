@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "807380679961",
-    "project_id": "ourfriendlymeeting",
-    "storage_bucket": "ourfriendlymeeting.appspot.com"
+    "project_number": "1073481672813",
+    "project_id": "ourfriendlymeetingtest1",
+    "storage_bucket": "ourfriendlymeetingtest1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:807380679961:android:d014847669b9e54ff8d988",
+        "mobilesdk_app_id": "1:1073481672813:android:9acc336c8fd67d3a437764",
         "android_client_info": {
           "package_name": "com.example.ourfriendlymeeting"
         }
       },
       "oauth_client": [
         {
-          "client_id": "807380679961-gpncj69ukh2ndpb050290fb9h9govmfc.apps.googleusercontent.com",
+          "client_id": "1073481672813-c0gd2d0d5brurald7024ihb1uevure8m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6OIExzdpauWhDjVIbUskfNvnkLwTnpBo"
+          "current_key": "AIzaSyCZRr14mrOVT6v275y96tk6FT3zu9pFzzM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "807380679961-gpncj69ukh2ndpb050290fb9h9govmfc.apps.googleusercontent.com",
+              "client_id": "1073481672813-c0gd2d0d5brurald7024ihb1uevure8m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

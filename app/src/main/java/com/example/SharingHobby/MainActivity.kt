@@ -1,10 +1,11 @@
-package com.example.ourfriendlymeeting
+package com.example.SharingHobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.ourfriendlymeeting.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,13 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        var connector = DBConnector()
-        CoroutineScope(Dispatchers.Default).launch {
-            var userData = connector.getData<Account>("651295262929965")
-            if( userData != null) {
-                // 여기서 작업 처리
-            }
-        }
 
 
         thread(start=true){
@@ -31,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread{
         showProgress(false)
             showButtons(true)
-            Log.d("system111","메롱!")}
+            }
         }
 
         val intent1 = Intent(this,JoinActivity::class.java)
@@ -44,10 +38,24 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent2)
         }
         binding.loginbutton.setOnClickListener {
-            intent.putExtra("uid",1)
+            var userId=binding.editTextTextPersonName.text.toString()
+            var UserIId="";
+            var connector = DBConnector()
+            var checkId =false;
+           /* CoroutineScope(Dispatchers.Default).launch {
+                var userData = connector.getData<Account>("")
+                if( userData != null) {
+                  Log.d("from1",userData?.PW);
+                      //checkId=true;
+                }
+                else    Log.d("from1","${userData?.PW}");
+            }*/
+
+            intent.putExtra("uid","$userId")
             intent.putExtra("location",0)
-            startActivity(intent3)
-        }
+            startActivity(intent3)}
+            //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
+
     }
     fun showProgress(show:Boolean){
         if(show)binding.imageView5.visibility = View.VISIBLE
