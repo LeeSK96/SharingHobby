@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/sportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="스포츠" />
+
+    <Button
+        android:id="@+id/cultureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문화 생활"
+        app:layout_constraintLeft_toRightOf="@+id/sportButton"/>
+
+    <Button
+        android:id="@+id/threeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        app:layout_constraintLeft_toRightOf="@+id/cultureButton"/>
+
+    <Button
+        android:id="@+id/fourButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        app:layout_constraintLeft_toRightOf="@+id/threeButton"/>
+
+    <Button
+        android:id="@+id/fiveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        app:layout_constraintLeft_toRightOf="@+id/fourButton"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
