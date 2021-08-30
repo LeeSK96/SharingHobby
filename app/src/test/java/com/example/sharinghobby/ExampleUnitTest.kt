@@ -1,4 +1,4 @@
-package com.example.ourfriendlymeeting
+package com.example.sharinghobby
 
 import org.junit.Test
 

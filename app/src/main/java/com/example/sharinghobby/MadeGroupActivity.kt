@@ -1,4 +1,4 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.example.ourfriendlymeeting.databinding.ActivityMadeGroupBinding
+import com.example.sharinghobby.databinding.ActivityMadeGroupBinding
 
 class MadeGroupActivity : AppCompatActivity() {
     val binding by lazy { ActivityMadeGroupBinding.inflate(layoutInflater) }

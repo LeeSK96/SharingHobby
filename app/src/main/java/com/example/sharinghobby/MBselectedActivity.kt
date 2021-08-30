@@ -1,9 +1,9 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.ourfriendlymeeting.databinding.ActivityMbselectedBinding
+import com.example.sharinghobby.databinding.ActivityMbselectedBinding
 
 class MBselectedActivity : AppCompatActivity() {
     val binding by lazy{ActivityMbselectedBinding.inflate(layoutInflater)}

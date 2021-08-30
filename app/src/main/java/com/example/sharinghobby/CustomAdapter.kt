@@ -1,15 +1,11 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ourfriendlymeeting.databinding.ActivityBelongBinding
-import com.example.ourfriendlymeeting.databinding.ItemRecyclerBinding
+import com.example.sharinghobby.databinding.ActivityBelongBinding
+import com.example.sharinghobby.databinding.ItemRecyclerBinding
 import java.text.SimpleDateFormat
 
 class CustomAdapter(val binding: ActivityBelongBinding,val context: Context,val belongActivity: BelongActivity):RecyclerView.Adapter<Holder>() {

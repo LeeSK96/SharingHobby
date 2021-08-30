@@ -1,10 +1,9 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import com.example.ourfriendlymeeting.databinding.ActivitySearchAndMakeBinding
+import com.example.sharinghobby.databinding.ActivitySearchAndMakeBinding
 
 class SearchAndMake : AppCompatActivity() {
     val binding by lazy { ActivitySearchAndMakeBinding.inflate(layoutInflater) }

@@ -1,4 +1,4 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.pm.PackageManager
 import android.os.Build

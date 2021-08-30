@@ -1,10 +1,9 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import com.example.ourfriendlymeeting.databinding.ActivityCategoryBinding
+import com.example.sharinghobby.databinding.ActivityCategoryBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class CategoryActivity : AppCompatActivity() {

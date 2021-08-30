@@ -1,12 +1,11 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.ourfriendlymeeting.databinding.ActivityCenterBinding
+import com.example.sharinghobby.databinding.ActivityCenterBinding
 
-class CenterActivity : com.example.SharingHobby.BaseActivity() {
+class CenterActivity : com.example.sharinghobby.BaseActivity() {
     val PERM_FINE_LOCATION=100;
     var location_state=false;
     val binding by lazy { ActivityCenterBinding.inflate(layoutInflater) }

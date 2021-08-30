@@ -1,11 +1,10 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.ourfriendlymeeting.databinding.ActivityJoinBinding
-import com.example.ourfriendlymeeting.databinding.ActivityMainBinding
+import com.example.sharinghobby.databinding.ActivityJoinBinding
 
 class JoinActivity : AppCompatActivity() {
     val binding by lazy{ ActivityJoinBinding.inflate(layoutInflater)}

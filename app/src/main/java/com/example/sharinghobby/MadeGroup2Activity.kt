@@ -1,22 +1,19 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.media.MediaActionSound
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
-import com.example.ourfriendlymeeting.databinding.ActivityMadeGroup2Binding
+import com.example.sharinghobby.databinding.ActivityMadeGroup2Binding
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.jar.Manifest
 
-class MadeGroup2Activity : com.example.SharingHobby.BaseActivity() {
+class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
     val PERM_STOREAGE =99
     val PERM_CAMERA =100
     val REQ_CAMERA =101

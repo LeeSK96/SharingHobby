@@ -1,4 +1,4 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

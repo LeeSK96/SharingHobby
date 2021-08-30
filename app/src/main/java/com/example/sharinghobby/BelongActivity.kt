@@ -1,11 +1,9 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.ourfriendlymeeting.databinding.ActivityBelongBinding
+import com.example.sharinghobby.databinding.ActivityBelongBinding
 
 class BelongActivity : AppCompatActivity() {
     val binding by lazy { ActivityBelongBinding.inflate(layoutInflater) }

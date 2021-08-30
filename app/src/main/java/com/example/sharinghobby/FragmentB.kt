@@ -1,4 +1,4 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import android.content.Context
 import android.os.Bundle
@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.example.ourfriendlymeeting.databinding.FragmentBBinding
-import com.example.ourfriendlymeeting.databinding.FragmentJoinBinding
+import com.example.sharinghobby.databinding.FragmentBBinding
 
 class FragmentB : Fragment() {
   var findActivity : FindActivity? = null

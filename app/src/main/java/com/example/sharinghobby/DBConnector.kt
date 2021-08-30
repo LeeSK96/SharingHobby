@@ -1,14 +1,10 @@
-package com.example.SharingHobby
+package com.example.sharinghobby
 
 import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.FirebaseException
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
