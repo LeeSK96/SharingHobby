@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         }
         val findHobby = Intent(this, FindHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
-        val myHobbyList = Intent(this, MyHobbyListActivity::class.java)
+        val myHobbyList = Intent(this, MBselectedActivity::class.java)
         val chatList = Intent(this, ChatListActivity::class.java)
 
         binding.findHobbyButton.setOnClickListener {
