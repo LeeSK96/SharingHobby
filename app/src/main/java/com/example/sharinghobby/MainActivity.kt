@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val intent1 = Intent(this,JoinActivity::class.java)
         val intent2 = Intent(this,FindActivity::class.java)
-        val intent3 = Intent(this,CenterActivity::class.java)
+        val goHome = Intent(this,HomeActivity::class.java)
         binding.joinbutton.setOnClickListener {
          startActivity(intent1)
         }
@@ -47,8 +47,7 @@ class MainActivity : AppCompatActivity() {
             }*/
 
             intent.putExtra("uid","$userId")
-            intent.putExtra("location",0)
-            startActivity(intent3)}
+            startActivity(goHome)}
             //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
 
     }

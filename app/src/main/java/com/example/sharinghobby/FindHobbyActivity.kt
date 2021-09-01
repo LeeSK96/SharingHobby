@@ -14,7 +14,7 @@ class FindHobbyActivity : AppCompatActivity() {
         binding = ActivityFindMakeHobbyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val selectHobby = Intent(this, CategoryActivity::class.java)
+        val selectHobby = Intent(this, CategoryActivity1::class.java)
 
 
         binding.selectHobbyButton.setOnClickListener {
