@@ -3,6 +3,7 @@ package com.example.sharinghobby
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,6 +11,11 @@ import android.widget.Toast
 import com.example.sharinghobby.databinding.ActivityJoin1Binding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_join1.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class Join1Activity : AppCompatActivity() {
     val binding by lazy { ActivityJoin1Binding.inflate(layoutInflater) }
@@ -51,6 +57,23 @@ class Join1Activity : AppCompatActivity() {
             if(userId==binding.accountId.text.toString()) {Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
                 .show(); binding.checkId.text="중복확인"}
             else{boolId=true; binding.checkId.text="OK!!"; userId=binding.accountId.text.toString() }
+        }
+        binding.emailcheckButton.setOnClickListener {
+            var checkint :Int=0;
+            var connector = DBConnector()
+            var user_email = binding.userEmail.text.toString();
+            CoroutineScope(Dispatchers.Default).launch {
+
+                val data = connector.getData<Account>(user_email!!)
+                runBlocking(Dispatchers.Main) {
+                    //  Log.e("asdf",data!!.user_phone)
+                    if(data==null)
+                    checkint=1;
+                }
+            }
+            if(checkint==1){Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
+                .show(); }
+            else{boolemail=true; binding.emailcheckButton.text="OK!!"; Log.d("from123","${data}")}
         }
         binding.joinus.setOnClickListener {
             //  if(boolId&&boolPw&&boolNn&&boolemail&&boolgender){}

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/emailcheck"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Join1Activity">
@@ -35,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint=""/>
+                android:hint=""
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/checkId"
@@ -46,6 +47,7 @@
                 android:text="중복확인" />
 
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -70,9 +72,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="문자+숫자 8자리이상" />
+                android:hint="문자+숫자 8자리이상"
+                android:inputType="textPersonName" />
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -86,11 +89,11 @@
                 android:id="@+id/textView59"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textSize="20sp"
-                android:layout_weight="1"
-                android:text="NICKNAME" />
+                android:text="NICKNAME"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/nickname"
@@ -98,9 +101,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="중복가능마음껏!" />
+                android:hint="중복가능마음껏!"
+                android:inputType="textPersonName" />
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -127,7 +131,15 @@
                 android:ems="10"
                 android:hint="~~~~@~~~~"
                 android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/emailcheckButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="중복확인" />
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -142,10 +154,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20sp"
                 android:gravity="center"
+                android:text="생년월일"
 
-                android:text="생년월일" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/birthday"
@@ -153,10 +165,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:hint="ex)19950604"
-                />
+                android:inputType="textPersonName" />
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -171,6 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -184,10 +197,10 @@
                 android:id="@+id/textView62"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20sp"
                 android:layout_gravity="center"
-                android:text="전화번호" />
+                android:layout_weight="1"
+                android:text="전화번호"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/telnumber"
@@ -195,8 +208,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="010-0000-0000" />
+                android:hint="010-0000-0000"
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/checktelnumber"
@@ -205,6 +218,7 @@
                 android:layout_weight="1"
                 android:text="인증" />
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />

@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.sharinghobby.databinding.FragmentABinding
+import com.example.sharinghobby.databinding.FragmentFindABinding
 
-class FragmentA : Fragment() {
+class FragmentFindA : Fragment() {
     var findActivity:FindAccountActivity? =null
 
     override fun onCreateView(
@@ -16,7 +16,7 @@ class FragmentA : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-      val binding =FragmentABinding.inflate(inflater,container,false)
+      val binding = FragmentFindABinding.inflate(inflater,container,false)
         var str:String?
         //쓰레드나 코루틴 사용해서 조회서비스 백그라운드에서 돌려야합니다
         binding.button2.setOnClickListener {

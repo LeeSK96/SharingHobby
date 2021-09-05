@@ -15,14 +15,14 @@ class FindHobbyActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val selectHobby = Intent(this, CategoryActivity1::class.java)
-
+        val MadeGroup =Intent(this,MadeGroupActivity::class.java)
 
         binding.selectHobbyButton.setOnClickListener {
             startActivity(selectHobby)
         }
 
         binding.makeHobbyButton.setOnClickListener {
-
+            startActivity(MadeGroup)
         }
     }
 

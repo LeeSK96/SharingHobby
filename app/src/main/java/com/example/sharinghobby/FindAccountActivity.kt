@@ -11,7 +11,7 @@ class FindAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val fragmentList = listOf(FragmentA(),FragmentB())
+        val fragmentList = listOf(FragmentFindA(),FragmentFindB())
         val adapter = FindFragmentAdapter(this)
         adapter.fragmentlist = fragmentList
         binding.viewPager2.adapter=adapter

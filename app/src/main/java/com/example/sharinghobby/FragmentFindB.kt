@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.sharinghobby.databinding.FragmentBBinding
+import com.example.sharinghobby.databinding.FragmentFindBBinding
 
-class FragmentB : Fragment() {
+class FragmentFindB : Fragment() {
   var findActivity : FindAccountActivity? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -17,7 +17,7 @@ class FragmentB : Fragment() {
         var checkid=false
         var checkname=false
         var checkphone=false
-        val binding = FragmentBBinding.inflate(inflater,container,false)
+        val binding = FragmentFindBBinding.inflate(inflater,container,false)
         binding.signbutton.setOnClickListener {
             //휴대폰인증처리 연결해야함
             //if(휴대폰연결처리 인증되면)checkphone =true
