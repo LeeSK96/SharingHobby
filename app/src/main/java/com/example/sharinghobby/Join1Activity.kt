@@ -8,6 +8,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.sharinghobby.databinding.ActivityJoin1Binding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class Join1Activity : AppCompatActivity() {
     val binding by lazy { ActivityJoin1Binding.inflate(layoutInflater) }
@@ -51,14 +53,17 @@ class Join1Activity : AppCompatActivity() {
             else{boolId=true; binding.checkId.text="OK!!"; userId=binding.accountId.text.toString() }
         }
         binding.joinus.setOnClickListener {
-            if(boolId&&boolPw&&boolNn&&boolemail&&boolgender){}
-            var OurDB = DBConnector();
-            var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"1",binding.nickname.text.toString());
-            OurDB.setAccountData(accountdata);
-            Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
+            //  if(boolId&&boolPw&&boolNn&&boolemail&&boolgender){}
+            val auth = Firebase.auth
+            auth.createUserWithEmailAndPassword(binding.userEmail.text.toString(),binding.password.text.toString())
+                .addOnSuccessListener {
+                    var OurDB = DBConnector();
+                    var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"1",binding.nickname.text.toString());
+                    OurDB.setAccountData(accountdata,auth.currentUser!!.uid);
+                    Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
+                }
 
-
-          val returnIntent = Intent()
+            val returnIntent = Intent()
             returnIntent.putExtra("from1","1")
             setResult(RESULT_OK,returnIntent)
             finish()

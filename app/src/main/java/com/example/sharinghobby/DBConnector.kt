@@ -1,6 +1,5 @@
 package com.example.sharinghobby
 
-import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -8,7 +7,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
-data class Account(val ID: String, val PW: String, val USER_email: String, val USER_phone: String, val USER_image: String, val Nickname: String)
+data class Account(val id: String, val pw: String, val user_email: String, val user_phone: String, val user_image: String, val nickname: String)// 전부 소문자로 바꿀것
 data class SmallGroup(val Leader: String, val User: String, val Explain: String, val Location: String, val Photo: String)
 data class MyPage(val ID: String, val PW: String, val MySmallGroup: String, val CS: String, val Settings: String, val ImageChange: String)
 data class Node(val GPS_X: String, val GPS_Y: String, val Category: String, val NodeName: String, val NodeImage: String, val CurrentOwner: String)
@@ -18,10 +17,10 @@ class DBConnector{
     val db = Firebase.firestore
 
 
-    fun setAccountData(data : Account) {// 해당 함수 부터 아래 4개는 데이터 insert
+    fun setAccountData(data: Account, uid: String) {// 해당 함수 부터 아래 4개는 데이터 insert
         val doc = db.collection("Users").document()
         doc.set(data)
-        db.collection("Users").document("NicknameList").collection("data").document(data.ID)
+        db.collection("Users").document("NicknameList").collection("data").document(data.id)
             .set(mapOf("uid" to doc.id))
     }
 

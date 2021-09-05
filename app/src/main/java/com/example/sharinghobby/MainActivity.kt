@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.sharinghobby.databinding.ActivityMainBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -34,20 +40,32 @@ class MainActivity : AppCompatActivity() {
         }
         binding.loginbutton.setOnClickListener {
             var userId=binding.editTextTextPersonName.text.toString()
-            var UserIId="";
+            var userPw = binding.editTextTextPersonName2.text.toString()
             var connector = DBConnector()
-            var checkId =false;
-           /* CoroutineScope(Dispatchers.Default).launch {
+            var auth = Firebase.auth
+            auth.signInWithEmailAndPassword(userId,userPw)
+                .addOnSuccessListener {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        val uid = auth.uid
+                        val data = connector.getData<Account>(uid!!)
+                        runBlocking(Dispatchers.Main) {
+                          //  Log.e("asdf",data!!.user_phone)
+                            intent.putExtra("uid","$userId")
+                            startActivity(goHome)
+                        }
+                    }
+                }
+            /*
+           CoroutineScope(Dispatchers.Default).launch {
                 var userData = connector.getData<Account>("")
                 if( userData != null) {
                   Log.d("from1",userData?.PW);
                       //checkId=true;
                 }
                 else    Log.d("from1","${userData?.PW}");
-            }*/
-
-            intent.putExtra("uid","$userId")
-            startActivity(goHome)}
+            }
+             */
+        }
             //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
 
     }
