@@ -16,7 +16,6 @@ data class Administrator(val leader: String, val imageChange: String, val groupM
 class DBConnector{
     val db = Firebase.firestore
 
-
     fun setAccountData(data: Account, uid: String) {// 해당 함수 부터 아래 4개는 데이터 insert
         val doc = db.collection("Users").document()
         doc.set(data)
