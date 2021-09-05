@@ -18,11 +18,12 @@ class DBConnector{
 
 
     fun setAccountData(data: Account, uid: String) {// 해당 함수 부터 아래 4개는 데이터 insert
-        val doc = db.collection("Users").document()
+        val doc = db.collection("Users").document(uid)
         doc.set(data)
         db.collection("Users").document("NicknameList").collection("data").document(data.id)
             .set(mapOf("uid" to doc.id))
     }
+    // 로그인(이메일 비번) -> uid -> uid로 AccountData에서 데이터를 가져옴(전화번호, 성별 등등...)
 
     fun setSmallGroupData(data : SmallGroup) {
         db.collection("SmallGroup").document()
