@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.example.sharinghobby.databinding.ActivityFindBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class FindActivity : AppCompatActivity() {
+class FindAccountActivity : AppCompatActivity() {
     val binding by lazy { ActivityFindBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

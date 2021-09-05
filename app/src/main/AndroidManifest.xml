@@ -33,10 +33,10 @@
         <activity android:name=".MBselectedActivity" />
 
         <activity android:name=".CenterActivity" />
-        <activity android:name=".FindActivity" />
+        <activity android:name=".FindAccountActivity" />
         <activity android:name=".Join1Activity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".loginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

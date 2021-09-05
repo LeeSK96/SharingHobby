@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.sharinghobby.databinding.FragmentABinding
 
 class FragmentA : Fragment() {
-    var findActivity:FindActivity? =null
+    var findActivity:FindAccountActivity? =null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +30,7 @@ class FragmentA : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is FindActivity) findActivity = context
+        if(context is FindAccountActivity) findActivity = context
     }
 
 }

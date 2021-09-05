@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.sharinghobby.databinding.ActivityMainBinding
+import com.example.sharinghobby.databinding.ActivityLoginBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity() {
-    val binding by lazy{ ActivityMainBinding.inflate(layoutInflater)}
+class loginActivity : AppCompatActivity() {
+    val binding by lazy{ ActivityLoginBinding.inflate(layoutInflater)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val intent1 = Intent(this,JoinActivity::class.java)
-        val intent2 = Intent(this,FindActivity::class.java)
+        val intent2 = Intent(this,FindAccountActivity::class.java)
         val goHome = Intent(this,HomeActivity::class.java)
         binding.joinbutton.setOnClickListener {
          startActivity(intent1)
