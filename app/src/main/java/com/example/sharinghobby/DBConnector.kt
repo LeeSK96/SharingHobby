@@ -8,21 +8,21 @@ import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
 data class Account(val id: String, val pw: String, val user_email: String, val user_phone: String, val user_image: String, val nickname: String)// 전부 소문자로 바꿀것
-data class SmallGroup(val Leader: String, val User: String, val Explain: String, val Location: String, val Photo: String)
-data class MyPage(val ID: String, val PW: String, val MySmallGroup: String, val CS: String, val Settings: String, val ImageChange: String)
-data class Node(val GPS_X: String, val GPS_Y: String, val Category: String, val NodeName: String, val NodeImage: String, val CurrentOwner: String)
-data class Administrator(val Leader: String, val ImageChange: String, val GroupMemberChange: String, val GroupExplainChange: String, val GroupLocationChange: String)
+data class SmallGroup(val leader: String, val user: String, val explain: String, val location: String, val photo: String)
+data class MyPage(val id: String, val pw: String, val mysmallgroup: String, val cs: String, val settings: String, val imageChange: String)
+data class Node(val gps_x: String, val gps_y: String, val category: String, val nodeName: String, val nodeImage: String, val currentOwner: String)
+data class Administrator(val leader: String, val imageChange: String, val groupMemberChange: String, val groupExplainChange: String, val groupLocationChange: String)
 
 class DBConnector{
     val db = Firebase.firestore
 
-
     fun setAccountData(data: Account, uid: String) {// 해당 함수 부터 아래 4개는 데이터 insert
-        val doc = db.collection("Users").document()
+        val doc = db.collection("Users").document(uid)
         doc.set(data)
         db.collection("Users").document("NicknameList").collection("data").document(data.id)
-            .set(mapOf("uid" to doc.id))
+            .set(mapOf("uid" to uid))
     }
+    // 로그인(이메일 비번) -> uid -> uid로 AccountData에서 데이터를 가져옴(전화번호, 성별 등등...)
 
     fun setSmallGroupData(data : SmallGroup) {
         db.collection("SmallGroup").document()

@@ -22,7 +22,7 @@ class CategoryActivity : AppCompatActivity() {
             tab.text =tabtables[position]
         }.attach()
     }
-    fun selectDone( kindOfHobby:String){
+    fun selectDone(kindOfHobby:String){
         val returnIntent = Intent()
         returnIntent.putExtra("returnV","$kindOfHobby");
         setResult(RESULT_OK,returnIntent)
