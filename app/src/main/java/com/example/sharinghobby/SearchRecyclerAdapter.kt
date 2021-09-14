@@ -1,13 +1,10 @@
 package com.example.sharinghobby
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sharinghobby.databinding.ViewholderSearchResultItemBinding
-import com.example.sharinghobby.model.SearchResultEntity
+import com.example.sharinghobby.model.result.SearchResultEntity
 
 class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchResultItemViewHolder>() {
 
@@ -17,9 +14,20 @@ class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchRe
     class SearchResultItemViewHolder(private val binding: ViewholderSearchResultItemBinding,
                                      val searchResultClickListener: (SearchResultEntity) -> Unit) : RecyclerView.ViewHolder(binding.root){
 
+
         fun bindData(data: SearchResultEntity) = with(binding){
             textTextView.text = data.name
             subtextTextView.text = data.fullAddress
+
+
+
+           val b :ViewholderSearchResultItemBinding  =  binding.apply {
+               textTextView.text = data.name
+            }
+
+           val st : String  =  with(binding) {
+               "RETURN"
+            }
         }
 
         fun bindViews(data: SearchResultEntity){
@@ -31,6 +39,7 @@ class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchRe
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultItemViewHolder {
+       //  LayoutInflater // view inflate
         val view = ViewholderSearchResultItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SearchResultItemViewHolder(view, searchResultClickListener)
     }

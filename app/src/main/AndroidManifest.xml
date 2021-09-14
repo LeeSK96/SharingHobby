@@ -46,7 +46,6 @@
 
         <activity android:name=".SearchActivity"></activity>
         <activity android:name=".MapActivity"></activity>
-        <activity android:name=".FindHobbyActivity"></activity>
         <activity android:name=".CategoryActivity1"></activity>
         <activity android:name=".HomeActivity"></activity>
 

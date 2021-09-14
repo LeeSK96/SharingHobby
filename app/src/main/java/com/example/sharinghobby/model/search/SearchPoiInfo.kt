@@ -1,4 +1,4 @@
-package com.example.sharinghobby.response.search
+package com.example.sharinghobby.model.search
 
 data class SearchPoiInfo (
     val totalCount: String,

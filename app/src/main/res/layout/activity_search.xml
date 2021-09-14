@@ -6,21 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
+    <include
+        android:id="@+id/search_toolbar"
+        layout="@layout/activity_search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/searchBarInputView"/>
+
     <EditText
         android:id="@+id/searchBarInputView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/searchButton"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/searchButton"
+        app:layout_constraintTop_toBottomOf="@+id/search_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         android:hint="@string/please_input_search_keyword"/>
 
     <Button
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/searchBarInputView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         android:text="@string/search"/>
 
     <androidx.recyclerview.widget.RecyclerView
