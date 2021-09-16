@@ -38,6 +38,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main_toolbar.*
 import kotlinx.android.synthetic.main.activity_main_toolbar.view.*
@@ -74,6 +76,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         const val PERMISSION_REQUEST_CODE = 101
         const val REQUEST_LOCATION = 10001
         const val REQUEST_CATEGORY = 10002
+        const val REQUEST_CREATE_HOBBY = 10003
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,9 +85,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         setContentView(binding.root)
 
         val findHobby = Intent(this, CategoryActivity1::class.java)
+        val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
         val myHobbyList = Intent(this, MBselectedActivity::class.java)
-        val chatList = Intent(this, ChatListActivity::class.java)
+        val chatList = Intent(this, ChatActivity::class.java)
 
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.bejji)
@@ -177,6 +181,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
             val createHobbyButton = findCreateHobbyDialogView.findViewById<Button>(R.id.createHobbyButton)
             createHobbyButton.setOnClickListener {
+                startActivityForResult(createHobby,REQUEST_CREATE_HOBBY)
                 findHobbyDialog.dismiss()
             }
 
@@ -191,7 +196,11 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         }
 
         binding.chatButton.setOnClickListener {
-            startActivity(chatList)
+            if(Firebase.auth.currentUser!=null) {
+                chatList.putExtra("roomID", "room1")
+                chatList.putExtra("UID", Firebase.auth.currentUser!!.uid)
+                startActivity(chatList)
+            }
         }
 
     }
@@ -203,6 +212,13 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             REQUEST_CATEGORY -> {
                 if(resultCode == RESULT_OK){
                     displayMarkers()
+                }
+            }
+
+            REQUEST_CREATE_HOBBY -> {
+                if(resultCode == RESULT_OK){
+                    // 정상적으로 취미모임 만들어지면 .. -> DB에 값넣기
+                    Log.e("result","성공")
                 }
             }
 

@@ -37,19 +37,20 @@
         <activity android:name=".Join1Activity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".loginActivity">
-
-        </activity>
-
-        <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".MapActivity"></activity>
-        <activity android:name=".CategoryActivity1"></activity>
-        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".CategoryActivity1"></activity>
+        <activity android:name=".HomeActivity">
+
+        </activity>
+        <activity android:name=".CreateHobbyActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
