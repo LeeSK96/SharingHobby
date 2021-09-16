@@ -1,4 +1,4 @@
-package com.example.sharinghobby.response.search
+package com.example.sharinghobby.model.search
 
 data class Poi (
     //POI 의  id

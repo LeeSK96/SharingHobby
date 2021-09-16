@@ -1,4 +1,4 @@
-package com.example.sharinghobby.model
+package com.example.sharinghobby.model.result
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

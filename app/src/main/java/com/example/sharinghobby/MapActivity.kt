@@ -1,23 +1,12 @@
 package com.example.sharinghobby
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import com.example.sharinghobby.databinding.ActivityMapBinding
-import com.example.sharinghobby.model.LocationLatLngEntity
-import com.example.sharinghobby.model.SearchResultEntity
-import com.example.sharinghobby.utillity.RetrofitUtil
+import com.example.sharinghobby.model.result.SearchResultEntity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -57,6 +46,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.searchToolbar.toolbarTitle.text = "현재위치로 마커를 드래그해주세요."
 
         job = Job()
 
@@ -70,13 +60,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             }
         }
 
+        // 메뉴바 리스너
+        binding.searchToolbar.backButton.setOnClickListener{
+            finish()
+        }
+
         binding.LocationCheckButton.setOnClickListener {
-            startActivity (
-                Intent(this, HomeActivity::class.java).apply {
-                    putExtra("changedLocationLat", changedFinalLocation.latitude.toString())
-                    putExtra("changedLocationLon", changedFinalLocation.longitude.toString())
-                }
-            )
+
+            val intent = Intent(this, HomeActivity::class.java).apply {
+                putExtra("changedLocationLat", changedFinalLocation.latitude.toString())
+                putExtra("changedLocationLon", changedFinalLocation.longitude.toString())
+            }
+            setResult(RESULT_OK, intent)
+            finish()
+
         }
 
         binding.LocationCancelButton.setOnClickListener {
@@ -114,7 +111,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             draggable(true)
         }
 
-
+        changedFinalLocation = positionLatLng
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(positionLatLng, CAMERA_ZOOM_LEVEL))
 

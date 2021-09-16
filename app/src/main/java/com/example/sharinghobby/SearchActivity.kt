@@ -5,13 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import com.example.sharinghobby.MapActivity.Companion.SEARCH_RESULT_EXTRA_KEY
 import com.example.sharinghobby.databinding.ActivitySearchBinding
-import com.example.sharinghobby.model.LocationLatLngEntity
-import com.example.sharinghobby.model.SearchResultEntity
-import com.example.sharinghobby.response.search.Poi
-import com.example.sharinghobby.response.search.Pois
+import com.example.sharinghobby.model.result.LocationLatLngEntity
+import com.example.sharinghobby.model.result.SearchResultEntity
+import com.example.sharinghobby.model.search.Poi
+import com.example.sharinghobby.model.search.Pois
 import com.example.sharinghobby.utillity.RetrofitUtil
 import kotlinx.coroutines.*
 import java.lang.Exception
@@ -28,6 +29,8 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivitySearchBinding
     private lateinit var adapter: SearchRecyclerAdapter
 
+    private val REQUEST_LOCATION_OK = 10101
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -39,6 +42,29 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
         initViews()
         bindViews()
         initData()
+
+        // 메뉴바 리스너
+        binding.searchToolbar.backButton.setOnClickListener{
+            finish()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == REQUEST_LOCATION_OK){
+            if(resultCode == RESULT_OK){
+                // click submit  > go to home
+                //    setResult()
+                val intent = Intent(this,HomeActivity::class.java).apply {
+                    putExtra("changedLocationLat", data?.getStringExtra("changedLocationLat"))
+                    putExtra("changedLocationLon", data?.getStringExtra("changedLocationLon"))
+                }
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+            // remain
+        }
     }
 
     private fun initViews() = with(binding){
@@ -77,14 +103,14 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
                 "빌딩이름 : ${it.name} 주소 : ${it.fullAddress} 위도/경도 : ${it.locationLatLng}",
                 Toast.LENGTH_SHORT
             ).show()
-            startActivity (
-                Intent(this, MapActivity::class.java).apply {
-                    putExtra(SEARCH_RESULT_EXTRA_KEY, it)
-                }
-            )
+            // home (data)  > search > map (data)
+            // TODO
+            startActivityForResult(Intent(this, MapActivity::class.java).apply {
+                putExtra(SEARCH_RESULT_EXTRA_KEY, it)
+            }, REQUEST_LOCATION_OK)
+
         }
     }
-
 
     private fun searchKeyword(keywordString: String){
         launch(coroutineContext) {

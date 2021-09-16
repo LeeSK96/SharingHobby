@@ -1,6 +1,7 @@
-package com.example.sharinghobby.model
+package com.example.sharinghobby.model.result
 
 import android.os.Parcelable
+import com.example.sharinghobby.model.result.LocationLatLngEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
