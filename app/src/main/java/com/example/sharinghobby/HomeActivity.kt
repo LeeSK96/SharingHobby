@@ -27,6 +27,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firestore.v1.FirestoreGrpc
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -86,6 +89,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         val selectLocation = Intent(this, SearchActivity::class.java)
         val myHobbyList = Intent(this, MBselectedActivity::class.java)
         val chatList = Intent(this, ChatListActivity::class.java)
+        val intent = Intent(this, ChatActivity::class.java)
 
         binding.findHobbyButton.setOnClickListener {
             startActivity(findHobby)
@@ -99,10 +103,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             startActivity(myHobbyList)
         }
 
+        /**
+         * roomID -> 방 번호, UID -> 유저 ID
+         */
         binding.chatButton.setOnClickListener {
-            startActivity(chatList)
+            if(Firebase.auth.currentUser!=null) {
+                startActivity(chatList)
+                intent.putExtra("roomID", "room1")
+                intent.putExtra("UID", Firebase.auth.currentUser!!.uid)
+                this.startActivity(intent)
+            }
         }
-
         if(intent.hasExtra("changedLocationLat") && intent.hasExtra("changedLocationLon")){
             isLocationSelected = true
         }
