@@ -30,7 +30,8 @@ class loginActivity : AppCompatActivity() {
         }
 
         val intent1 = Intent(this,JoinActivity::class.java)
-        val intent2 = Intent(this,FindAccountActivity::class.java)
+        //val intent2 = Intent(this,FindAccountActivity::class.java)
+        val intent2 =Intent(this,MadeGroup2Activity::class.java)
         val goHome = Intent(this,HomeActivity::class.java)
         binding.joinbutton.setOnClickListener {
          startActivity(intent1)
@@ -38,6 +39,13 @@ class loginActivity : AppCompatActivity() {
         binding.searchbutton.setOnClickListener {
             startActivity(intent2)
         }
+
+        /*
+        * 1. upload file to firebase storage ==> return url
+        * 2. insert data (id, url) to firebase database
+        * 3. select data (url) from firebase database by using id
+        * 4. load image
+        * */
         binding.loginbutton.setOnClickListener {
             var userId=binding.editTextTextPersonName.text.toString()
             var userPw = binding.editTextTextPersonName2.text.toString()

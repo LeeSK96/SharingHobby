@@ -1,8 +1,8 @@
 package com.example.sharinghobby.utillity
 
 import com.example.sharinghobby.BuildConfig
-import com.example.sharinghobby.Url
-//import com.example.sharinghobby.Url
+import com.example.sharinghobby.data.Url
+//import com.example.sharinghobby.data.Url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

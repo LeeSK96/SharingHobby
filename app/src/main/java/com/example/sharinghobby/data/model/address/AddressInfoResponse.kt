@@ -1,4 +1,4 @@
-package com.example.sharinghobby.model.address
+package com.example.sharinghobby.data.model.address
 
 data class AddressInfoResponse (
     val addressInfo : AddressInfo

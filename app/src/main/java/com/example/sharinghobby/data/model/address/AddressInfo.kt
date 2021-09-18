@@ -1,4 +1,4 @@
-package com.example.sharinghobby.model.address
+package com.example.sharinghobby.data.model.address
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

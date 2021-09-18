@@ -1,4 +1,4 @@
-package com.example.sharinghobby
+package com.example.sharinghobby.data
 
 object Url {
     const val TMAP_URL = "https://apis.openapi.sk.com"
