@@ -2,20 +2,15 @@
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ActionBar
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -25,10 +20,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import com.example.sharinghobby.data.model.result.LocationLatLngEntity
+import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.example.sharinghobby.databinding.ActivityHomeBinding
-import com.example.sharinghobby.databinding.FindhobbyDialogBinding
-import com.example.sharinghobby.model.result.LocationLatLngEntity
-import com.example.sharinghobby.model.result.SearchResultEntity
 import com.example.sharinghobby.utillity.RetrofitUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -47,7 +41,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
-class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
+ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
     private lateinit var job: Job
 
@@ -85,9 +79,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         setContentView(binding.root)
 
         val findHobby = Intent(this, CategoryActivity1::class.java)
-        val createHobby = Intent(this, CreateHobbyActivity::class.java)
+        //val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
-        val myHobbyList = Intent(this, MBselectedActivity::class.java)
+        val myHobbyList = Intent(this, BelongActivity::class.java)
         val chatList = Intent(this, ChatActivity::class.java)
 
         supportActionBar?.setDisplayShowTitleEnabled(true)
@@ -181,7 +175,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
             val createHobbyButton = findCreateHobbyDialogView.findViewById<Button>(R.id.createHobbyButton)
             createHobbyButton.setOnClickListener {
-                startActivityForResult(createHobby,REQUEST_CREATE_HOBBY)
+              //  startActivityForResult(createHobby,REQUEST_CREATE_HOBBY)
                 findHobbyDialog.dismiss()
             }
 
