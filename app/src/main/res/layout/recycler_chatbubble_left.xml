@@ -40,7 +40,7 @@
             android:paddingRight="12dp"
             android:paddingBottom="6dp"
             android:text="아이폰식 텍스트 버블"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

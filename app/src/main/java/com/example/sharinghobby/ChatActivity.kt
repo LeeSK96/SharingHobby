@@ -27,6 +27,10 @@ class ChatActivity : AppCompatActivity() {
         /** intent에서 roomID를 받아옵니다.
             만약 roomID를 통해 호출되지 않았다면 잘못된 요청이므로
             잘못된 요청이라는 알림과 함께 액티비티가 종료됩니다.
+
+            소모임 1개 -> 채팅방 1개
+            소모임 한개를 만들 때, 소모임 ID( = SmallGroup에 생성되는 Document ID)와 똑같은 ID의 문서를 Chat/Room/list에 만든다.
+            소모임에서 채팅방으로 들어갈 때, 소모임 ID를 받아서 /Chat/Room/List/{소모임ID}로 접속하게 한다.( 즉 ChatActivity의 roomID intent 값을 {소모임 ID}값으로)
          */
         if (intent.hasExtra("roomID") && intent.hasExtra("UID")) {
             roomID = intent.getStringExtra("roomID")!!
