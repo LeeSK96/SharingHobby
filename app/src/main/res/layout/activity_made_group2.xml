@@ -31,11 +31,11 @@
         app:layout_constraintStart_toEndOf="@+id/cameraButton" />
 
     <Button
+        android:visibility="invisible"
         android:id="@+id/NextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="22dp"
-        android:text="GPS설정go!!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

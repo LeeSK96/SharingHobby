@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -36,10 +37,14 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
             arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
             PERM_STOREAGE
         )
+        val GroupId:String? =intent.getStringExtra("groupId")
         binding.NextButton.setOnClickListener {
-            val intent = Intent(this, MadeGroup3Activity::class.java)
-            intent.putExtra("uri","$notrealuri");
-            startActivity(intent)
+           val returnIntent = Intent()
+            if(notrealuri!=null) {
+                returnIntent.putExtra("returnUrl",notrealuri)
+                setResult(RESULT_OK,returnIntent)
+                finish()
+            }else Toast.makeText(this,"1111",Toast.LENGTH_LONG).show()
         }
         readDatabase();
     }
@@ -158,7 +163,7 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
         map["communityId"] = 1;
         map["imgurl"] = url
 
-        notrealuri=url;
+        notrealuri=url
 
         db.collection("File")
             .add(map)
@@ -216,8 +221,10 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
             .load(url)
             .thumbnail(0.5f)
             .centerCrop()
-            .apply(RequestOptions().override(200,500))
+            .apply(RequestOptions().override(500,500))
             .into(binding.imageView6)
+           binding.NextButton.visibility= View.VISIBLE
+           binding.NextButton.text="설정완료!"
     }
     fun setImageWithGlide2(url:String){
         Glide.with(binding.root.context)

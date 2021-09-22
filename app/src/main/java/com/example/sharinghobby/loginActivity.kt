@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.sharinghobby.databinding.ActivityLoginBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,7 +32,7 @@ class loginActivity : AppCompatActivity() {
 
         val intent1 = Intent(this,JoinActivity::class.java)
         //val intent2 = Intent(this,FindAccountActivity::class.java)
-        val intent2 =Intent(this,MadeGroup2Activity::class.java)
+        val intent2 =Intent(this,FindAccountActivity::class.java)
         val goHome = Intent(this,HomeActivity::class.java)
         binding.joinbutton.setOnClickListener {
          startActivity(intent1)
@@ -49,6 +50,8 @@ class loginActivity : AppCompatActivity() {
         binding.loginbutton.setOnClickListener {
             var userId=binding.editTextTextPersonName.text.toString()
             var userPw = binding.editTextTextPersonName2.text.toString()
+            if(userId=="" ||userPw==""){Toast.makeText(this,"아이디 또는 비밀번호가 입력되지 않았습니다.",Toast.LENGTH_LONG).show(); }
+            else{
             var connector = DBConnector()
             var auth = Firebase.auth
             auth.signInWithEmailAndPassword(userId,userPw)
@@ -73,7 +76,7 @@ class loginActivity : AppCompatActivity() {
                 else    Log.d("from1","${userData?.PW}");
             }
              */
-        }
+        }}
             //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
 
     }
