@@ -1,19 +1,43 @@
-package com.example.sharinghobby
+package com.devingryu.firechatexample
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sharinghobby.Account
+import com.example.sharinghobby.DBConnector
+import com.example.sharinghobby.R
 import com.example.sharinghobby.databinding.RecyclerChatbubbleLeftBinding
 import com.example.sharinghobby.databinding.RecyclerChatbubbleRightBinding
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
 
 data class ChatMessage(val text: String="", val sent_at: Timestamp= Timestamp(0,0), val sent_by:String="")
 
 class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var mContext : Context? = null
+    val userNickname : HashMap<String,String> = hashMapOf()
+    private fun getUserNick(uid: String){
+        CoroutineScope(Dispatchers.Default).launch {
+            val connector = DBConnector()
+            val accountData= connector.getData<Account>(uid)
+            if(accountData != null){
+                userNickname[uid] = accountData.nickname
+                notifyDataSetChanged() //RecyclerView에서 데이터가 변경되었으니 다시 확인해라
+            } else {
+                userNickname.remove(uid)
+            }
+        }
+    }
     var data : ArrayList<ChatMessage> = arrayListOf()
         set(value) {
             field = value
@@ -36,8 +60,7 @@ class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<Recycler
                 parent,
                 false
             ))
-            else /*ViewType.RIGHT.value*/ -> RightViewHolder(
-                RecyclerChatbubbleRightBinding.inflate(
+            else /*ViewType.RIGHT.value*/ -> RightViewHolder(RecyclerChatbubbleRightBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -58,6 +81,14 @@ class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<Recycler
                             else R.drawable.bubble_left_tail
                         )
                     binding.user.visibility = if(data.size-1<=position || data[position+1].sent_by != data[position].sent_by) View.VISIBLE else View.GONE
+                    binding.user.text = if (userNickname[data[position].sent_by] != null) {
+                        userNickname[data[position].sent_by]
+                    } else {
+                        userNickname[data[position].sent_by] = "불러오는 중.."
+                        getUserNick(data[position].sent_by)
+                        "불러오는 중.."
+                    }
+                    binding.time.text = SimpleDateFormat("hh:mm").format(data[position].sent_at.toDate())
                 }
             }
             else /*ViewType.RIGHT.value*/ -> {
@@ -69,9 +100,17 @@ class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<Recycler
                                 R.drawable.bubble_right
                             else R.drawable.bubble_right_tail
                         )
+                    binding.time.text = SimpleDateFormat("hh:mm").format(data[position].sent_at.toDate())
                 }
             }
         }
+        Firebase.firestore.collection("Users").get()
+            .addOnSuccessListener {
+                val docs = it.documents
+                for( doc in docs){
+                    // do something ...
+                }
+            }
     }
 
     override fun getItemCount(): Int = data.size
