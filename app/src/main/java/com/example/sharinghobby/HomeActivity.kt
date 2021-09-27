@@ -20,9 +20,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.example.sharinghobby.databinding.ActivityHomeBinding
-import com.example.sharinghobby.model.result.LocationLatLngEntity
-import com.example.sharinghobby.model.result.SearchResultEntity
+import com.example.sharinghobby.data.model.result.LocationLatLngEntity
 import com.example.sharinghobby.utillity.RetrofitUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
