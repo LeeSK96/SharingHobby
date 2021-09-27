@@ -1,3 +1,5 @@
 package com.example.sharinghobby
 
-data class Memo1(var no:Int,var title:String , var timestamp:Long)
+import java.io.Serializable
+import java.sql.Timestamp
+data class Memo1(var title:String , var timestamp:Long): Serializable

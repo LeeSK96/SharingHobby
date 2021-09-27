@@ -2,11 +2,9 @@ package com.example.sharinghobby
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import com.example.sharinghobby.databinding.ActivityMapBinding
-import com.example.sharinghobby.model.result.SearchResultEntity
+import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

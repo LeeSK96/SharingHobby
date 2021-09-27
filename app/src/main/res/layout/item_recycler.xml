@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:gravity="clip_vertical"
@@ -19,21 +20,21 @@
         android:id="@+id/textView69"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:textColor="@color/black"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView70"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:textColor="@color/black"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 </LinearLayout>

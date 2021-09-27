@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sharinghobby.databinding.ViewholderSearchResultItemBinding
-import com.example.sharinghobby.model.result.SearchResultEntity
+import com.example.sharinghobby.data.model.result.SearchResultEntity
 
 class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchResultItemViewHolder>() {
 
