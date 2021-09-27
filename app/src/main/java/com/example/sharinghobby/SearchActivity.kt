@@ -29,12 +29,18 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivitySearchBinding
     private lateinit var adapter: SearchRecyclerAdapter
 
-    private val REQUEST_LOCATION_OK = 10101
-
+    companion object {
+        const val REQUEST_LOCATION_OK = 10101
+        const val REQUEST_LOCATION_HOBBY_OK = 10102
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if(intent.hasExtra("typeOfIntent")){
+            binding.searchToolbar.toolbarTitle.text = "모임 위치를 입력해주세요."
+        }
 
         job = Job()
 
@@ -52,16 +58,37 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        when(requestCode){
+            REQUEST_LOCATION_OK -> {
+                if (resultCode == RESULT_OK){
+                    // click submit  > go to home
+                    //    setResult()
+                    val selectLocationIntent = Intent(this,HomeActivity::class.java).apply {
+                        putExtra("changedLocationLat", data?.getStringExtra("changedLocationLat"))
+                        putExtra("changedLocationLon", data?.getStringExtra("changedLocationLon"))
+                    }
+                    setResult(RESULT_OK, selectLocationIntent)
+                    finish()
+                }
+            }
+
+            REQUEST_LOCATION_HOBBY_OK -> {
+                if(resultCode == RESULT_OK){
+                    // create hobby > go to home
+                    val createHobbyIntent = Intent(this, CreateHobbyActivity::class.java).apply {
+                        putExtra("changedLocationLat", data?.getStringExtra("changedLocationLat"))
+                        putExtra("changedLocationLon", data?.getStringExtra("changedLocationLon"))
+                    }
+                    setResult(RESULT_OK, createHobbyIntent)
+                    finish()
+                }
+            }
+        }
+
+
         if(requestCode == REQUEST_LOCATION_OK){
             if(resultCode == RESULT_OK){
-                // click submit  > go to home
-                //    setResult()
-                val intent = Intent(this,HomeActivity::class.java).apply {
-                    putExtra("changedLocationLat", data?.getStringExtra("changedLocationLat"))
-                    putExtra("changedLocationLon", data?.getStringExtra("changedLocationLon"))
-                }
-                setResult(RESULT_OK, intent)
-                finish()
+
             }
             // remain
         }
@@ -107,6 +134,10 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
             // TODO
             startActivityForResult(Intent(this, MapActivity::class.java).apply {
                 putExtra(SEARCH_RESULT_EXTRA_KEY, it)
+                if (intent.hasExtra("typeOfIntent")){
+                    putExtra("typeOfIntent", "createHobby")
+                }
+
             }, REQUEST_LOCATION_OK)
 
         }

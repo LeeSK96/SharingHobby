@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_arrow_left_solid.xml" />
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/activity_create_hobby.xml" value="0.16666666666666666" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/activity_join1.xml" value="0.3333333333333333" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/activity_made_group.xml" value="0.16666666666666666" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/activity_made_group2.xml" value="0.10260416666666666" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/activity_main_category_array.xml" value="0.10260416666666666" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/activity_sub_category_array.xml" value="0.10260416666666666" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/dialog_hobby_info.xml" value="0.15677083333333333" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/findhobby_dialog.xml" value="0.15677083333333333" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/hobby_info_dialog.xml" value="0.15677083333333333" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/item_recycler.xml" value="0.15677083333333333" />
+        <entry key="..\:/android_lsk/OurFriendlyMeeting/app/src/main/res/layout/notice_dialog.xml" value="0.15677083333333333" />
+      </map>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

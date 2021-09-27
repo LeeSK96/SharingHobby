@@ -1,8 +1,6 @@
 package com.example.sharinghobby.utillity
 
 import com.example.sharinghobby.model.search.SearchResponse
-import com.example.sharinghobby.Key
-import com.example.sharinghobby.Url
 import com.example.sharinghobby.model.address.AddressInfoResponse
 //import com.example.sharinghobby.model.poi.schema.response.address.AddressInfoResponse
 //import com.example.sharinghobby.model.poi.schema.response.search.SearchResponse

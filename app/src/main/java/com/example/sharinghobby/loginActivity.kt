@@ -3,6 +3,7 @@ package com.example.sharinghobby
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.sharinghobby.databinding.ActivityLoginBinding
 import com.google.firebase.auth.ktx.auth
@@ -39,6 +40,7 @@ class loginActivity : AppCompatActivity() {
             startActivity(intent2)
         }
         binding.loginbutton.setOnClickListener {
+            //startActivity(goHome)
             var userId=binding.editTextTextPersonName.text.toString()
             var userPw = binding.editTextTextPersonName2.text.toString()
             var connector = DBConnector()
@@ -50,21 +52,22 @@ class loginActivity : AppCompatActivity() {
                         val data = connector.getData<Account>(uid!!)
                         runBlocking(Dispatchers.Main) {
                           //  Log.e("asdf",data!!.user_phone)
-                            intent.putExtra("uid","$userId")
+                            Log.e("uid", uid)
+                            goHome.putExtra("uid",uid)
                             startActivity(goHome)
                         }
                     }
                 }
-            /*
-           CoroutineScope(Dispatchers.Default).launch {
+
+           /*CoroutineScope(Dispatchers.Default).launch {
                 var userData = connector.getData<Account>("")
                 if( userData != null) {
                   Log.d("from1",userData?.PW);
                       //checkId=true;
                 }
                 else    Log.d("from1","${userData?.PW}");
-            }
-             */
+            }*/
+
         }
             //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
 

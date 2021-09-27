@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="모임명 : "
+                android:textSize="30dp"/>
+
+            <EditText
+                android:id="@+id/group_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="모임명을 입력하세요."
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="카테고리 : "
+                android:textSize="30dp"/>
+
+            <!--<EditText
+                android:id="@+id/group_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="모임명을 입력하세요."
+                android:gravity="center"/>-->
+
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                />
+
+            <Spinner
+                android:id="@+id/subcategory_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="모임 인원 수 : "
+                android:textSize="30dp"/>
+
+            <EditText
+                android:id="@+id/group_member_limit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="인원 수를 입력하세요."
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="간단한 모임설명 : "
+                android:textSize="30dp"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/group_intro"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="간단하게 모임에 대한 설명을 입력하세요."
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/check_button"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+</LinearLayout>

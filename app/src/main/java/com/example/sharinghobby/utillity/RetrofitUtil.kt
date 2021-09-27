@@ -1,7 +1,6 @@
 package com.example.sharinghobby.utillity
 
 import com.example.sharinghobby.BuildConfig
-import com.example.sharinghobby.Url
 //import com.example.sharinghobby.Url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
