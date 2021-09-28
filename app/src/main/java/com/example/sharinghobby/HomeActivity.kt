@@ -72,8 +72,6 @@ import kotlin.math.*
 
     private val fireBase = DBConnector()
 
-
-
     companion object {
         const val SEARCH_RESULT_EXTRA_KEY = "SEARCH_RESULT_EXTRA_KEY"
         const val CAMERA_ZOOM_LEVEL = 17f
@@ -185,8 +183,13 @@ import kotlin.math.*
 
             val findHobbyButton = findCreateHobbyDialogView.findViewById<Button>(R.id.findHobbyButton)
             findHobbyButton.setOnClickListener {
-                startActivityForResult(findHobby, REQUEST_CATEGORY)
-                findHobbyDialog.dismiss()
+                if(currentSelectMarker != null || changedLocationMarker != null) {
+                    startActivityForResult(findHobby, REQUEST_CATEGORY)
+                    findHobbyDialog.dismiss()
+                }else{
+                    Toast.makeText(this,"위치를 선택한 후 취미 찾기를 진행해주세요.",Toast.LENGTH_SHORT).show()
+                    findHobbyDialog.dismiss()
+                 }
             }
 
             val createHobbyButton = findCreateHobbyDialogView.findViewById<Button>(R.id.createHobbyButton)
