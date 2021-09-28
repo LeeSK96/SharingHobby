@@ -560,6 +560,10 @@ import kotlin.math.*
             }
         }*/
 
+
+
+
+
         infoHobbyDialog.show()
 
         infoHobbyDialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
