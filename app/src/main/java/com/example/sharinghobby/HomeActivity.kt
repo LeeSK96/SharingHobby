@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -34,12 +35,17 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_create_hobby.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_main_drawer_header.view.*
 import kotlinx.android.synthetic.main.activity_main_toolbar.*
 import kotlinx.android.synthetic.main.activity_main_toolbar.view.*
 import kotlinx.android.synthetic.main.dialog_hobby_info.*
+import kotlinx.android.synthetic.main.dialog_hobby_info.group_member_limit
+import kotlinx.android.synthetic.main.dialog_hobby_info.group_title
 import kotlinx.android.synthetic.main.dialog_hobby_info.view.*
 import kotlinx.coroutines.*
+import org.w3c.dom.Text
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.*
 
@@ -133,9 +139,21 @@ import kotlin.math.*
 
         // 메뉴바 리스너
         binding.viewToolbar.menuButton.setOnClickListener{
-            binding.drawerLayout.openDrawer(
-                GravityCompat.START
-            )
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                withContext(Dispatchers.IO){
+                    val data = fireBase.getData<Account>(userIndex)
+                    //binding.drawerLayout.header_icon
+                    binding.drawerLayout.header_user_nickname.text = data!!.nickname
+                    binding.drawerLayout.header_user_email.text = data!!.user_email
+
+                }
+                binding.drawerLayout.openDrawer(
+                    GravityCompat.START
+                )
+
+            }
         }
 
         binding.viewToolbar.noticeButton.setOnClickListener{
@@ -541,45 +559,49 @@ import kotlin.math.*
 
     private fun clickMarker(marker: Marker){
 
-        val hobbyInfoDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_hobby_info,null)
-        val dialogBuilder = AlertDialog.Builder(this)
-            .setView(hobbyInfoDialogView)
-        val infoHobbyDialog = dialogBuilder.create()
+        if(marker in hobbyMakerArr) {
+            val hobbyInfoDialogView =
+                LayoutInflater.from(this).inflate(R.layout.dialog_hobby_info, null)
+            val dialogBuilder = AlertDialog.Builder(this)
+                .setView(hobbyInfoDialogView)
+            val infoHobbyDialog = dialogBuilder.create()
 
-        /*CoroutineScope(Dispatchers.Default).launch {
-            Log.e("markerTag", marker.tag.toString())
-            var data = fireBase.getData<SmallGroup>(marker.tag.toString())
-            runBlocking(Dispatchers.Main) {
-                Log.e("title", data!!.title)
-                Log.e("category", data!!.category)
+            CoroutineScope(Dispatchers.Main).launch {
+                Log.e("T1", Thread.currentThread().name)
+                val tag = marker.tag.toString()
 
-                *//*hobbyInfoDialogView.group_title.text = data!!.title
-                hobbyInfoDialogView.group_category.text = data!!.category
-                hobbyInfoDialogView.group_member_limit.text = data!!.user_limit
-                hobbyInfoDialogView.group_intro.text = data!!.introduction*//*
+                withContext(Dispatchers.IO) {
+                    Log.e("T2", Thread.currentThread().name)
+                    val data = fireBase.getData<SmallGroup>(tag)
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_title).text = data!!.title
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_category).text =
+                        data!!.category
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_member_limit).text =
+                        data!!.user_limit
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_intro).text =
+                        data!!.introduction
+                }
+
+
+                Log.e("T3", Thread.currentThread().name)
+                infoHobbyDialog.show()
+                infoHobbyDialog.window?.setLayout(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                )
             }
-        }*/
 
-
-
-
-
-        infoHobbyDialog.show()
-
-        infoHobbyDialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
-
-
-
-        val hobbyPageButton = hobbyInfoDialogView.findViewById<Button>(R.id.hobbyPageButton)
-        // 자세히보기 버튼 -> 취미모임페이지로 이동
-        /*hobbyPageButton.setOnClickListener {
+            val hobbyPageButton = hobbyInfoDialogView.findViewById<Button>(R.id.hobbyPageButton)
+            // 자세히보기 버튼 -> 취미모임페이지로 이동
+            /*hobbyPageButton.setOnClickListener {
             startActivityForResult(findHobby, REQUEST_CATEGORY)
             infoHobbyDialog.dismiss()
         }*/
 
-        val infoCanelButton = hobbyInfoDialogView.findViewById<Button>(R.id.infoCancelButton)
-        infoCanelButton.setOnClickListener {
-            infoHobbyDialog.dismiss()
+            val infoCanelButton = hobbyInfoDialogView.findViewById<Button>(R.id.infoCancelButton)
+            infoCanelButton.setOnClickListener {
+                infoHobbyDialog.dismiss()
+            }
         }
 
     }

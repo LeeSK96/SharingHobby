@@ -19,8 +19,8 @@ class CreateHobbyActivity: AppCompatActivity() {
     }
 
     var title = ""
-    //var category = ""
-    val category_items = resources.getStringArray(R.array.category_array)
+    var category = ""
+    //val category_items = resources.getStringArray(R.array.category_array)
     var limit_user = ""
     var intro = ""
 
@@ -31,12 +31,12 @@ class CreateHobbyActivity: AppCompatActivity() {
 
         val selectHobbyLoc = Intent(this, SearchActivity::class.java)
 
-        val categoryAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, category_items)
+        //val categoryAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, category_items)
 
-        binding.categorySpinner.adapter = categoryAdapter
-        binding.subcategorySpinner.adapter = categoryAdapter
+        //binding.categorySpinner.adapter = categoryAdapter
+        //binding.subcategorySpinner.adapter = categoryAdapter
 
-        binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        /*binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -67,13 +67,13 @@ class CreateHobbyActivity: AppCompatActivity() {
 
             }
 
-        }
+        }*/
 
         binding.checkButton.setOnClickListener {
-            title = binding.groupTitle.text.toString()
-            //category = binding.groupCategory.text.toString()
-            limit_user = binding.groupMemberLimit.text.toString()
-            intro = binding.groupIntro.text.toString()
+            title = binding.createGroupTitle.text.toString()
+            category = binding.createGroupCategory.text.toString()
+            limit_user = binding.createGroupMemberLimit.text.toString()
+            intro = binding.createGroupIntro.text.toString()
 
             selectHobbyLoc.putExtra("typeOfIntent", "createHobby")
             startActivityForResult(selectHobbyLoc, REQUEST_INFO)

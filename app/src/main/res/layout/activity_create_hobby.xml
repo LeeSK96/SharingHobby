@@ -23,7 +23,7 @@
                 android:textSize="30dp"/>
 
             <EditText
-                android:id="@+id/group_title"
+                android:id="@+id/create_group_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="모임명을 입력하세요."
@@ -43,14 +43,14 @@
                 android:text="카테고리 : "
                 android:textSize="30dp"/>
 
-            <!--<EditText
-                android:id="@+id/group_category"
+            <EditText
+                android:id="@+id/create_group_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="모임명을 입력하세요."
-                android:gravity="center"/>-->
+                android:gravity="center"/>
 
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/category_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1"/>-->
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:textSize="30dp"/>
 
             <EditText
-                android:id="@+id/group_member_limit"
+                android:id="@+id/create_group_member_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="인원 수를 입력하세요."
@@ -102,7 +102,7 @@
                 android:gravity="center"/>
 
             <EditText
-                android:id="@+id/group_intro"
+                android:id="@+id/create_group_intro"
                 android:inputType="textMultiLine"
                 android:lines="8"
                 android:layout_width="match_parent"
