@@ -144,7 +144,7 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
                 ref.downloadUrl.addOnSuccessListener {
                     /** 3. Firebase DataBase 저장 */
                     Log.e("링크 가져오기 성공", "$it")
-                    insertDatabase(it.toString())
+                    insertDatabase(it.toString(), "Ouoe5bO8OvGMxr9DhKhi") // 현재 실험중 고쳐야 함
 
                 }.addOnFailureListener {
                     Log.e("링크 가져오기 실패", it.message.toString())
@@ -155,7 +155,7 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
 
     /*firebase database저장*/
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private fun insertDatabase(url: String) {
+    private fun insertDatabase(url: String, gid: String) {
         /**1. 커뮤니티 생성화면) 사진 선택 -> stoage 에 등록 후 url 물고있기
          * 2. 커뮤니티 등록 버튼을 등록해서 실행할 때, Database 에 url,id 같이 insert
          */
@@ -163,14 +163,14 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
         map["communityId"] = 1;
         map["imgurl"] = url
 
-        notrealuri=url
+        notrealuri=url  //그냥 전역변수임 실험하기 위해 선언
 
         db.collection("File")
             .add(map)
             .addOnSuccessListener { documentReference -> //저장된 데이터의 ID을 획득할 수 있습니다.
                 //documentReference.id
                 Log.e("firebase DB Insert 완료", "DocumentSnapshot added with ID: $documentReference")
-
+                db.collection("SmallGroup").document(gid).update(mapOf("photo" to url))
                 setImageWithGlide1(url)
             }
             .addOnFailureListener { e ->

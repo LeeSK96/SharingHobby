@@ -3,6 +3,8 @@ package com.example.sharinghobby.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.sharinghobby.Memo1
 import com.example.sharinghobby.databinding.ItemRecyclerBinding
 import java.text.SimpleDateFormat
@@ -45,5 +47,10 @@ class Holder(val binding: ItemRecyclerBinding):RecyclerView.ViewHolder(binding.r
             onClickTask(memo)
            // Toast.makeText(binding.root.context,"${memo.title} ${memo.timestamp}",Toast.LENGTH_LONG).show()
         }
+        Glide.with(binding.root.context)
+            .load(memo.url)
+            .thumbnail(0.5f)
+            .centerCrop()
+            .into(binding.imageView4)
     }
 }

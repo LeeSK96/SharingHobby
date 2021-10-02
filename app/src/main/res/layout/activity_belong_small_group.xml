@@ -18,8 +18,8 @@
             android:id="@+id/Groupimage"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             tools:srcCompat="@drawable/ourbaseconcept" />
 
         <Space

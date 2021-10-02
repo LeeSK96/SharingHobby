@@ -12,6 +12,8 @@ import com.example.sharinghobby.Memo1
 import com.example.sharinghobby.R
 import com.example.sharinghobby.databinding.FragmentBelongBinding
 import com.example.sharinghobby.view.adapter.CustomAdapter
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class FragmentBelong : Fragment() {
 
@@ -30,9 +32,18 @@ class FragmentBelong : Fragment() {
         binding.RecyclerView.adapter = adapter
 
         val data: MutableList<Memo1> = mutableListOf()
+        Firebase.firestore.collection("SmallGroup").get()
+            .addOnSuccessListener {
+                for (item in it.documents){
+                    data.add(Memo1(url = item["photo"] as String, title = item["introduction"] as String, timestamp = System.currentTimeMillis()))
+                }
+                adapter.setList(data)
+            }
+        /*
         for(no in 1..20){
             data.add(Memo1(title = "group:${no}", timestamp = System.currentTimeMillis()))
         }
+         */
 
         adapter.setList(data)
 

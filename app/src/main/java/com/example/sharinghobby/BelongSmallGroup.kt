@@ -20,6 +20,8 @@ class BelongSmallGroup : AppCompatActivity() {
         //if (comunityId != null) {
         //    setImageWithGlide1(comunityId)
        // }
+        
+
         binding.Groupimage.setOnClickListener {
             val intent1 = Intent(this,MadeGroup2Activity::class.java)
             intent1.putExtra("groupId",1)
