@@ -17,13 +17,15 @@ class CategoryActivity1: AppCompatActivity() {
         setContentView(binding.root)
 
         binding.sportButton.setOnClickListener {
-            val intent = Intent().putExtra("categoryNumber", "1")
+            val intent = Intent().putExtra("categoryNumber", "스포츠")
             setResult(RESULT_OK, intent)
             finish()
         }
 
         binding.cultureButton.setOnClickListener {
-
+            val intent = Intent().putExtra("categoryNumber", "문화")
+            setResult(RESULT_OK, intent)
+            finish()
         }
 
         binding.threeButton.setOnClickListener {

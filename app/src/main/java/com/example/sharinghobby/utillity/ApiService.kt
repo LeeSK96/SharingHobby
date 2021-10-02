@@ -1,11 +1,11 @@
 package com.example.sharinghobby.utillity
 
-import com.example.sharinghobby.data.model.search.SearchResponse
 import com.example.sharinghobby.data.Key
 import com.example.sharinghobby.data.Url
+import com.example.sharinghobby.data.model.search.SearchResponse
 import com.example.sharinghobby.data.model.address.AddressInfoResponse
-//import com.example.sharinghobby.data.model.poi.schema.response.address.AddressInfoResponse
-//import com.example.sharinghobby.data.model.poi.schema.response.search.SearchResponse
+//import com.example.sharinghobby.model.poi.schema.response.address.AddressInfoResponse
+//import com.example.sharinghobby.model.poi.schema.response.search.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

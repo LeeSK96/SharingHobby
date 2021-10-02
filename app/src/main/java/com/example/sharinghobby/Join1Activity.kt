@@ -62,7 +62,7 @@ class Join1Activity : AppCompatActivity() {
                 runBlocking(Dispatchers.Main) {
                     //  Log.e("asdf",data!!.user_phone)
                     if(data==null)
-                    checkint=1;
+                        checkint=1;
                 }
             }
             if(checkint==1){Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
@@ -78,6 +78,9 @@ class Join1Activity : AppCompatActivity() {
                     var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"1",binding.nickname.text.toString());
                     OurDB.setAccountData(accountdata,auth.currentUser!!.uid);
                     Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    it.printStackTrace()
                 }
 
             val returnIntent = Intent()

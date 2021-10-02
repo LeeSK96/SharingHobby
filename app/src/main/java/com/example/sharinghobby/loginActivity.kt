@@ -3,8 +3,8 @@ package com.example.sharinghobby
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.example.sharinghobby.databinding.ActivityLoginBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,8 +31,7 @@ class loginActivity : AppCompatActivity() {
         }
 
         val intent1 = Intent(this,JoinActivity::class.java)
-        //val intent2 = Intent(this,FindAccountActivity::class.java)
-        val intent2 =Intent(this,FindAccountActivity::class.java)
+        val intent2 = Intent(this,FindAccountActivity::class.java)
         val goHome = Intent(this,HomeActivity::class.java)
         binding.joinbutton.setOnClickListener {
          startActivity(intent1)
@@ -40,18 +39,10 @@ class loginActivity : AppCompatActivity() {
         binding.searchbutton.setOnClickListener {
             startActivity(intent2)
         }
-
-        /*
-        * 1. upload file to firebase storage ==> return url
-        * 2. insert data (id, url) to firebase database
-        * 3. select data (url) from firebase database by using id
-        * 4. load image
-        * */
         binding.loginbutton.setOnClickListener {
+            //startActivity(goHome)
             var userId=binding.editTextTextPersonName.text.toString()
             var userPw = binding.editTextTextPersonName2.text.toString()
-            if(userId=="" ||userPw==""){Toast.makeText(this,"아이디 또는 비밀번호가 입력되지 않았습니다.",Toast.LENGTH_LONG).show(); }
-            else{
             var connector = DBConnector()
             var auth = Firebase.auth
             auth.signInWithEmailAndPassword(userId,userPw)
@@ -61,22 +52,23 @@ class loginActivity : AppCompatActivity() {
                         val data = connector.getData<Account>(uid!!)
                         runBlocking(Dispatchers.Main) {
                           //  Log.e("asdf",data!!.user_phone)
-                            intent.putExtra("uid","$userId")
+                            Log.e("uid", uid)
+                            goHome.putExtra("uid",uid)
                             startActivity(goHome)
                         }
                     }
                 }
-            /*
-           CoroutineScope(Dispatchers.Default).launch {
+
+           /*CoroutineScope(Dispatchers.Default).launch {
                 var userData = connector.getData<Account>("")
                 if( userData != null) {
                   Log.d("from1",userData?.PW);
                       //checkId=true;
                 }
                 else    Log.d("from1","${userData?.PW}");
-            }
-             */
-        }}
+            }*/
+
+        }
             //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
 
     }
