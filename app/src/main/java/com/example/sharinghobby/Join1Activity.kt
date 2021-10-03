@@ -51,13 +51,7 @@ class Join1Activity : AppCompatActivity() {
             }
 
         }
-        binding.checkId.setOnClickListener {
-            //if (데이터베이스에서 가져올것 == binding.accountId.text.tostring()){토스트 메세지 출력 이미 있는 아이디 }
-            //else checkID=true
-            if(userId==binding.accountId.text.toString()) {Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
-                .show(); binding.checkId.text="중복확인"}
-            else{boolId=true; binding.checkId.text="OK!!"; userId=binding.accountId.text.toString() }
-        }
+
         binding.emailcheckButton.setOnClickListener {
             var checkint :Int=0;
             var connector = DBConnector()
@@ -68,7 +62,7 @@ class Join1Activity : AppCompatActivity() {
                 runBlocking(Dispatchers.Main) {
                     //  Log.e("asdf",data!!.user_phone)
                     if(data==null)
-                    checkint=1;
+                        checkint=1;
                 }
             }
             if(checkint==1){Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
@@ -84,6 +78,9 @@ class Join1Activity : AppCompatActivity() {
                     var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"1",binding.nickname.text.toString());
                     OurDB.setAccountData(accountdata,auth.currentUser!!.uid);
                     Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    it.printStackTrace()
                 }
 
             val returnIntent = Intent()

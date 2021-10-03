@@ -1,9 +1,9 @@
 package com.example.sharinghobby.utillity
 
-import com.example.sharinghobby.model.search.SearchResponse
-import com.example.sharinghobby.Key
-import com.example.sharinghobby.Url
-import com.example.sharinghobby.model.address.AddressInfoResponse
+import com.example.sharinghobby.data.Key
+import com.example.sharinghobby.data.Url
+import com.example.sharinghobby.data.model.search.SearchResponse
+import com.example.sharinghobby.data.model.address.AddressInfoResponse
 //import com.example.sharinghobby.model.poi.schema.response.address.AddressInfoResponse
 //import com.example.sharinghobby.model.poi.schema.response.search.SearchResponse
 import retrofit2.Response

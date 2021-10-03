@@ -2,33 +2,28 @@
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ActionBar
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.example.sharinghobby.databinding.ActivityHomeBinding
-import com.example.sharinghobby.databinding.FindhobbyDialogBinding
-import com.example.sharinghobby.model.result.LocationLatLngEntity
-import com.example.sharinghobby.model.result.SearchResultEntity
+import com.example.sharinghobby.data.model.result.LocationLatLngEntity
 import com.example.sharinghobby.utillity.RetrofitUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -40,14 +35,22 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_create_hobby.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_main_drawer_header.view.*
 import kotlinx.android.synthetic.main.activity_main_toolbar.*
 import kotlinx.android.synthetic.main.activity_main_toolbar.view.*
+import kotlinx.android.synthetic.main.dialog_hobby_info.*
+import kotlinx.android.synthetic.main.dialog_hobby_info.group_member_limit
+import kotlinx.android.synthetic.main.dialog_hobby_info.group_title
+import kotlinx.android.synthetic.main.dialog_hobby_info.view.*
 import kotlinx.coroutines.*
+import org.w3c.dom.Text
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.*
 
 
-class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
+ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
     private lateinit var job: Job
 
@@ -58,7 +61,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
     private lateinit var map: GoogleMap
     private var currentSelectMarker: Marker? = null
     private var changedLocationMarker: Marker? = null
-    private var hobbyMakerArr: ArrayList<Marker>? = null
+    private var hobbyMakerArr = arrayListOf<Marker>()
+    private var groupMemberList = arrayListOf<String>()
 
     private lateinit var searchResult: SearchResultEntity
     private lateinit var locationManager: LocationManager
@@ -67,16 +71,24 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
     private var isGpsChecked: Boolean = false
     private var isLocationSelected: Boolean = false
+    private var isDisplayHobbyMarkers: Boolean = false
 
+    private var categoryNumber: String = ""
+    private var userIndex: String = ""
 
+    private val fireBase = DBConnector()
 
     companion object {
         const val SEARCH_RESULT_EXTRA_KEY = "SEARCH_RESULT_EXTRA_KEY"
         const val CAMERA_ZOOM_LEVEL = 17f
         const val PERMISSION_REQUEST_CODE = 101
+
         const val REQUEST_LOCATION = 10001
         const val REQUEST_CATEGORY = 10002
         const val REQUEST_CREATE_HOBBY = 10003
+
+        const val DISTANCE_LIMIT = 2000 // 특정범위(2km)
+        const val RADIUS = 6372.8 * 1000
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,8 +96,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userIndex = intent.getStringExtra("uid")!!
+
         val findHobby = Intent(this, CategoryActivity1::class.java)
-       // val createHobby = Intent(this, CreateHobbyActivity::class.java)
+        val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
         val myHobbyList = Intent(this, MBselectedActivity::class.java)
         val chatList = Intent(this, ChatActivity::class.java)
@@ -104,8 +118,8 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
-        Log.e("isGps",isGpsChecked.toString())
-        Log.e("isLoc",isLocationSelected.toString())
+        Log.e("isGPS", isGpsChecked.toString())
+        Log.e("isLoc", isLocationSelected.toString())
 
         if(isGpsChecked){
             binding.currentLocationButton.visibility = View.VISIBLE
@@ -125,13 +139,25 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
         // 메뉴바 리스너
         binding.viewToolbar.menuButton.setOnClickListener{
-            binding.drawerLayout.openDrawer(
-                GravityCompat.START
-            )
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                withContext(Dispatchers.IO){
+                    val data = fireBase.getData<Account>(userIndex)
+                    //binding.drawerLayout.header_icon
+                    binding.drawerLayout.header_user_nickname.text = data!!.nickname
+                    binding.drawerLayout.header_user_email.text = data!!.user_email
+
+                }
+                binding.drawerLayout.openDrawer(
+                    GravityCompat.START
+                )
+
+            }
         }
 
         binding.viewToolbar.noticeButton.setOnClickListener{
-            val noticeDialogView = LayoutInflater.from(this).inflate(R.layout.notice_dialog,null)
+            val noticeDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_notice,null)
             val dialogBuilder = AlertDialog.Builder(this)
                 .setView(noticeDialogView)
             val noticeDialog = dialogBuilder.create()
@@ -166,7 +192,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         // 각 버튼 별로 클릭리스너
         binding.findCreateHobbyButton.setOnClickListener {
 
-            val findCreateHobbyDialogView = LayoutInflater.from(this).inflate(R.layout.findhobby_dialog,null)
+            val findCreateHobbyDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_findhobby,null)
             val dialogBuilder = AlertDialog.Builder(this)
                 .setView(findCreateHobbyDialogView)
             val findHobbyDialog = dialogBuilder.create()
@@ -175,13 +201,18 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
             val findHobbyButton = findCreateHobbyDialogView.findViewById<Button>(R.id.findHobbyButton)
             findHobbyButton.setOnClickListener {
-                startActivityForResult(findHobby, REQUEST_CATEGORY)
-                findHobbyDialog.dismiss()
+                if(currentSelectMarker != null || changedLocationMarker != null) {
+                    startActivityForResult(findHobby, REQUEST_CATEGORY)
+                    findHobbyDialog.dismiss()
+                }else{
+                    Toast.makeText(this,"위치를 선택한 후 취미 찾기를 진행해주세요.",Toast.LENGTH_SHORT).show()
+                    findHobbyDialog.dismiss()
+                 }
             }
 
             val createHobbyButton = findCreateHobbyDialogView.findViewById<Button>(R.id.createHobbyButton)
             createHobbyButton.setOnClickListener {
-              //  startActivityForResult(createHobby,REQUEST_CREATE_HOBBY)
+                startActivityForResult(createHobby,REQUEST_CREATE_HOBBY)
                 findHobbyDialog.dismiss()
             }
 
@@ -211,14 +242,33 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         when(requestCode){
             REQUEST_CATEGORY -> {
                 if(resultCode == RESULT_OK){
-                    displayMarkers()
+                    isDisplayHobbyMarkers = true
+                    categoryNumber = data?.getStringExtra("categoryNumber")!!
+                    displayMarkers(categoryNumber)
                 }
             }
 
             REQUEST_CREATE_HOBBY -> {
                 if(resultCode == RESULT_OK){
+                    // 선택한 카테고리 모임들 최신화
+                    if(isDisplayHobbyMarkers){
+                        displayMarkers(categoryNumber)
+                    }
+
+                    groupMemberList.add(userIndex)
                     // 정상적으로 취미모임 만들어지면 .. -> DB에 값넣기
-                    Log.e("result","성공")
+                    var fireBase = DBConnector();
+                    var smallGroupData = SmallGroup(data?.getStringExtra("groupTitle")!!,
+                    data?.getStringExtra("groupCategory")!!,
+                    data?.getStringExtra("groupMemberLimit")!!,
+                        userIndex, data?.getStringExtra("groupLocationLat")!!,
+                        data?.getStringExtra("groupLocationLon")!!,
+                        groupMemberList,
+                        data?.getStringExtra("groupIntro")!!,
+                        "default_photo"
+                    )
+                    fireBase.setSmallGroupData(smallGroupData);
+                    groupMemberList.clear()
                 }
             }
 
@@ -236,6 +286,10 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
                         data?.getStringExtra("changedLocationLon")!!.toDouble()
                     )
                     setSelectedMarker()
+
+                    if(isDisplayHobbyMarkers){
+                        displayMarkers(categoryNumber)
+                    }
                 }
             }
         }
@@ -456,114 +510,113 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         }
     }
 
-    private fun displayMarkers(){
+    private fun displayMarkers(categoryNumber: String){
+        // 이미 카테고리선택 후, 다른 카테고리 선택시 지워주는 작업 + DB연동
+        if(!hobbyMakerArr.isNullOrEmpty()) {
 
-        /* 이미 카테고리선택 후, 다른 카테고리 선택시 지워주는 작업 + DB연동
-        if(hobbyMakerArr != null){
-            
             // 기존에 있던 마커들 지우는 기능
-            for (i in hobbyMakerArr.indices){
+            for (i in hobbyMakerArr.indices) {
                 hobbyMakerArr[i].remove()
             }
-            
-            var hobbyLocationLatLngEntity = LocationLatLngEntity(36.61909677722212.toFloat(), 127.28567676157024.toFloat())
-            var hobbyLocationMarker = setupHobbyMarker(
-                SearchResultEntity(
-                    fullAddress = "",
-                    name = "모임 이름",
-                    locationLatLng = hobbyLocationLatLngEntity
-                )
-            )
-            hobbyLocationMarker.tag = "123"
+            hobbyMakerArr.clear()
+        }
 
-            hobbyMakerArr?.add(hobbyLocationMarker)
+        fireBase.db.collection("SmallGroup").whereEqualTo("category", categoryNumber).get().addOnSuccessListener {
+            for(item in it.documents){
+                var group_idx = item.id
+                var node_title = item["title"]
+                var node_lat = item["node_lat"]
+                var node_lon = item["node_lon"]
 
-            hobbyLocationMarker.showInfoWindow()
-            
-            for(i in hobbyMakerArr.indices){
-                map.addMarker(hobbyMakerArr[i])
+                // 범위안에 있는지 체크
+                var inRange = if(!isLocationSelected && isGpsChecked){
+                     setDistanceRange(currentSelectMarker!!.position.latitude, currentSelectMarker!!.position.longitude,
+                        node_lat.toString().toDouble(), node_lon.toString().toDouble())
+                } else{
+                    setDistanceRange(changedLocationMarker!!.position.latitude, changedLocationMarker!!.position.longitude,
+                        node_lat.toString().toDouble(), node_lon.toString().toDouble())
+                }
+
+                if (inRange){
+                    var hobbyLocationLatLngEntity = LocationLatLngEntity(node_lat.toString().toFloat(), node_lon.toString().toFloat())
+                    var hobbyLocationMarker = setupHobbyMarker(
+                        SearchResultEntity(
+                            fullAddress = "",
+                            name = node_title.toString(),
+                            locationLatLng = hobbyLocationLatLngEntity
+                        )
+                    )
+                    hobbyLocationMarker.tag = group_idx
+
+                    hobbyMakerArr.add(hobbyLocationMarker)
+                }
             }
-        }*/
-        
-
-
-        val marker1 = MarkerOptions().apply {
-            position(LatLng(36.61909677722212, 127.28567676157024))
-            title("marker1")
-            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
         }
-
-
-        val marker2 = MarkerOptions().apply {
-            position(LatLng(36.6188074837427, 127.28553003528177))
-            title("marker2")
-            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        fireBase.db.collection("SmallGroup").whereEqualTo("category", categoryNumber).get().addOnFailureListener {
+            it.printStackTrace()
         }
-
-        val marker3 = MarkerOptions().apply {
-            position(LatLng(36.6189316496611, 127.2856831409741))
-            title("marker3")
-            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-        }
-
-
-        val marker4 = MarkerOptions().apply {
-            position(LatLng(36.619177711935144, 127.28553840802694))
-            title("marker4")
-            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-        }
-
-        val markerArr = arrayListOf<MarkerOptions>()
-        //markerArr.add(marker1)
-        markerArr.add(marker2)
-        markerArr.add(marker3)
-        markerArr.add(marker4)
-
-        for(i in markerArr.indices) {
-            map.addMarker(markerArr[i])
-        }
-
     }
 
     private fun clickMarker(marker: Marker){
 
-        val hobbyInfoDialogView = LayoutInflater.from(this).inflate(R.layout.hobby_info_dialog,null)
-        val dialogBuilder = AlertDialog.Builder(this)
-            .setView(hobbyInfoDialogView)
-        val infoHobbyDialog = dialogBuilder.create()
+        if(marker in hobbyMakerArr) {
+            val hobbyInfoDialogView =
+                LayoutInflater.from(this).inflate(R.layout.dialog_hobby_info, null)
+            val dialogBuilder = AlertDialog.Builder(this)
+                .setView(hobbyInfoDialogView)
+            val infoHobbyDialog = dialogBuilder.create()
 
-        infoHobbyDialog.show()
+            CoroutineScope(Dispatchers.Main).launch {
+                Log.e("T1", Thread.currentThread().name)
+                val tag = marker.tag.toString()
 
-        infoHobbyDialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+                withContext(Dispatchers.IO) {
+                    Log.e("T2", Thread.currentThread().name)
+                    val data = fireBase.getData<SmallGroup>(tag)
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_title).text = data!!.title
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_category).text =
+                        data!!.category
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_member_limit).text =
+                        data!!.user_limit
+                    hobbyInfoDialogView.findViewById<TextView>(R.id.group_intro).text =
+                        data!!.introduction
+                }
 
 
+                Log.e("T3", Thread.currentThread().name)
+                infoHobbyDialog.show()
+                infoHobbyDialog.window?.setLayout(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                )
+            }
 
-        val hobbyPageButton = hobbyInfoDialogView.findViewById<Button>(R.id.hobbyPageButton)
-        // 자세히보기 버튼 -> 취미모임페이지로 이동
-        /*hobbyPageButton.setOnClickListener {
+            val hobbyPageButton = hobbyInfoDialogView.findViewById<Button>(R.id.hobbyPageButton)
+            // 자세히보기 버튼 -> 취미모임페이지로 이동
+            /*hobbyPageButton.setOnClickListener {
             startActivityForResult(findHobby, REQUEST_CATEGORY)
             infoHobbyDialog.dismiss()
         }*/
 
-        val infoCanelButton = hobbyInfoDialogView.findViewById<Button>(R.id.infoCancelButton)
-        infoCanelButton.setOnClickListener {
-            infoHobbyDialog.dismiss()
+            val infoCanelButton = hobbyInfoDialogView.findViewById<Button>(R.id.infoCancelButton)
+            infoCanelButton.setOnClickListener {
+                infoHobbyDialog.dismiss()
+            }
         }
 
     }
 
-    private fun removeMarker(removeMarkerOptions: MarkerOptions){
-        val markerPosition = LocationLatLngEntity(
-            removeMarkerOptions.position.latitude.toFloat(), removeMarkerOptions.position.longitude.toFloat())
+     // 특정범위 내에 존재하는지 확인
+    private fun setDistanceRange(current_lat: Double, current_lon: Double, latitude: Double, longtitude: Double): Boolean{
+         val dLat = Math.toRadians(latitude - current_lat)
+         val dLon = Math.toRadians(longtitude - current_lon)
+         val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(latitude)) * cos(Math.toRadians(current_lat))
+         val c = 2 * asin(sqrt(a))
 
-        var removeMarker = setupMarker(
-            SearchResultEntity(
-                fullAddress = "",
-                name = removeMarkerOptions.title,
-                locationLatLng = markerPosition)
-            )
+         var isLocatedIn = (RADIUS * c ) < DISTANCE_LIMIT
 
-        removeMarker.remove()
+
+        return isLocatedIn
     }
 
     // 내 위치 리스너
@@ -579,4 +632,3 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
     }
 }
-

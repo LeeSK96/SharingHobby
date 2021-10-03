@@ -2,11 +2,9 @@ package com.example.sharinghobby
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import com.example.sharinghobby.databinding.ActivityMapBinding
-import com.example.sharinghobby.model.result.SearchResultEntity
+import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -46,7 +44,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.searchToolbar.toolbarTitle.text = "현재위치로 마커를 드래그해주세요."
+
+        if(intent.hasExtra("typeOfIntent")){
+            binding.searchToolbar.toolbarTitle.text = "모임위치로 마커를 드래그해주세요."
+        }else{
+            binding.searchToolbar.toolbarTitle.text = "현재위치로 마커를 드래그해주세요."
+        }
 
         job = Job()
 
@@ -77,13 +80,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
         }
 
         binding.LocationCancelButton.setOnClickListener {
-            startActivity (
-                Intent(this, HomeActivity::class.java)
-            )
+            finish()
         }
 
     }
-
 
     private fun setupGoogleMap() {
         val mapFragment =
@@ -134,8 +134,4 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             changedFinalLocation = marker.position
         }
     }
-
-
-
-
 }

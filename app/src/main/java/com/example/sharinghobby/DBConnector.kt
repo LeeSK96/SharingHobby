@@ -8,11 +8,10 @@ import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
 data class Account(val id: String="", val pw: String="", val user_email: String="", val user_phone: String="", val user_image: String="", val nickname: String="")// 전부 소문자로 바꿀것
-data class SmallGroup(val leader: String="", val user: String="", val explain: String="", val location: String="", val photo: String="")
+data class SmallGroup(val title: String="", val category: String="", val user_limit: String="", val master: String="", val node_lat: String="", val node_lon: String="", val user_list: ArrayList<String>? = null, val introduction: String="", val photo: String="")
 data class MyPage(val id: String="", val pw: String="", val mysmallgroup: String="", val cs: String="", val settings: String="", val imageChange: String="")
 data class Node(val gps_x: String="", val gps_y: String="", val category: String="", val nodeName: String="", val nodeImage: String="", val currentOwner: String="")
 data class Administrator(val leader: String="", val imageChange: String="", val groupMemberChange: String="", val groupExplainChange: String="", val groupLocationChange: String="")
-
 class DBConnector{
     val db = Firebase.firestore
 
@@ -45,6 +44,7 @@ class DBConnector{
     }
     // 동기 작업 / 비동기 작업
     // 네트워크 작업을 동기로 실행하면 안드로이드에서 오류를 발생시킨다
+
 
     //var data = getData<Account>("123")
     suspend inline fun <reified T> getData(docName : String) : T? {// 데이터 가져오는 작업
