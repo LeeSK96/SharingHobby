@@ -101,7 +101,7 @@ import kotlin.math.*
         val findHobby = Intent(this, CategoryActivity1::class.java)
         val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
-        val myHobbyList = Intent(this, MBselectedActivity::class.java)
+        val myHobbyList = Intent(this, BelongActivity::class.java)
         val chatList = Intent(this, ChatActivity::class.java)
 
         supportActionBar?.setDisplayShowTitleEnabled(true)
