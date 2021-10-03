@@ -47,7 +47,6 @@ class loginActivity : AppCompatActivity() {
             var connector = DBConnector()
             var check=0;
             var auth = Firebase.auth
-            var warning1:String="";
             if(userId==""||userPw=="")Toast.makeText(this,"ID또는 PW를 입력하지 않았습니다.",Toast.LENGTH_LONG).show()
             else{
             auth.signInWithEmailAndPassword(userId,userPw)
@@ -55,20 +54,21 @@ class loginActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Default).launch {
                         val uid = auth.uid
                         val data = connector.getData<Account>(uid!!)
-                        warning1=data?.user_email.toString()
                         if(data?.id!=null){
                         runBlocking(Dispatchers.Main) {
                           //  Log.e("asdf",data!!.user_phone)
                             Log.e("uid", uid)
                             goHome.putExtra("uid",uid)
-                            check =1;
+                            check = showinfo(1);
                             startActivity(goHome)
+                            finish()
                         }
-                        }
+                        }else{for(i in 1..1000000){for(i in 1..1000000);}}
 
                     }
                 }}
             if(check==0)Toast.makeText(this@loginActivity,"존재하지 않는 Id입니다.",Toast.LENGTH_LONG).show()
+
 
            /*CoroutineScope(Dispatchers.Default).launch {
                 var userData = connector.getData<Account>("")
@@ -82,6 +82,10 @@ class loginActivity : AppCompatActivity() {
         }
             //else Toast.makeText(this, "아이디 또는 패스워드가 틀렸습니다", Toast.LENGTH_SHORT).show()
 
+    }
+    suspend fun showinfo(a:Int=0): Int{
+        if(a==1)return 1
+        else return 0;
     }
     fun showProgress(show:Boolean){
         if(show)binding.imageView5.visibility = View.VISIBLE
