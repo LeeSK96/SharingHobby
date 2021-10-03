@@ -63,7 +63,14 @@ class DBConnector{
         } catch (e: FirebaseException) {
             null
         }
+
+        db.collection("SmallGroup").whereEqualTo("category", "1").get().addOnSuccessListener {
+            for(item in it.documents){
+                var nodeName = item["name"]
+            }
+        }
     }
+
 
 
     fun deleteData(collectionName:String , docName: String){//데이터 지움
