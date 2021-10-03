@@ -228,8 +228,8 @@ import kotlin.math.*
 
         binding.chatButton.setOnClickListener {
             if(Firebase.auth.currentUser!=null) {
-                chatList.putExtra("roomID", "room1")
-                chatList.putExtra("UID", Firebase.auth.currentUser!!.uid)
+                chatList.putExtra("roomID", "0SSS4Q0RaA7urbOQKHoo")
+                chatList.putExtra("UID", userIndex)
                 startActivity(chatList)
             }
         }
