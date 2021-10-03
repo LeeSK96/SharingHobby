@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.sharinghobby.databinding.ActivityLoginBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -45,19 +46,27 @@ class loginActivity : AppCompatActivity() {
             var userPw = binding.editTextTextPersonName2.text.toString()
             var connector = DBConnector()
             var auth = Firebase.auth
+            var warning1:String="";
+            if(userId==""||userPw=="")Toast.makeText(this,"ID또는 PW를 입력하지 않았습니다.",Toast.LENGTH_LONG).show()
+            else{
             auth.signInWithEmailAndPassword(userId,userPw)
                 .addOnSuccessListener {
                     CoroutineScope(Dispatchers.Default).launch {
                         val uid = auth.uid
                         val data = connector.getData<Account>(uid!!)
+                        warning1=data?.user_email.toString()
+                        if(data?.id!=null){
                         runBlocking(Dispatchers.Main) {
                           //  Log.e("asdf",data!!.user_phone)
                             Log.e("uid", uid)
                             goHome.putExtra("uid",uid)
                             startActivity(goHome)
                         }
+                        }
+
                     }
-                }
+                }}
+            Toast.makeText(this@loginActivity,"존재하지 않는 Id입니다.",Toast.LENGTH_LONG).show()
 
            /*CoroutineScope(Dispatchers.Default).launch {
                 var userData = connector.getData<Account>("")
