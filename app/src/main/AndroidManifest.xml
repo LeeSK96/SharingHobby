@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OurFriendlyMeeting">
         <activity
-            android:name=".MadeGroup3Activity"
+
             android:label="@string/title_activity_made_group3"
             android:theme="@style/Theme.OurFriendlyMeeting.NoActionBar"></activity>
         <activity android:name=".MadeGroup2Activity" />
@@ -30,9 +30,6 @@
         <activity android:name=".BelongSmallGroup" />
         <activity android:name=".MadeActivity" />
         <activity android:name=".BelongActivity" />
-        <activity android:name=".MBselectedActivity" />
-
-        <activity android:name=".CenterActivity" />
         <activity android:name=".FindAccountActivity" />
         <activity android:name=".Join1Activity" />
         <activity android:name=".JoinActivity" />
