@@ -45,6 +45,7 @@ class loginActivity : AppCompatActivity() {
             var userId=binding.editTextTextPersonName.text.toString()
             var userPw = binding.editTextTextPersonName2.text.toString()
             var connector = DBConnector()
+            var check=0;
             var auth = Firebase.auth
             var warning1:String="";
             if(userId==""||userPw=="")Toast.makeText(this,"ID또는 PW를 입력하지 않았습니다.",Toast.LENGTH_LONG).show()
@@ -60,13 +61,14 @@ class loginActivity : AppCompatActivity() {
                           //  Log.e("asdf",data!!.user_phone)
                             Log.e("uid", uid)
                             goHome.putExtra("uid",uid)
+                            check =1;
                             startActivity(goHome)
                         }
                         }
 
                     }
                 }}
-            Toast.makeText(this@loginActivity,"존재하지 않는 Id입니다.",Toast.LENGTH_LONG).show()
+            if(check==0)Toast.makeText(this@loginActivity,"존재하지 않는 Id입니다.",Toast.LENGTH_LONG).show()
 
            /*CoroutineScope(Dispatchers.Default).launch {
                 var userData = connector.getData<Account>("")
