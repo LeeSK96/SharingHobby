@@ -101,7 +101,7 @@ import kotlin.math.*
         val findHobby = Intent(this, CategoryActivity1::class.java)
         val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
-        val myHobbyList = Intent(this, MBselectedActivity::class.java)
+        val myHobbyList = Intent(this, BelongActivity::class.java)
         val chatList = Intent(this, ChatActivity::class.java)
 
         supportActionBar?.setDisplayShowTitleEnabled(true)
@@ -228,8 +228,8 @@ import kotlin.math.*
 
         binding.chatButton.setOnClickListener {
             if(Firebase.auth.currentUser!=null) {
-                chatList.putExtra("roomID", "room1")
-                chatList.putExtra("UID", Firebase.auth.currentUser!!.uid)
+                chatList.putExtra("roomID", "0SSS4Q0RaA7urbOQKHoo")
+                chatList.putExtra("UID", userIndex)
                 startActivity(chatList)
             }
         }

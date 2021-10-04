@@ -9,6 +9,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devingryu.firechatexample.ChatMessage
+import com.devingryu.firechatexample.ChatRecyclerAdapter
 import com.example.sharinghobby.databinding.ActivityChatBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
@@ -41,7 +43,7 @@ class ChatActivity : AppCompatActivity() {
             finish() // 액티비티 종료
         }
 
-        val adapter = com.example.sharinghobby.ChatRecyclerAdapter(UID)
+        val adapter = ChatRecyclerAdapter(UID)
         with(binding.recycler){
             layoutManager = LinearLayoutManager(this@ChatActivity).apply { reverseLayout = true }
             this.adapter = adapter
@@ -69,7 +71,7 @@ class ChatActivity : AppCompatActivity() {
                 .document(roomID)
                 .collection("messages")
                 .add(
-                    com.example.sharinghobby.ChatMessage(
+                    ChatMessage(
                         binding.sendText.text.toString(),
                         Timestamp.now(),
                         UID
@@ -87,7 +89,7 @@ class ChatActivity : AppCompatActivity() {
                     .document(roomID)
                     .collection("messages")
                     .add(
-                        com.example.sharinghobby.ChatMessage(
+                        ChatMessage(
                             binding.sendText.text.toString(),
                             Timestamp.now(),
                             UID

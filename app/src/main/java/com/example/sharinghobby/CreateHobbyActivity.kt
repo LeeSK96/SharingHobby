@@ -91,7 +91,7 @@ class CreateHobbyActivity: AppCompatActivity() {
             REQUEST_INFO -> {
                 val createIntent = Intent(this, HomeActivity::class.java).apply {
                     putExtra("groupTitle", title)
-                    //putExtra("groupCategory", category)
+                    putExtra("groupCategory", category)
                     putExtra("groupMemberLimit",limit_user)
                     putExtra("groupLocationLat", data?.getStringExtra("changedLocationLat"))
                     putExtra("groupLocationLon", data?.getStringExtra("changedLocationLon"))
