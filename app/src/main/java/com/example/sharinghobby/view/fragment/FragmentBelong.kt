@@ -39,11 +39,6 @@ class FragmentBelong : Fragment() {
                 }
                 adapter.setList(data)
             }
-        /*
-        for(no in 1..20){
-            data.add(Memo1(title = "group:${no}", timestamp = System.currentTimeMillis()))
-        }
-         */
 
         adapter.setList(data)
 

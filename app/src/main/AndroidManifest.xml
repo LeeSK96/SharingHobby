@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OurFriendlyMeeting">
-
+        <activity
+            android:name=".view.gallaryActivity"
+            android:exported="true" />
         <activity android:name=".MadeGroup2Activity" />
         <activity android:name=".MadeGroupActivity" />
         <activity android:name=".CategoryActivity" />
@@ -27,39 +29,32 @@
         <activity android:name=".BelongSmallGroup" />
         <activity android:name=".MadeActivity" />
         <activity android:name=".BelongActivity" />
-        <activity android:name=".CreateHobbyActivity"/>
-        <activity android:name=".ChatActivity"/>
-
+        <activity android:name=".CreateHobbyActivity" />
+        <activity android:name=".ChatActivity" />
         <activity android:name=".FindAccountActivity" />
         <activity android:name=".Join1Activity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".loginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".MapActivity"></activity>
-        <activity android:name=".CategoryActivity1"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".CategoryActivity1" />
         <activity android:name=".HomeActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map" />
-
     </application>
 
 </manifest>
