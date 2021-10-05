@@ -19,12 +19,16 @@ class BelongSmallGroup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         var Groupinfo = intent.getSerializableExtra("memo");
-        Log.d("from1","${Groupinfo.toString()}")
         //여기 연결하는 방법 질문
-        val comunityId: String? =Groupinfo?.javaClass?.getResource("url").toString()
-        if (comunityId != null) {
-            setImageWithGlide1(comunityId)
+        val data: Memo1? =Groupinfo as Memo1
+        var title: String? =data?.title
+       var groupImage:String? =data?.url
+        if (  title != null) {
+          binding.GroupTitle.text=title.toString()
        }
+        if (  groupImage != null) {
+            setImageWithGlide1( groupImage)
+        }
         val fragmentList = listOf(team_notify(), team_gallary(), Teamlist())
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
@@ -45,7 +49,6 @@ class BelongSmallGroup : AppCompatActivity() {
             //intent1.putExtra("url",1)
          //   startActivity(intent1)
        // }
-        binding.GroupTitle.text = Groupinfo.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

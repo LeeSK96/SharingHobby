@@ -2,6 +2,7 @@ package com.example.sharinghobby.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 
 class Teamlist : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,17 +33,18 @@ class Teamlist : Fragment() {
         })
         binding.RecyclerView.adapter = adapter
 
-      /*  val data: MutableList<Memo1> = mutableListOf()
+        val data: MutableList<Memo1> = mutableListOf()
         Firebase.firestore.collection("Users").get()
             .addOnSuccessListener {
                 for (item in it.documents){
-                    data.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis()))
+                    //Log.d("123","${item["user_image"]}")
+                    data?.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis()))
                 }
-                adapter.setList(data)
+                adapter?.setList(data)
             }
 
-        adapter.setList(data)
-*/
+        adapter?.setList(data)
+
         return binding.root
     }
 
