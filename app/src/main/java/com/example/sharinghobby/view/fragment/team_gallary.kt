@@ -19,7 +19,12 @@ class team_gallary : Fragment() {
     ): View? {
 
         val binding= FragmentTeamGallaryBinding.inflate(inflater,container,false)
-        binding.imageButton2.setOnClickListener{belongSmallGroupActivity?.goDetail(1)}
+        binding.imageButton1.setOnClickListener{belongSmallGroupActivity?.goDetail(1)}
+        binding.imageButton2.setOnClickListener{belongSmallGroupActivity?.goDetail(2)}
+        binding.imageButton3.setOnClickListener{belongSmallGroupActivity?.goDetail(3)}
+        binding.imageButton4.setOnClickListener{belongSmallGroupActivity?.goDetail(4)}
+        binding.imageButton5.setOnClickListener{belongSmallGroupActivity?.goDetail(5)}
+        binding.imageButton6.setOnClickListener{belongSmallGroupActivity?.goDetail(6)}
         return binding.root
     }
 

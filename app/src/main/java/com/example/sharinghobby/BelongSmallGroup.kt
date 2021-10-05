@@ -25,7 +25,7 @@ class BelongSmallGroup : AppCompatActivity() {
         if (comunityId != null) {
             setImageWithGlide1(comunityId)
        }
-        val fragmentList = listOf(team_notify(), team_gallary(),team_list())
+        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist())
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager24.adapter = adapter
