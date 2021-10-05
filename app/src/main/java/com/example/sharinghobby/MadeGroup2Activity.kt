@@ -144,7 +144,7 @@ class MadeGroup2Activity : com.example.sharinghobby.BaseActivity() {
                 ref.downloadUrl.addOnSuccessListener {
                     /** 3. Firebase DataBase 저장 */
                     Log.e("링크 가져오기 성공", "$it")
-                    insertDatabase(it.toString(), "Ouoe5bO8OvGMxr9DhKhi") // 현재 실험중 고쳐야 함
+                    insertDatabase(it.toString(), "0SSS4Q0RaA7urbOQKHoo") // 현재 실험중 고쳐야 함
 
                 }.addOnFailureListener {
                     Log.e("링크 가져오기 실패", it.message.toString())

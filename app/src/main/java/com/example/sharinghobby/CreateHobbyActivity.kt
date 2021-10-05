@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sharinghobby.databinding.ActivityCreateHobbyBinding
-import kotlinx.android.synthetic.main.activity_made_group.*
+
 
 class CreateHobbyActivity: AppCompatActivity() {
 
