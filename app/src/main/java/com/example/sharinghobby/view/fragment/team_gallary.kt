@@ -15,6 +15,11 @@ import com.example.sharinghobby.databinding.FragmentTeamGallaryBinding
 
 class team_gallary : Fragment() {
     var belongSmallGroupActivity: BelongSmallGroup? =null
+    val url1:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021505.jpg?alt=media&token=03f946cf-ba7a-450c-a5d2-199dccae5f0b"
+    val url2:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021427.jpg?alt=media&token=39e460f9-e36b-4361-8943-6d5bae87c829"
+    val url3:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021403.jpg?alt=media&token=fe6d51ef-1430-44a2-8a7e-6a8f023c3750"
+    val url4:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021313.jpg?alt=media&token=e53add8d-845e-493a-8ba8-be0bfdaadcd8"
+    val url5:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021156.jpg?alt=media&token=ae490e40-6d4b-4e8f-a98e-082947ac7515"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +31,7 @@ class team_gallary : Fragment() {
                 .load(url)
                 .thumbnail(0.5f)
                 .centerCrop()
-                .apply(RequestOptions().override(500,500))
+                //.apply(RequestOptions().override(130,150))
                 .into(binding.imageButton1)
         }
         fun setImageWithGlide2(url:String){
@@ -34,7 +39,7 @@ class team_gallary : Fragment() {
                 .load(url)
                 .thumbnail(0.5f)
                 .centerCrop()
-                .apply(RequestOptions().override(500,500))
+                //.apply(RequestOptions().override(130,150))
                 .into(binding.imageButton2)
         }
         fun setImageWithGlide3(url:String){
@@ -42,7 +47,7 @@ class team_gallary : Fragment() {
                 .load(url)
                 .thumbnail(0.5f)
                 .centerCrop()
-                .apply(RequestOptions().override(500,500))
+               // .apply(RequestOptions().override(130,150))
                 .into(binding.imageButton3)
         }
         fun setImageWithGlide4(url:String){
@@ -50,7 +55,7 @@ class team_gallary : Fragment() {
                 .load(url)
                 .thumbnail(0.5f)
                 .centerCrop()
-                .apply(RequestOptions().override(500,500))
+                //.apply(RequestOptions().override(130,150))
                 .into(binding.imageButton4)
         }
         fun setImageWithGlide5(url:String){
@@ -58,16 +63,17 @@ class team_gallary : Fragment() {
                 .load(url)
                 .thumbnail(0.5f)
                 .centerCrop()
-                .apply(RequestOptions().override(500,500))
+              //  .apply(RequestOptions().override(130,150))
                 .into(binding.imageButton5)
         }
         fun setValue(value:String){
-            setImageWithGlide1(value)
-            setImageWithGlide2(value)
-            setImageWithGlide3(value)
-            setImageWithGlide4(value)
-            setImageWithGlide5(value)
+            setImageWithGlide1(url1)
+            setImageWithGlide2(url2)
+            setImageWithGlide3(url3)
+            setImageWithGlide4(url4)
+            setImageWithGlide5(url5)
         }
+        setValue("go");
         binding.imageButton1.setOnClickListener{belongSmallGroupActivity?.goDetail(1)}
         binding.imageButton2.setOnClickListener{belongSmallGroupActivity?.goDetail(2)}
         binding.imageButton3.setOnClickListener{belongSmallGroupActivity?.goDetail(3)}

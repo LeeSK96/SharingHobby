@@ -12,6 +12,8 @@ import com.example.sharinghobby.view.adapter.BelongChartFragmentAdapter
 import com.example.sharinghobby.view.fragment.*
 import com.example.sharinghobby.view.gallaryActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class BelongSmallGroup : AppCompatActivity() {
     val binding by lazy{ActivityBelongSmallGroupBinding.inflate(layoutInflater)}
@@ -27,7 +29,6 @@ class BelongSmallGroup : AppCompatActivity() {
         if (  title != null) {
           binding.GroupTitle.text=title.toString()
        }
-
         if (  groupImage != null) {
             setImageWithGlide1( groupImage)
         }
@@ -41,28 +42,24 @@ class BelongSmallGroup : AppCompatActivity() {
             tab.text =tabTitle[position]
         }.attach()
 
-        setFragment()
+       // setFragment()
        // teamGallary.setValue(groupImage);
         binding.imageButton.setOnClickListener {
             val intent1 = Intent(this,MadeGroup2Activity::class.java)
             intent1.putExtra("groupId",1)
             startActivityForResult(intent1,99)
         }
-     //   binding.imageButton3.setOnClickListener{
-          //  val intent1 =Intent(this,MadeGroup3Activity::class.java)
-            //intent1.putExtra("url",1)
-         //   startActivity(intent1)
-       // }
+
     }
-    fun setFragment(){
+   /* fun setFragment(){
         val teamFragment = team_gallary()
         var bundle =Bundle()
-        //bundle.putStringArrayList("key1","")
+        bundle.putStringArrayList("key1","")
         teamFragment.arguments =bundle;
         val transcation =supportFragmentManager.beginTransaction()
         transcation.add(R.id.frameLayout,teamFragment)
         transcation.commit()
-    }
+    }*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode== RESULT_OK){
