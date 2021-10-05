@@ -37,7 +37,6 @@ class Teamlist : Fragment() {
         Firebase.firestore.collection("Users").get()
             .addOnSuccessListener {
                 for (item in it.documents){
-                    //Log.d("123","${item["user_image"]}")
                     data?.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis()))
                 }
                 adapter?.setList(data)
