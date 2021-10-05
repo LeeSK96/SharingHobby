@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class BelongSmallGroup : AppCompatActivity() {
     val binding by lazy{ActivityBelongSmallGroupBinding.inflate(layoutInflater)}
+    lateinit var teamGallary: team_gallary
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -26,6 +27,7 @@ class BelongSmallGroup : AppCompatActivity() {
         if (  title != null) {
           binding.GroupTitle.text=title.toString()
        }
+
         if (  groupImage != null) {
             setImageWithGlide1( groupImage)
         }
@@ -39,6 +41,8 @@ class BelongSmallGroup : AppCompatActivity() {
             tab.text =tabTitle[position]
         }.attach()
 
+        setFragment()
+       // teamGallary.setValue(groupImage);
         binding.imageButton.setOnClickListener {
             val intent1 = Intent(this,MadeGroup2Activity::class.java)
             intent1.putExtra("groupId",1)
@@ -50,7 +54,15 @@ class BelongSmallGroup : AppCompatActivity() {
          //   startActivity(intent1)
        // }
     }
-
+    fun setFragment(){
+        val teamFragment = team_gallary()
+        var bundle =Bundle()
+        //bundle.putStringArrayList("key1","")
+        teamFragment.arguments =bundle;
+        val transcation =supportFragmentManager.beginTransaction()
+        transcation.add(R.id.frameLayout,teamFragment)
+        transcation.commit()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode== RESULT_OK){
