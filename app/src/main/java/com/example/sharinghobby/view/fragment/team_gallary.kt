@@ -73,6 +73,7 @@ class team_gallary : Fragment() {
             setImageWithGlide4(url4)
             setImageWithGlide5(url5)
         }
+
         setValue("go");
         binding.imageButton1.setOnClickListener{belongSmallGroupActivity?.goDetail(1)}
         binding.imageButton2.setOnClickListener{belongSmallGroupActivity?.goDetail(2)}
