@@ -26,7 +26,8 @@ class FragmentBelong : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentBelongBinding>(inflater, R.layout.fragment_belong, container, false)
         val adapter = CustomAdapter(onClickTask = {
             val intent = Intent(activity, BelongSmallGroup::class.java )
-            intent.putExtra("memo", it)
+            //intent.putExtra("memo", it)
+            intent.putExtra("gid",it.idx)
             activity?.startActivity(intent)
         })
         binding.RecyclerView.adapter = adapter
@@ -35,7 +36,7 @@ class FragmentBelong : Fragment() {
         Firebase.firestore.collection("SmallGroup").get()
             .addOnSuccessListener {
                 for (item in it.documents){
-                    data.add(Memo1(url = item["photo"] as String, title = item["introduction"] as String, timestamp = System.currentTimeMillis()))
+                    data.add(Memo1(url = item["photo"] as String, title = item["introduction"] as String, idx = item.id,timestamp = System.currentTimeMillis()))
                 }
                 adapter.setList(data)
             }

@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.sharinghobby.BelongSmallGroup
+import com.example.sharinghobby.ChatActivity
 import com.example.sharinghobby.Memo1
 import com.example.sharinghobby.R
 import com.example.sharinghobby.databinding.FragmentBelongBinding
 import com.example.sharinghobby.databinding.FragmentTeamlistBinding
 import com.example.sharinghobby.view.adapter.CustomAdapter
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -25,10 +27,17 @@ class Teamlist : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+
+
         val binding = DataBindingUtil.inflate<FragmentTeamlistBinding>(inflater, R.layout.fragment_teamlist, container, false)
         val adapter = CustomAdapter(onClickTask = {
-            val intent = Intent(activity, BelongSmallGroup::class.java )
-            intent.putExtra("memo", it)
+            val intent = Intent(activity, ChatActivity::class.java )
+            val myid = Firebase.auth.currentUser!!.uid
+            val roomid = if (myid < it.idx) myid + "|" + it.idx
+                         else               it.idx + "|" + myid
+            intent.putExtra("roomID", roomid)
+            intent.putExtra("UID",myid)
             activity?.startActivity(intent)
         })
         binding.RecyclerView.adapter = adapter
@@ -37,7 +46,8 @@ class Teamlist : Fragment() {
         Firebase.firestore.collection("Users").get()
             .addOnSuccessListener {
                 for (item in it.documents){
-                    data?.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis()))
+                    data?.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis(),idx = item.id))
+
                 }
                 adapter?.setList(data)
             }
