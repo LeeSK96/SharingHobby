@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:text="TextView"
         android:textColor="@color/purple_700"
@@ -37,11 +37,11 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GroupTitle">
+        app:layout_constraintTop_toBottomOf="@+id/master">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager24"
         android:layout_width="409dp"
-        android:layout_height="350dp"
+        android:layout_height="340dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -73,10 +73,23 @@
     <Button
         android:id="@+id/chattingButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="채팅방"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager24" />
+
+    <TextView
+        android:id="@+id/master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="175dp"
+        android:text="master"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GroupTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
