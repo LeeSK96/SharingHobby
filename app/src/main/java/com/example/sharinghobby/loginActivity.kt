@@ -54,7 +54,7 @@ class loginActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Default).launch {
                         val uid = auth.uid
                         val data = connector.getData<Account>(uid!!)
-                        if(data?.id!=null){
+                        if(data?.id!==null){
                         runBlocking(Dispatchers.Main) {
                           //  Log.e("asdf",data!!.user_phone)
                             Log.e("uid", uid)
@@ -64,9 +64,9 @@ class loginActivity : AppCompatActivity() {
                             finish()
                         }
                         }else{for(i in 1..1000000){for(i in 1..1000000);}}
-
                     }
-                }}
+                }
+            }
             if(check==0)Toast.makeText(this@loginActivity,"존재하지 않는 Id입니다.",Toast.LENGTH_LONG).show()
 
 

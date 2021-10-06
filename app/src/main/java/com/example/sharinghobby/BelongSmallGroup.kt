@@ -34,7 +34,6 @@ class BelongSmallGroup : AppCompatActivity() {
         urlList.add(url3)
         urlList.add(url4)
         urlList.add(url5)
-        var Groupinfo = intent.getSerializableExtra("memo");
 
         val gid = if (intent.hasExtra("gid")){
             intent.getStringExtra("gid")
