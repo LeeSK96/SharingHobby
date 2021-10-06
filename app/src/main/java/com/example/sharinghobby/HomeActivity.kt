@@ -593,10 +593,12 @@ import kotlin.math.*
 
             val hobbyPageButton = hobbyInfoDialogView.findViewById<Button>(R.id.hobbyPageButton)
             // 자세히보기 버튼 -> 취미모임페이지로 이동
-            /*hobbyPageButton.setOnClickListener {
-            startActivityForResult(findHobby, REQUEST_CATEGORY)
-            infoHobbyDialog.dismiss()
-        }*/
+            hobbyPageButton.setOnClickListener {
+                val goSmallGroupPage = Intent(this, BelongSmallGroup::class.java)
+                goSmallGroupPage.putExtra("memo",marker.tag.toString())
+                startActivity(goSmallGroupPage)
+                infoHobbyDialog.dismiss()
+        }
 
             val infoCanelButton = hobbyInfoDialogView.findViewById<Button>(R.id.infoCancelButton)
             infoCanelButton.setOnClickListener {

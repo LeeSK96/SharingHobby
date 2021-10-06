@@ -124,11 +124,11 @@ class SearchActivity : AppCompatActivity(), CoroutineScope {
             )
         }
         adapter.setSearchResultList(dataList) {
-            Toast.makeText(
+            /*Toast.makeText(
                 this,
                 "빌딩이름 : ${it.name} 주소 : ${it.fullAddress} 위도/경도 : ${it.locationLatLng}",
                 Toast.LENGTH_SHORT
-            ).show()
+            ).show()*/
             // home (data)  > search > map (data)
             // TODO
             startActivityForResult(Intent(this, MapActivity::class.java).apply {
