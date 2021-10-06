@@ -54,7 +54,7 @@ class loginActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Default).launch {
                         val uid = auth.uid
                         val data = connector.getData<Account>(uid!!)
-                        if(data?.id!==null){
+                        if(data?.id != null){
                         runBlocking(Dispatchers.Main) {
                           //  Log.e("asdf",data!!.user_phone)
                             Log.e("uid", uid)
