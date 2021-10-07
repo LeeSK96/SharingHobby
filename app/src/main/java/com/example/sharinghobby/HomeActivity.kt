@@ -595,7 +595,7 @@ import kotlin.math.*
             // 자세히보기 버튼 -> 취미모임페이지로 이동
             hobbyPageButton.setOnClickListener {
                 val goSmallGroupPage = Intent(this, BelongSmallGroup::class.java)
-                goSmallGroupPage.putExtra("memo",marker.tag.toString())
+                goSmallGroupPage.putExtra("gid",marker.tag.toString())
                 startActivity(goSmallGroupPage)
                 infoHobbyDialog.dismiss()
         }

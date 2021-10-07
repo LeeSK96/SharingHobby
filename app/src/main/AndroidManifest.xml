@@ -23,9 +23,7 @@
             android:name=".view.gallaryActivity"
             android:exported="true" />
         <activity android:name=".MadeGroup2Activity" />
-        <activity android:name=".MadeGroupActivity" />
         <activity android:name=".CategoryActivity" />
-        <activity android:name=".SearchAndMake" />
         <activity android:name=".BelongSmallGroup" />
         <activity android:name=".MadeActivity" />
         <activity android:name=".BelongActivity" />
@@ -45,11 +43,6 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".CategoryActivity1" />
         <activity android:name=".HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
