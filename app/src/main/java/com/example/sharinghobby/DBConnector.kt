@@ -7,7 +7,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
-data class Account(val id: String="", val pw: String="", val user_email: String="", val user_phone: String="", val user_image: String="", val nickname: String="", val smallgrouplist: ArrayList<String> = arrayListOf())// 전부 소문자로 바꿀것
+data class Account(val id: String="", val pw: String="", val user_email: String="", val user_phone: String="", val user_image: String="", val nickname: String="", val groupmark_own_list: ArrayList<String>? = null, val groupmark_in_list: ArrayList<String>? = null)
 data class SmallGroup(val title: String="", val category: String="", val user_limit: String="", val master: String="", val node_lat: String="", val node_lon: String="", val user_list: ArrayList<String>? = null, val introduction: String="", val photo: String=""
                        ,val urlList: ArrayList<String> = arrayListOf())
 data class MyPage(val id: String="", val pw: String="", val mysmallgroup: String="", val cs: String="", val settings: String="", val imageChange: String="")

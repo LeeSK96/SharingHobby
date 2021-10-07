@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import com.bumptech.glide.Glide
 import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.example.sharinghobby.databinding.ActivityHomeBinding
 import com.example.sharinghobby.data.model.result.LocationLatLngEntity
@@ -63,6 +65,8 @@ import kotlin.math.*
     private var changedLocationMarker: Marker? = null
     private var hobbyMakerArr = arrayListOf<Marker>()
     private var groupMemberList = arrayListOf<String>()
+    private var groupMarkOwnList = arrayListOf<String>()
+    private var groupMarkInList = arrayListOf<String>()
 
     private lateinit var searchResult: SearchResultEntity
     private lateinit var locationManager: LocationManager
@@ -82,6 +86,7 @@ import kotlin.math.*
         const val SEARCH_RESULT_EXTRA_KEY = "SEARCH_RESULT_EXTRA_KEY"
         const val CAMERA_ZOOM_LEVEL = 17f
         const val PERMISSION_REQUEST_CODE = 101
+        const val SMALLGROUP_MARK_LIMIT = 5 // 소모임 즐겨찾기 제한
 
         const val REQUEST_LOCATION = 10001
         const val REQUEST_CATEGORY = 10002
@@ -139,16 +144,32 @@ import kotlin.math.*
 
         // 메뉴바 리스너
         binding.viewToolbar.menuButton.setOnClickListener{
+            var user_image : String = ""
 
             CoroutineScope(Dispatchers.Main).launch {
 
                 withContext(Dispatchers.IO){
-                    val data = fireBase.getData<Account>(userIndex)
-                    //binding.drawerLayout.header_icon
-                    binding.drawerLayout.header_user_nickname.text = data!!.nickname
-                    binding.drawerLayout.header_user_email.text = data!!.user_email
+                    val user_data = fireBase.getData<Account>(userIndex)
+                    user_image = user_data!!.user_image
+                    binding.drawerLayout.header_user_nickname.text = user_data.nickname
+                    binding.drawerLayout.header_user_email.text = user_data.user_email
+
+                    groupMarkOwnList = user_data.groupmark_own_list!!
+                    groupMarkInList = user_data.groupmark_in_list!!
+
+                    //TODO() 코루틴으로 해당 소모임인덱스 타이틀 가져오기 및 적용 10.6~
 
                 }
+
+                if (!user_image.isNullOrEmpty()) {
+                    setImageWithGlide(
+                        user_image,
+                        binding.root.context,
+                        binding.drawerLayout.header_icon
+                    )
+                    user_image = ""
+                }
+
                 binding.drawerLayout.openDrawer(
                     GravityCompat.START
                 )
@@ -174,19 +195,32 @@ import kotlin.math.*
         // 네비게이션바 리스너
         binding.navigationView.setNavigationItemSelectedListener { MenuItem ->
             binding.drawerLayout.closeDrawers()
-
-            when(MenuItem.itemId){
-                R.id.item1 -> {
-
-                }
-                R.id.item2 -> {
-
-                }
-                R.id.item3 -> {
-
-                }
+            if (MenuItem.itemId != 0) {
+                startActivity(Intent(this, BelongSmallGroup::class.java).apply {
+                    putExtra("gid", MenuItem.itemId.toString())
+                })
             }
             return@setNavigationItemSelectedListener false
+        }
+
+        binding.navigationView.menu.clear()
+
+        val groupMarkOwnMenu = binding.navigationView.menu.addSubMenu("내가 만든 모임")
+        if (!groupMarkOwnList.isNullOrEmpty()) {
+            for (item in groupMarkOwnList) {
+                groupMarkOwnMenu.add(0, groupMarkOwnList[item.toInt()].toInt(), 0, "제목")
+            }
+        }else {
+            groupMarkOwnMenu.add(0, 0, 0, "즐겨찾기한 모임이 없습니다.")
+        }
+
+        val groupMarkInMenu = binding.navigationView.menu.addSubMenu("내가 가입한 모임")
+        if(!groupMarkInList.isNullOrEmpty()) {
+            for (item in groupMarkInList) {
+                groupMarkInMenu.add(0, groupMarkInList[item.toInt()].toInt(), 0, "제목")
+            }
+        }else {
+            groupMarkInMenu.add(0, 0, 0, "즐겨찾기한 모임이 없습니다.")
         }
 
         // 각 버튼 별로 클릭리스너
@@ -569,10 +603,12 @@ import kotlin.math.*
             CoroutineScope(Dispatchers.Main).launch {
                 Log.e("T1", Thread.currentThread().name)
                 val tag = marker.tag.toString()
+                var group_image: String = ""
 
                 withContext(Dispatchers.IO) {
                     Log.e("T2", Thread.currentThread().name)
                     val data = fireBase.getData<SmallGroup>(tag)
+                    group_image = data!!.photo
                     hobbyInfoDialogView.findViewById<TextView>(R.id.group_title).text = data!!.title
                     hobbyInfoDialogView.findViewById<TextView>(R.id.group_category).text =
                         data!!.category
@@ -580,6 +616,15 @@ import kotlin.math.*
                         data!!.user_limit
                     hobbyInfoDialogView.findViewById<TextView>(R.id.group_intro).text =
                         data!!.introduction
+                }
+
+                if(!group_image.isNullOrEmpty()) {
+                    setImageWithGlide(
+                        group_image,
+                        hobbyInfoDialogView.context,
+                        hobbyInfoDialogView.findViewById<ImageView>(R.id.group_image)
+                    )
+                    group_image = ""
                 }
 
 
@@ -594,9 +639,11 @@ import kotlin.math.*
             val hobbyPageButton = hobbyInfoDialogView.findViewById<Button>(R.id.hobbyPageButton)
             // 자세히보기 버튼 -> 취미모임페이지로 이동
             hobbyPageButton.setOnClickListener {
-                val goSmallGroupPage = Intent(this, BelongSmallGroup::class.java)
-                goSmallGroupPage.putExtra("gid",marker.tag.toString())
-                startActivity(goSmallGroupPage)
+
+                startActivity(Intent(this, BelongSmallGroup::class.java).apply {
+                    putExtra("gid", marker.tag.toString())
+                })
+
                 infoHobbyDialog.dismiss()
         }
 
@@ -631,6 +678,13 @@ import kotlin.math.*
             )
             onCurrentLocationChanged(locationLatLngEntity)
         }
-
     }
+    // Url을 Glide를 이용하여 이미지 변환
+     private fun setImageWithGlide(url:String, context:Context, imageLocation: ImageView){
+         Glide.with(context)
+             .load(url)
+             .thumbnail(0.5f)
+             .centerCrop()
+             .into(imageLocation)
+     }
 }
