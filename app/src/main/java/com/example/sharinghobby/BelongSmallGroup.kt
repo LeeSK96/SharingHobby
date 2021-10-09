@@ -65,10 +65,14 @@ class BelongSmallGroup : AppCompatActivity() {
             setImageWithGlide1( groupImage)
         }
          */
+
+
+
         val fragmentList = listOf(team_notify(), team_gallary(), Teamlist())
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager24.adapter = adapter
+
 
         val tabTitle = listOf<String>("팀게시글","갤러리","팀원목록")
         TabLayoutMediator(binding.tabLayout3, binding.viewPager24){tab, position->
@@ -82,6 +86,7 @@ class BelongSmallGroup : AppCompatActivity() {
             intent1.putExtra("groupId",1)
             startActivityForResult(intent1,99)
         }
+
         binding.chattingButton.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java )
             val myid = Firebase.auth.currentUser!!.uid
