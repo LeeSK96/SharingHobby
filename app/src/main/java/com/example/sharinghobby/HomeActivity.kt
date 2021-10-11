@@ -48,6 +48,7 @@ import kotlinx.android.synthetic.main.dialog_hobby_info.group_title
 import kotlinx.android.synthetic.main.dialog_hobby_info.view.*
 import kotlinx.coroutines.*
 import org.w3c.dom.Text
+import java.lang.NumberFormatException
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.*
 
@@ -67,6 +68,8 @@ import kotlin.math.*
     private var groupMemberList = arrayListOf<String>()
     private var groupMarkOwnList = arrayListOf<String>()
     private var groupMarkInList = arrayListOf<String>()
+    private var groupMarkOwnTitleList = arrayListOf<String>()
+    private var groupMarkInTitleList = arrayListOf<String>()
 
     private lateinit var searchResult: SearchResultEntity
     private lateinit var locationManager: LocationManager
@@ -147,6 +150,7 @@ import kotlin.math.*
             var user_image : String = ""
 
             CoroutineScope(Dispatchers.Main).launch {
+                binding.navigationView.menu.clear()
 
                 withContext(Dispatchers.IO){
                     val user_data = fireBase.getData<Account>(userIndex)
@@ -157,8 +161,39 @@ import kotlin.math.*
                     groupMarkOwnList = user_data.groupmark_own_list!!
                     groupMarkInList = user_data.groupmark_in_list!!
 
-                    //TODO() 코루틴으로 해당 소모임인덱스 타이틀 가져오기 및 적용 10.6~
+                    if(!groupMarkOwnList.isNullOrEmpty()){
+                        for(item in groupMarkOwnList){
+                            val group_data = fireBase.getData<SmallGroup>(item)
+                            val group_title = group_data!!.title
 
+                            groupMarkOwnTitleList.add(group_title)
+                        }
+                    }
+
+                    if(!groupMarkInList.isNullOrEmpty()){
+                        for(item in groupMarkInList){
+                            val group_data = fireBase.getData<SmallGroup>(item)
+                            val group_title = group_data!!.title
+
+                            groupMarkInTitleList.add(group_title)
+                        }
+                    }
+                }
+                val groupMarkOwnMenu = binding.navigationView.menu.addSubMenu("내가 만든 모임")
+                if(!groupMarkOwnList.isNullOrEmpty()) {
+                    for (i in groupMarkOwnList.indices) {
+                        groupMarkOwnMenu.add(0, i+1, 0, groupMarkOwnTitleList[i])
+                    }
+                }else{
+                    groupMarkOwnMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
+                }
+                val groupMarkInMenu = binding.navigationView.menu.addSubMenu("내가 가입한 모임")
+                if(!groupMarkInList.isNullOrEmpty()){
+                    for (i in groupMarkInList.indices){
+                        groupMarkInMenu.add(0, i+6, 0, groupMarkInTitleList[i])
+                    }
+                }else{
+                    groupMarkInMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
                 }
 
                 if (!user_image.isNullOrEmpty()) {
@@ -196,32 +231,21 @@ import kotlin.math.*
         binding.navigationView.setNavigationItemSelectedListener { MenuItem ->
             binding.drawerLayout.closeDrawers()
             if (MenuItem.itemId != 0) {
-                startActivity(Intent(this, BelongSmallGroup::class.java).apply {
-                    putExtra("gid", MenuItem.itemId.toString())
-                })
+                if(MenuItem.itemId in 1..5){
+                    startActivity(Intent(this, BelongSmallGroup::class.java).apply {
+                        putExtra("gid", groupMarkOwnList[MenuItem.itemId - 1])
+                    })
+                }
+                else if(MenuItem.itemId in 6..10){
+                    startActivity(Intent(this, BelongSmallGroup::class.java).apply {
+                        putExtra("gid", groupMarkInList[MenuItem.itemId - 6])
+                    })
+                }
             }
             return@setNavigationItemSelectedListener false
         }
 
-        binding.navigationView.menu.clear()
 
-        val groupMarkOwnMenu = binding.navigationView.menu.addSubMenu("내가 만든 모임")
-        if (!groupMarkOwnList.isNullOrEmpty()) {
-            for (item in groupMarkOwnList) {
-                groupMarkOwnMenu.add(0, groupMarkOwnList[item.toInt()].toInt(), 0, "제목")
-            }
-        }else {
-            groupMarkOwnMenu.add(0, 0, 0, "즐겨찾기한 모임이 없습니다.")
-        }
-
-        val groupMarkInMenu = binding.navigationView.menu.addSubMenu("내가 가입한 모임")
-        if(!groupMarkInList.isNullOrEmpty()) {
-            for (item in groupMarkInList) {
-                groupMarkInMenu.add(0, groupMarkInList[item.toInt()].toInt(), 0, "제목")
-            }
-        }else {
-            groupMarkInMenu.add(0, 0, 0, "즐겨찾기한 모임이 없습니다.")
-        }
 
         // 각 버튼 별로 클릭리스너
         binding.findCreateHobbyButton.setOnClickListener {
