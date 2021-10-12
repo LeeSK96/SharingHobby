@@ -158,8 +158,12 @@ import kotlin.math.*
                     binding.drawerLayout.header_user_nickname.text = user_data.nickname
                     binding.drawerLayout.header_user_email.text = user_data.user_email
 
-                    groupMarkOwnList = user_data.groupmark_own_list!!
-                    groupMarkInList = user_data.groupmark_in_list!!
+                    if(user_data.groupmark_own_list != null) {
+                        groupMarkOwnList = user_data.groupmark_own_list!!
+                    }
+                    if(user_data.groupmark_in_list != null) {
+                        groupMarkInList = user_data.groupmark_in_list!!
+                    }
 
                     if(!groupMarkOwnList.isNullOrEmpty()){
                         for(item in groupMarkOwnList){
@@ -196,7 +200,7 @@ import kotlin.math.*
                     groupMarkInMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
                 }
 
-                if (!user_image.isNullOrEmpty()) {
+                if (user_image != "default_photo") {
                     setImageWithGlide(
                         user_image,
                         binding.root.context,
