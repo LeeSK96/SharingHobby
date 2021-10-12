@@ -67,7 +67,7 @@ class Join1Activity : AppCompatActivity() {
             }
             if(checkint==1){Toast.makeText(this, "중복된 아이디입니다", Toast.LENGTH_SHORT)
                 .show(); }
-            else{boolemail=true; binding.emailcheckButton.text="OK!!"; Log.d("from123","${data}")}
+            else{boolemail=true; binding.emailcheckButton.text="OK!!"; userId=user_email;}
         }
         binding.joinus.setOnClickListener {
             //  if(boolId&&boolPw&&boolNn&&boolemail&&boolgender){}
@@ -75,7 +75,7 @@ class Join1Activity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(binding.userEmail.text.toString(),binding.password.text.toString())
                 .addOnSuccessListener {
                     var OurDB = DBConnector();
-                    var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"1",binding.nickname.text.toString());
+                    var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"NoPhoto",binding.nickname.text.toString());
                     OurDB.setAccountData(accountdata,auth.currentUser!!.uid);
                     Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
                 }

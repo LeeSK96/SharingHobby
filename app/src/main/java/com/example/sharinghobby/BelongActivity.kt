@@ -2,12 +2,9 @@ package com.example.sharinghobby
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sharinghobby.databinding.ActivityBelongBinding
 import com.example.sharinghobby.view.adapter.BelongChartFragmentAdapter
 import com.example.sharinghobby.view.fragment.FragmentBelong
-import com.example.sharinghobby.view.fragment.MyMadeFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BelongActivity : AppCompatActivity() {
