@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 
@@ -32,7 +33,9 @@ class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<Recycler
             val accountData= connector.getData<Account>(uid)
             if(accountData != null){
                 userNickname[uid] = accountData.nickname
-                notifyDataSetChanged() //RecyclerView에서 데이터가 변경되었으니 다시 확인해라
+                runBlocking(Dispatchers.Main) {
+                    notifyDataSetChanged() //RecyclerView에서 데이터가 변경되었으니 다시 확인해라
+                }
             } else {
                 userNickname.remove(uid)
             }

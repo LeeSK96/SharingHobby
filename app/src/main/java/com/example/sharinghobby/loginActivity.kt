@@ -59,15 +59,14 @@ class loginActivity : AppCompatActivity() {
                           //  Log.e("asdf",data!!.user_phone)
                             Log.e("uid", uid)
                             goHome.putExtra("uid",uid)
-                            check = showinfo(1);
                             startActivity(goHome)
                             finish()
                         }
                         }else{for(i in 1..1000000){for(i in 1..1000000);}}
                     }
+                }.addOnFailureListener {    Toast.makeText(this@loginActivity,"존재하지 않는 Id거나 pw가 틀렸습니다.",Toast.LENGTH_LONG).show()}
                 }
-            }
-            if(check==0)Toast.makeText(this@loginActivity,"존재하지 않는 Id입니다.",Toast.LENGTH_LONG).show()
+
 
 
            /*CoroutineScope(Dispatchers.Default).launch {
