@@ -159,34 +159,34 @@ import kotlin.math.*
                     binding.drawerLayout.header_user_email.text = user_data.user_email
 
                     if(user_data.groupmark_own_list != null) {
-                        groupMarkOwnList = user_data.groupmark_own_list!!
+                        groupMarkOwnList = user_data.groupmark_own_list
                     }
                     if(user_data.groupmark_in_list != null) {
-                        groupMarkInList = user_data.groupmark_in_list!!
+                        groupMarkInList = user_data.groupmark_in_list
                     }
 
                     if(!groupMarkOwnList.isNullOrEmpty()){
                         for(item in groupMarkOwnList){
-                            val group_data = fireBase.getData<SmallGroup>(item)
-                            val group_title = group_data!!.title
+                            val group_own_data = fireBase.getData<SmallGroup>(item)
+                            val group_own_title = group_own_data!!.title
 
-                            groupMarkOwnTitleList.add(group_title)
+                            groupMarkOwnTitleList.add(group_own_title)
                         }
                     }
 
                     if(!groupMarkInList.isNullOrEmpty()){
                         for(item in groupMarkInList){
-                            val group_data = fireBase.getData<SmallGroup>(item)
-                            val group_title = group_data!!.title
+                            val group_in_data = fireBase.getData<SmallGroup>(item)
+                            val group_in_title = group_in_data!!.title
 
-                            groupMarkInTitleList.add(group_title)
+                            groupMarkInTitleList.add(group_in_title)
                         }
                     }
                 }
                 val groupMarkOwnMenu = binding.navigationView.menu.addSubMenu("내가 만든 모임")
                 if(!groupMarkOwnList.isNullOrEmpty()) {
                     for (i in groupMarkOwnList.indices) {
-                        groupMarkOwnMenu.add(0, i+1, 0, groupMarkOwnTitleList[i])
+                        groupMarkOwnMenu.add(0, i+1, 0, groupMarkOwnTitleList[i]).setIcon(android.R.drawable.star_on)
                     }
                 }else{
                     groupMarkOwnMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
@@ -194,7 +194,7 @@ import kotlin.math.*
                 val groupMarkInMenu = binding.navigationView.menu.addSubMenu("내가 가입한 모임")
                 if(!groupMarkInList.isNullOrEmpty()){
                     for (i in groupMarkInList.indices){
-                        groupMarkInMenu.add(0, i+6, 0, groupMarkInTitleList[i])
+                        groupMarkInMenu.add(0, i+6, 0, groupMarkInTitleList[i]).setIcon(android.R.drawable.star_on)
                     }
                 }else{
                     groupMarkInMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
