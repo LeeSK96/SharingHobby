@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OurFriendlyMeeting">
         <activity
+            android:name=".view.ChatReady"
+            android:exported="true" />
+        <activity
             android:name=".ChattingListView"
             android:exported="true" />
         <activity
@@ -45,7 +48,7 @@
         <activity android:name=".SearchActivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".CategoryActivity1" />
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

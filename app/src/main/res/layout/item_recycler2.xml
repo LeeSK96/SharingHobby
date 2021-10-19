@@ -44,11 +44,6 @@
             android:textColor="@color/purple_200" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/bookmarker"
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/star" />
+
 
 </LinearLayout>

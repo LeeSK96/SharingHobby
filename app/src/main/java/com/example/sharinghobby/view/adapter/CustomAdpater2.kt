@@ -5,25 +5,24 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.sharinghobby.Memo1
-import com.example.sharinghobby.databinding.ItemRecyclerBinding
+import com.example.sharinghobby.databinding.ItemRecycler2Binding
 import java.text.SimpleDateFormat
 
-class CustomAdapter(var onClickTask : (memo : Memo1) -> Unit):RecyclerView.Adapter<Holder>() {
+class CustomAdapter2(var onClickTask : (memo : Memo1) -> Unit): RecyclerView.Adapter<Holder2>() {
     private var listData = mutableListOf<Memo1>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemRecyclerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder2 {
+        val binding = ItemRecycler2Binding.inflate(LayoutInflater.from(parent.context),parent,false)
         //binding.bookmarker.setOnClickListener { Toast.makeText(parent.context,"${1}",Toast.LENGTH_LONG).show() }
-        return Holder(binding).apply {
-            this.onClickTask = this@CustomAdapter.onClickTask
+        return Holder2(binding).apply {
+            this.onClickTask = this@CustomAdapter2.onClickTask
             //this.bookmarker1.toString()
-           }
+        }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-       val memo =listData.get(position)
+    override fun onBindViewHolder(holder: Holder2, position: Int) {
+        val memo =listData.get(position)
         holder.setMemo(memo)
     }
 
@@ -38,12 +37,9 @@ class CustomAdapter(var onClickTask : (memo : Memo1) -> Unit):RecyclerView.Adapt
 
 }
 
-class Holder(val binding: ItemRecyclerBinding):RecyclerView.ViewHolder(binding.root){
+class Holder2(val binding: ItemRecycler2Binding): RecyclerView.ViewHolder(binding.root){
     lateinit var onClickTask : (memo : Memo1) -> Unit
-    init {
-        binding.bookmarker.setOnClickListener { Toast.makeText(binding.root.context,"${binding.textView69.text} 추가",Toast.LENGTH_LONG).show()
-        }
-    }
+
     //lateinit var bookmarker1 :(memo:Memo1)->Unit
     fun setMemo(memo: Memo1){
         binding.textView69.text = "${memo.title}"
@@ -53,11 +49,11 @@ class Holder(val binding: ItemRecyclerBinding):RecyclerView.ViewHolder(binding.r
 
         binding.container.setOnClickListener {
             onClickTask(memo)
-           // Toast.makeText(binding.root.context,"${memo.title} ${memo.timestamp}",Toast.LENGTH_LONG).show()
+            // Toast.makeText(binding.root.context,"${memo.title} ${memo.timestamp}",Toast.LENGTH_LONG).show()
         }
-       /* binding.bookmarker.setOnClickListener {
-            bookmarker1(memo)
-        }*/
+        /* binding.bookmarker.setOnClickListener {
+             bookmarker1(memo)
+         }*/
         Glide.with(binding.root.context)
             .load(memo.url)
             .thumbnail(0.5f)

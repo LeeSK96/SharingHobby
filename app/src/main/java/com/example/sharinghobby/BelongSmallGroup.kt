@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_belong_small_group.*
 import java.util.ArrayList
 
 class BelongSmallGroup : AppCompatActivity() {
@@ -92,7 +93,10 @@ class BelongSmallGroup : AppCompatActivity() {
             intent1.putExtra("groupId",1)
             startActivityForResult(intent1,99)
         }
-
+        binding.bookmark.setOnClickListener {
+            Toast.makeText(this,"즐겨찾기 추가!",Toast.LENGTH_LONG).show()
+            
+        }
         binding.chattingButton.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java )
             val myid = Firebase.auth.currentUser!!.uid

@@ -10,13 +10,15 @@ import androidx.databinding.DataBindingUtil
 import com.example.sharinghobby.BelongSmallGroup
 import com.example.sharinghobby.Memo1
 import com.example.sharinghobby.R
-import com.example.sharinghobby.databinding.FragmentBelongBinding
-import com.example.sharinghobby.databinding.FragmentChattingteamlistBinding
+import com.example.sharinghobby.databinding.FragmentChateamlistBinding
+import com.example.sharinghobby.databinding.FragmentMymadeBinding
+import com.example.sharinghobby.view.ChatReady
 import com.example.sharinghobby.view.adapter.CustomAdapter
+import com.example.sharinghobby.view.adapter.CustomAdapter2
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class ChattingteamlistFragment : Fragment() {
+class Chateamlist : Fragment() {
 
 
     override fun onCreateView(
@@ -24,14 +26,14 @@ class ChattingteamlistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentChattingteamlistBinding>(inflater, R.layout.fragment_chattingteamlist, container, false)
-        val adapter = CustomAdapter(onClickTask = {
-            val intent = Intent(activity, BelongSmallGroup::class.java )
+        val binding = DataBindingUtil.inflate<FragmentChateamlistBinding>(inflater, R.layout.fragment_chateamlist, container, false)
+        val adapter = CustomAdapter2(onClickTask = {
+            val intent = Intent(activity, ChatReady::class.java )
             //intent.putExtra("memo", it)
             intent.putExtra("gid",it.idx)
             activity?.startActivity(intent)
         })
-        binding.RecyclerView.adapter = adapter
+        binding.RecyclerViewChatList.adapter = adapter
 
         val data: MutableList<Memo1> = mutableListOf()
         Firebase.firestore.collection("SmallGroup").get()
@@ -46,5 +48,4 @@ class ChattingteamlistFragment : Fragment() {
 
         return binding.root
     }
-
 }

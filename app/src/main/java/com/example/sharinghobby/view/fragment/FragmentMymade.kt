@@ -11,7 +11,6 @@ import com.example.sharinghobby.BelongSmallGroup
 import com.example.sharinghobby.Memo1
 import com.example.sharinghobby.R
 import com.example.sharinghobby.databinding.FragmentBelongBinding
-import com.example.sharinghobby.databinding.FragmentChattingteamlistBinding
 import com.example.sharinghobby.databinding.FragmentMymadeBinding
 import com.example.sharinghobby.view.adapter.CustomAdapter
 import com.google.firebase.firestore.ktx.firestore
@@ -24,14 +23,14 @@ class FragmentMymade : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentChattingteamlistBinding>(inflater, R.layout.fragment_belong, container, false)
+        val binding = DataBindingUtil.inflate<FragmentMymadeBinding>(inflater, R.layout.fragment_mymade, container, false)
         val adapter = CustomAdapter(onClickTask = {
             val intent = Intent(activity, BelongSmallGroup::class.java )
             //intent.putExtra("memo", it)
             intent.putExtra("gid",it.idx)
             activity?.startActivity(intent)
         })
-        binding.RecyclerView.adapter = adapter
+        binding.RecyclerViewMymade.adapter = adapter
 
         val data: MutableList<Memo1> = mutableListOf()
         Firebase.firestore.collection("SmallGroup").get()

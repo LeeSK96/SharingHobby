@@ -2,12 +2,9 @@ package com.example.sharinghobby
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.sharinghobby.databinding.ActivityBelongBinding
-import com.example.sharinghobby.databinding.ActivityChattingListViewBinding
+import com.example.sharinghobby.databinding.*
 import com.example.sharinghobby.view.adapter.BelongChartFragmentAdapter
-import com.example.sharinghobby.view.fragment.FragmentBelong
-import com.example.sharinghobby.view.fragment.FragmentMymade
-import com.example.sharinghobby.view.fragment.Teamlist
+import com.example.sharinghobby.view.fragment.*
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ChattingListView : AppCompatActivity() {
@@ -16,7 +13,7 @@ class ChattingListView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val fragmentList = listOf(FragmentBelong(), Teamlist())
+        val fragmentList = listOf(Chateamlist(), ChatindivisualFragment())
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager25.adapter = adapter
