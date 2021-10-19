@@ -61,6 +61,12 @@ class BelongSmallGroup : AppCompatActivity() {
         if (  title != null) {
           binding.GroupTitle.text=title.toString()
        }
+        /**
+         * UID1 UID2
+         * UID1_UID2 <- 이 자체가 고유한 ID가 되는 것
+         * 2명만 접속할 수 있는 채팅방이 되는 것
+         * abc < abd
+         */
         if (  groupImage != null) {
             setImageWithGlide1( groupImage)
         }
