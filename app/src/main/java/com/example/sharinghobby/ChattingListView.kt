@@ -7,15 +7,16 @@ import com.example.sharinghobby.databinding.ActivityChattingListViewBinding
 import com.example.sharinghobby.view.adapter.BelongChartFragmentAdapter
 import com.example.sharinghobby.view.fragment.FragmentBelong
 import com.example.sharinghobby.view.fragment.FragmentMymade
+import com.example.sharinghobby.view.fragment.Teamlist
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ChattingListView : AppCompatActivity() {
     val binding by lazy{ ActivityChattingListViewBinding.inflate(layoutInflater)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chatting_list_view)
+        setContentView(binding.root)
 
-        val fragmentList = listOf(FragmentBelong(), FragmentMymade())
+        val fragmentList = listOf(FragmentBelong(), Teamlist())
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager25.adapter = adapter

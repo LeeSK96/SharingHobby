@@ -110,7 +110,7 @@ import kotlin.math.*
         val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
         val myHobbyList = Intent(this, BelongActivity::class.java)
-        val chatList = Intent(this, ChatActivity::class.java)
+        var chatList = Intent(this, ChattingListView::class.java)
 
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.bejji)
@@ -215,7 +215,10 @@ import kotlin.math.*
 
             }
         }
-
+        binding.chatButton.setOnClickListener {
+            chatList =intent.putExtra("idx","idxnum");
+            startActivity(chatList);
+        }
         binding.viewToolbar.noticeButton.setOnClickListener{
             val noticeDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_notice,null)
             val dialogBuilder = AlertDialog.Builder(this)
