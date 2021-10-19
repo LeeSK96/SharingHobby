@@ -20,6 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OurFriendlyMeeting">
         <activity
+            android:name=".SetUserPhoto"
+            android:exported="true" />
+        <activity
+            android:name=".UserMyPage"
+            android:exported="true" />
+        <activity
+            android:name=".MyPage"
+            android:exported="true" />
+        <activity
             android:name=".view.ChatReady"
             android:exported="true" />
         <activity
