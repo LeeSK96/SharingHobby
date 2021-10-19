@@ -9,7 +9,7 @@
         <!-- TODO: Update blank fragment layout -->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RecyclerViewMymade"
+            android:id="@+id/RecyclerView"
             android:layout_width="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
