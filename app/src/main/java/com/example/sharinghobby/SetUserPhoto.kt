@@ -22,6 +22,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 
 class SetUserPhoto : BaseActivity() {
+    var userUid:String?=""
     val PERM_STOREAGE = 99
     val PERM_CAMERA = 100
     val REQ_CAMERA = 101
@@ -38,6 +39,7 @@ class SetUserPhoto : BaseActivity() {
             arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
             PERM_STOREAGE
         )
+        userUid = intent.getStringExtra("uid");
         val GroupId:String? =intent.getStringExtra("groupId")
         binding.Success.setOnClickListener {
             val returnIntent = Intent()
@@ -125,7 +127,7 @@ class SetUserPhoto : BaseActivity() {
         return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
     }
 
-    fun uploadStorage(uri: Uri) {
+    fun uploadStorage(uri: Uri,uid: String) {
         val filename = SimpleDateFormat("yyyyMMddhhmmss").format(java.util.Date()) + ".jpg"
 
         //업로드할 위치와 파일 명 (폴더가 없을 경우 자동생성)
@@ -145,7 +147,7 @@ class SetUserPhoto : BaseActivity() {
                 ref.downloadUrl.addOnSuccessListener {
                     /** 3. Firebase DataBase 저장 */
                     Log.e("링크 가져오기 성공", "$it")
-                    insertDatabase(it.toString(), "lP7wyqunccCL19Naulxa") // 현재 실험중 고쳐야 함
+                    insertDatabase(it.toString(), "$uid") // 현재 실험중 고쳐야 함
 
                 }.addOnFailureListener {
                     Log.e("링크 가져오기 실패", it.message.toString())
@@ -156,7 +158,7 @@ class SetUserPhoto : BaseActivity() {
 
     /*firebase database저장*/
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private fun insertDatabase(url: String, gid: String) {
+    private fun insertDatabase(url: String, uid: String) {
         /**1. 커뮤니티 생성화면) 사진 선택 -> stoage 에 등록 후 url 물고있기
          * 2. 커뮤니티 등록 버튼을 등록해서 실행할 때, Database 에 url,id 같이 insert
          */
@@ -171,7 +173,7 @@ class SetUserPhoto : BaseActivity() {
             .addOnSuccessListener { documentReference -> //저장된 데이터의 ID을 획득할 수 있습니다.
                 //documentReference.id
                 Log.e("firebase DB Insert 완료", "DocumentSnapshot added with ID: $documentReference")
-                db.collection("Users").document(gid).update(mapOf("user_image" to url))
+                db.collection("Users").document(uid).update(mapOf("user_image" to url))
                 setImageWithGlide1(url)
             }
             .addOnFailureListener { e ->
@@ -204,14 +206,16 @@ class SetUserPhoto : BaseActivity() {
                     realUri?.let { uri ->
                         val bitmap = loadBitmap(uri)
                         // binding.imageView6.setImageBitmap(bitmap)
-                        uploadStorage(uri)
+                        val Uid1: String =userUid.toString()
+                        uploadStorage(uri,Uid1)
                         realUri = null
                     }
                 }
                 REQ_STOREAGE -> {
                     data?.data?.let { uri ->
                         // binding.imageView6.setImageURI(uri)
-                        uploadStorage(uri)
+                        val Uid1: String =userUid.toString()
+                        uploadStorage(uri,Uid1)
                     }
                 }
             }

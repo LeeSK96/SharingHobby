@@ -105,13 +105,11 @@ import kotlin.math.*
         setContentView(binding.root)
 
         userIndex = intent.getStringExtra("uid")!!
-        val userimport=userIndex.toString()
+
         val findHobby = Intent(this, CategoryActivity1::class.java)
         val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)
         val myHobbyList = Intent(this, BelongActivity::class.java)
-        //원래 뒤로가기 버튼인데 실험을 위해 사용중
-        var Userpage= Intent(this, UserMyPage::class.java)
         var chatList = Intent(this, ChattingListView::class.java)
 
         supportActionBar?.setDisplayShowTitleEnabled(true)
@@ -119,10 +117,7 @@ import kotlin.math.*
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
         job = Job()
-        binding.moveBackButton.setOnClickListener {
-           // Userpage =intent.putExtra("uid",userimport)
-            startActivity(Userpage)
-        }
+
         isGpsChecked = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -236,9 +231,10 @@ import kotlin.math.*
         }
 
         binding.viewToolbar.mypageButton.setOnClickListener {
-
+            startActivity(Intent(this,  UserMyPage::class.java).apply {
+                putExtra("uid", userIndex)
+            })
         }
-
         // 네비게이션바 리스너
         binding.navigationView.setNavigationItemSelectedListener { MenuItem ->
             binding.drawerLayout.closeDrawers()
