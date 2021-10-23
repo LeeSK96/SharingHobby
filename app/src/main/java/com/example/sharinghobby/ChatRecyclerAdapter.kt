@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sharinghobby.Account
 import com.example.sharinghobby.DBConnector
 import com.example.sharinghobby.R
@@ -26,13 +27,13 @@ data class ChatMessage(val text: String="", val sent_at: Timestamp= Timestamp(0,
 
 class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var mContext : Context? = null
-    val userNickname : HashMap<String,String> = hashMapOf()
+    val userNickname : HashMap<String,Pair<String,String>> = hashMapOf()
     private fun getUserNick(uid: String){
         CoroutineScope(Dispatchers.Default).launch {
             val connector = DBConnector()
             val accountData= connector.getData<Account>(uid)
             if(accountData != null){
-                userNickname[uid] = accountData.nickname
+                userNickname[uid] = Pair(accountData.nickname,accountData.user_image)
                 runBlocking(Dispatchers.Main) {
                     notifyDataSetChanged() //RecyclerView에서 데이터가 변경되었으니 다시 확인해라
                 }
@@ -85,13 +86,16 @@ class ChatRecyclerAdapter(val currentUID: String): RecyclerView.Adapter<Recycler
                         )
                     binding.user.visibility = if(data.size-1<=position || data[position+1].sent_by != data[position].sent_by) View.VISIBLE else View.GONE
                     binding.user.text = if (userNickname[data[position].sent_by] != null) {
-                        userNickname[data[position].sent_by]
+                        userNickname[data[position].sent_by]!!.first
                     } else {
-                        userNickname[data[position].sent_by] = "불러오는 중.."
+                        userNickname[data[position].sent_by] = Pair("불러오는 중..","")
                         getUserNick(data[position].sent_by)
                         "불러오는 중.."
                     }
                     binding.time.text = SimpleDateFormat("hh:mm").format(data[position].sent_at.toDate())
+                    Glide.with(mContext!!)
+                        .load(userNickname[data[position].sent_by]!!.second)
+                        .into(binding.userProfile)
                 }
             }
             else /*ViewType.RIGHT.value*/ -> {
