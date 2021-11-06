@@ -124,6 +124,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
     inner class MarkerDragListener : GoogleMap.OnMarkerDragListener{
         override fun onMarkerDragStart(marker: Marker) {
             changedStartLocation = marker.position
+            marker.title = "현재 위치"
+            marker.snippet = ""
+            marker.showInfoWindow()
         }
 
         override fun onMarkerDrag(marker: Marker) {
