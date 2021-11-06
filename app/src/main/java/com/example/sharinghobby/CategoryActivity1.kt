@@ -16,6 +16,7 @@ class CategoryActivity1: AppCompatActivity() {
         binding = ActivityCategory1Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.searchToolbar.toolbarTitle.setText("취미 카테고리를 선택해주세요.")
         binding.sportButton.setOnClickListener {
             val intent = Intent().putExtra("categoryNumber", "스포츠")
             setResult(RESULT_OK, intent)
@@ -28,19 +29,19 @@ class CategoryActivity1: AppCompatActivity() {
             finish()
         }
 
-        binding.threeButton.setOnClickListener {
+        binding.gameButton.setOnClickListener {
 
         }
 
-        binding.fourButton.setOnClickListener {
+        binding.makeButton.setOnClickListener {
 
         }
 
-        binding.fiveButton.setOnClickListener {
+        binding.studyButton.setOnClickListener {
 
         }
 
-        binding.sixButton.setOnClickListener {
+        binding.etcButton.setOnClickListener {
 
         }
     }

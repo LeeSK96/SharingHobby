@@ -2,15 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/search_toolbar"
+        layout="@layout/activity_search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="10dp">
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/sportButton"
@@ -35,22 +41,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_weight="1">
 
         <Button
-            android:id="@+id/threeButton"
+            android:id="@+id/gameButton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:text="3"
+            android:text="게임"
             android:textSize="25dp"
             android:layout_marginRight="20dp"/>
 
         <Button
-            android:id="@+id/fourButton"
+            android:id="@+id/makeButton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:text="4"
+            android:text="만들기"
             android:textSize="25dp"
             android:layout_marginLeft="20dp"/>
 
@@ -62,21 +67,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_weight="1">
 
         <Button
-            android:id="@+id/fiveButton"
+            android:id="@+id/studyButton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:text="5"
+            android:text="스터디"
             android:textSize="25dp"
             android:layout_marginRight="20dp"/>
 
         <Button
-            android:id="@+id/sixButton"
+            android:id="@+id/etcButton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:text="6"
+            android:text="기타"
             android:textSize="25dp"
             android:layout_marginLeft="20dp"/>
 
