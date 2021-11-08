@@ -71,15 +71,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout3" />
 
-    <Button
-        android:id="@+id/chattingButton"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="채팅방"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager24" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/chattingButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="채팅방"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/joinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/master"

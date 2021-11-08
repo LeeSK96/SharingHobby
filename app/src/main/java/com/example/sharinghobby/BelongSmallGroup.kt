@@ -47,14 +47,16 @@ class BelongSmallGroup : AppCompatActivity() {
         var groupImage = ""
         var master = ""
         CoroutineScope(Dispatchers.Default).launch {
-            lee = DBConnector().checkBelongGroup(gid!!, uid)!!
+            lee = DBConnector().checkBelongGroup(gid!!, uid)!! //얘가 그룹에 속해있으면 false, 아니면 true
             runBlocking(Dispatchers.Main) {
-                if (!lee!!) {
+                if (!lee) { //속해있으면
                     val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
                     val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
                     adapter.fragmentList = fragmentList
                     binding.viewPager24.adapter = adapter
-                } else {
+
+                    binding.chattingButton.visibility
+                } else { // 아니면
                     val fragmentList = listOf(team_notify(), team_gallary())
                     val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
                     adapter.fragmentList = fragmentList
@@ -81,7 +83,6 @@ class BelongSmallGroup : AppCompatActivity() {
                     binding.button3.visibility= View.VISIBLE
                 }
             }
-
         //여기 연결하는 방법 질문
         /*
         //val data: Memo1? =Groupinfo as Memo1
