@@ -2,6 +2,7 @@ package com.example.sharinghobby.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,23 +54,21 @@ class joinmember(val gid:String) : Fragment() {
         binding.RecyclerViewjoin.adapter = adapter
 
         val data: MutableList<Memo1> = mutableListOf()
-        Firebase.firestore.collection("SmallGroup").get()
+        Firebase.firestore.collection("SmallGroup").document(gid).get()
             .addOnSuccessListener {
-                val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()
-                for (item in it.documents){
-                    newData.add(UserAcceptAdapter.Data(item.id,item["user_image"] as String,item["nickname"] as String, false))
+                for (item in (it["groupmember_join_list"] as ArrayList<String>)){
+                    Log.e("uid", item)
+                    Firebase.firestore.collection("Users").document(item)
+                        .get()
+                        .addOnSuccessListener { userData ->
+                            Log.e("userdata", userData.toString())
+                            val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()
+                            newData.add(UserAcceptAdapter.Data(userData.id,userData["user_image"] as String,userData["nickname"] as String, false))
+                            adapter.addData(newData)
+                        }
                 }
-                adapter.addData(newData)
             }
 
-        Firebase.firestore.collection("Users").get()
-            .addOnSuccessListener {
-                val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()
-                for (item in it.documents){
-                    newData.add(UserAcceptAdapter.Data(item.id,item["user_image"] as String,item["nickname"] as String, false))
-                }
-                adapter.addData(newData)
-            }
 
         return binding.root
     }

@@ -3,6 +3,7 @@ package com.example.sharinghobby.view.adapter
 import android.content.Context
 import android.content.Intent
 import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.sharinghobby.ChatActivity
 import com.example.sharinghobby.DBConnector
 import com.example.sharinghobby.R
+import com.example.sharinghobby.SmallGroup
 import com.example.sharinghobby.databinding.ItemAcceptUserBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -58,14 +60,43 @@ class UserAcceptAdapter(val gid: String) : RecyclerView.Adapter<RecyclerView.Vie
                     mContext.startActivity(intent)
                 }
                 binding.acceptButton.setOnClickListener { _ ->
+                    val uid: String = it.UID
+                    Firebase.firestore.collection("SmallGroup").document(gid).get()
+                        .addOnSuccessListener {
+
+                            var groupmember_join_list = arrayListOf<String>()
+                            groupmember_join_list = it["groupmember_join_list"] as ArrayList<String>
+
+                            groupmember_join_list.removeAt(position)
+                            data.removeAt(position)
+                            notifyDataSetChanged()
+
+                            Firebase.firestore.collection("SmallGroup").document(gid).update(mapOf("groupmember_join_list" to groupmember_join_list))
+
+                        }
+
                     val db = DBConnector()
-                    db.setBelongGroup(it.UID,gid)
-                    db.setBelongUser(gid,it.UID)
+                    db.setBelongGroup(uid,gid)
+                    db.setBelongUser(gid,uid)
                     Toast.makeText(mContext,"Accepted!!",Toast.LENGTH_SHORT).show()
                 }
 
-                binding.rejectButton.setOnClickListener{
+                binding.rejectButton.setOnClickListener{ _ ->
+                    val uid: String = it.UID
+                    Firebase.firestore.collection("SmallGroup").document(gid).get()
+                        .addOnSuccessListener {
 
+
+                            var groupmember_join_list = arrayListOf<String>()
+                            groupmember_join_list = it["groupmember_join_list"] as ArrayList<String>
+
+                            groupmember_join_list.removeAt(position)
+                            data.removeAt(position)
+                            notifyDataSetChanged()
+
+                            Firebase.firestore.collection("SmallGroup").document(gid).update(mapOf("groupmember_join_list" to groupmember_join_list))
+
+                        }
                 }
             }
         }
