@@ -31,7 +31,6 @@ import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.example.sharinghobby.databinding.ActivityHomeBinding
 import com.example.sharinghobby.data.model.result.LocationLatLngEntity
 import com.example.sharinghobby.utillity.RetrofitUtil
-import com.example.sharinghobby.utillity.fcm.FCMUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -42,7 +41,6 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.android.synthetic.main.activity_create_hobby.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main_drawer_header.view.*
@@ -118,8 +116,6 @@ import kotlin.math.*
         setContentView(binding.root)
 
         userIndex = intent.getStringExtra("uid")!!
-        FCMUtil.getToken()
-
         val findHobby = Intent(this, CategoryActivity1::class.java)
         val createHobby = Intent(this, CreateHobbyActivity::class.java)
         val selectLocation = Intent(this, SearchActivity::class.java)

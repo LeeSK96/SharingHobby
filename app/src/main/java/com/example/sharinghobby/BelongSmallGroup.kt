@@ -17,12 +17,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_belong_small_group.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import java.util.ArrayList
 import com.example.sharinghobby.DBConnector
+import kotlinx.coroutines.*
 
 class BelongSmallGroup : AppCompatActivity() {
     val url1:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021505.jpg?alt=media&token=03f946cf-ba7a-450c-a5d2-199dccae5f0b"
@@ -51,21 +48,23 @@ class BelongSmallGroup : AppCompatActivity() {
         var master = ""
         CoroutineScope(Dispatchers.Default).launch {
             lee = DBConnector().checkBelongGroup(gid!!, uid)!!
-            if (lee!!) {
-                val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
-                val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
-                adapter.fragmentList = fragmentList
-                binding.viewPager24.adapter = adapter
-            } else {
-                val fragmentList = listOf(team_notify(), team_gallary())
-                val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
-                adapter.fragmentList = fragmentList
-                binding.viewPager24.adapter = adapter
+            runBlocking(Dispatchers.Main) {
+                if (!lee!!) {
+                    val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
+                    val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
+                    adapter.fragmentList = fragmentList
+                    binding.viewPager24.adapter = adapter
+                } else {
+                    val fragmentList = listOf(team_notify(), team_gallary())
+                    val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
+                    adapter.fragmentList = fragmentList
+                    binding.viewPager24.adapter = adapter
+                }
+                val tabTitle = listOf<String>("팀게시글", "갤러리", "팀원목록")
+                TabLayoutMediator(binding.tabLayout3, binding.viewPager24) { tab, position ->
+                    tab.text = tabTitle[position]
+                }.attach()
             }
-            val tabTitle = listOf<String>("팀게시글", "갤러리", "팀원목록")
-            TabLayoutMediator(binding.tabLayout3, binding.viewPager24) { tab, position ->
-                tab.text = tabTitle[position]
-            }.attach()
         }
 
         Firebase.firestore.collection("SmallGroup").document(gid!!)
@@ -78,10 +77,11 @@ class BelongSmallGroup : AppCompatActivity() {
                 binding.GroupTitle.text=title
                 binding.master.text =master
                 setImageWithGlide1(groupImage)
+                if(uid==master){
+                    binding.button3.visibility= View.VISIBLE
+                }
             }
-        if(uid==master){
-            binding.button3.visibility= View.VISIBLE
-        }
+
         //여기 연결하는 방법 질문
         /*
         //val data: Memo1? =Groupinfo as Memo1
@@ -101,7 +101,7 @@ class BelongSmallGroup : AppCompatActivity() {
         }
          */
 
-        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist())
+        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager24.adapter = adapter
@@ -113,6 +113,10 @@ class BelongSmallGroup : AppCompatActivity() {
 
        // setFragment()
        // teamGallary.setValue(groupImage);
+        binding.button3.setOnClickListener {
+            val intent1=Intent(this,Joinmembership::class.java)
+            startActivity(intent1);
+        }
         binding.imageButton.setOnClickListener {
             val intent1 = Intent(this,MadeGroup2Activity::class.java)
             intent1.putExtra("groupId",1)
@@ -149,7 +153,6 @@ class BelongSmallGroup : AppCompatActivity() {
                     setImageWithGlide1(image1)
                     }
                 }
-
             }
         }
     }
