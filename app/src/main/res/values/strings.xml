@@ -18,4 +18,7 @@
     <string name="search">검색</string>
     <string name="empty_result_text">검색 결과가 없습니다.</string>
     <string name="please_input_building">현재 위치를 입력해주세요.</string>
+
+    <string name="channel_name">my_channel</string>
+    <string name="channel_description"></string>
 </resources>

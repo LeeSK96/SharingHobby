@@ -2,12 +2,16 @@
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +31,7 @@ import com.example.sharinghobby.data.model.result.SearchResultEntity
 import com.example.sharinghobby.databinding.ActivityHomeBinding
 import com.example.sharinghobby.data.model.result.LocationLatLngEntity
 import com.example.sharinghobby.utillity.RetrofitUtil
+import com.example.sharinghobby.utillity.fcm.FCMUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -37,6 +42,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.android.synthetic.main.activity_create_hobby.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main_drawer_header.view.*
@@ -53,7 +59,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.math.*
 
 
- class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
+ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope{
 
     private lateinit var job: Job
 
@@ -82,6 +88,7 @@ import kotlin.math.*
 
     private var categoryNumber: String = ""
     private var userIndex: String = ""
+    private var tokenNumber: String = ""
 
     private val fireBase = DBConnector()
 
@@ -99,12 +106,19 @@ import kotlin.math.*
         const val RADIUS = 6372.8 * 1000
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        /*val pref = this.getSharedPreferences("token", Context.MODE_PRIVATE)
+        tokenNumber = pref.getString("token","")!!
+        Log.e("token", tokenNumber)*/
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         userIndex = intent.getStringExtra("uid")!!
+        FCMUtil.getToken()
 
         val findHobby = Intent(this, CategoryActivity1::class.java)
         val createHobby = Intent(this, CreateHobbyActivity::class.java)
@@ -299,7 +313,6 @@ import kotlin.math.*
                 startActivity(chatList)
             }
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -719,4 +732,6 @@ import kotlin.math.*
              .centerCrop()
              .into(imageLocation)
      }
+
+
 }
