@@ -15,7 +15,6 @@ data class Node(val gps_x: String="", val gps_y: String="", val category: String
 data class Administrator(val leader: String="", val imageChange: String="", val groupMemberChange: String="", val groupExplainChange: String="", val groupLocationChange: String="")
 class DBConnector{
     val db = Firebase.firestore
-
     fun setAccountData(data: Account, uid: String) {// 해당 함수 부터 아래 4개는 데이터 insert
         val doc = db.collection("Users").document(uid)
         doc.set(data)
@@ -76,6 +75,60 @@ class DBConnector{
 
     fun deleteData(collectionName:String , docName: String){//데이터 지움
         db.collection(collectionName).document(docName).delete()
+    }
+    suspend fun getBelongGroup(uid:String) : ArrayList<String>?{
+        return try {
+            var doc = db.collection("Users").document(uid)
+                .get().await()
+            val ret = arrayListOf<String>()
+            for (it in (doc["belong_group"] as Map<String,Boolean>?)?: mapOf())
+                ret.add(it.key)
+            ret
+        } catch (e: FirebaseException) {
+            null
+        }
+    }
+    fun setBelongGroup(uid:String, gid:String){
+        db.collection("Users").document(uid)
+            .update(mapOf(
+                "belong_group."+gid to false
+            ))
+    }
+    suspend fun checkBelongGroup(uid:String,gid: String) : Boolean?{
+        return try {
+            var doc = db.collection("Users").document(uid)
+                .get().await()
+            if (doc.get("belong_group."+gid)!=null) true else false
+        } catch (e: FirebaseException) {
+            null
+        }
+    }
+    suspend fun getBelongUser(gid:String) : ArrayList<String>?{
+        return try {
+            var doc = db.collection("SmallGroup").document(gid)
+                .get().await()
+            val ret = arrayListOf<String>()
+            for (it in (doc["belong_user"] as Map<String,Boolean>?)?: mapOf())
+                ret.add(it.key)
+            ret
+        } catch (e: FirebaseException) {
+            null
+        }
+    }
+    fun setBelongUser(gid:String, uid:String){
+        db.collection("SmallGroup").document(gid)
+            .update(mapOf(
+                "belong_user."+uid to true
+            ))
+    }
+    suspend fun checkBelongUser(gid: String, uid:String) : Boolean?{
+        return try {
+            var doc = db.collection("SmallGroup").document(gid)
+                .get().await()
+            if (doc.get("belong_user."+uid)!=null) true else false
+        } catch (e: FirebaseException) {
+            null
+        }
     }
 
 }

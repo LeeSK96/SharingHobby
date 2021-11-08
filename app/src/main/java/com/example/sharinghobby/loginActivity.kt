@@ -62,7 +62,7 @@ class loginActivity : AppCompatActivity() {
                             startActivity(goHome)
                             finish()
                         }
-                        }else{for(i in 1..1000000){for(i in 1..1000000);}}
+                        }
                     }
                 }.addOnFailureListener {    Toast.makeText(this@loginActivity,"존재하지 않는 Id거나 pw가 틀렸습니다.",Toast.LENGTH_LONG).show()}
                 }

@@ -111,7 +111,7 @@ import kotlin.math.*
         val selectLocation = Intent(this, SearchActivity::class.java)
         val myHobbyList = Intent(this, BelongActivity::class.java)
         var chatList = Intent(this, ChattingListView::class.java)
-
+        myHobbyList.putExtra("uid",userIndex);
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.bejji)
         supportActionBar?.setDisplayShowTitleEnabled(true)

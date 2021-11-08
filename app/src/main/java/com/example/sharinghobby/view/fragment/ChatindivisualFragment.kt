@@ -2,6 +2,7 @@ package com.example.sharinghobby.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,17 @@ class ChatindivisualFragment : Fragment() {
             else               it.idx + "|" + myid
             intent.putExtra("roomID", roomid)
             intent.putExtra("UID",myid)
+            Log.e("asdf","aiuwhefiowsjedfp0jawe0df")
+            //region 임시 코드: 개인 채팅방 접속 시 가입한 채팅방 로그 남기기
+            Firebase.firestore.collection("Users").document(myid)
+                .update(mapOf("private_chat_list."+it.idx to true))
+                .addOnFailureListener {
+                    it.printStackTrace()
+                }
+                .addOnSuccessListener {
+                    Log.e("asdf","LogSuccess")
+                }
+            //endregion
             activity?.startActivity(intent)
         })
         binding.RecyclerViewChatindiList.adapter = adapter
@@ -44,7 +56,7 @@ class ChatindivisualFragment : Fragment() {
         Firebase.firestore.collection("Users").get()
             .addOnSuccessListener {
                 for (item in it.documents){
-                    data?.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis(),idx = item.id))
+                    data?.add(Memo1(url = item["user_image"] as String, title = item["nickname"] as String, timestamp = System.currentTimeMillis(),idx = item.id,))
 
                 }
                 adapter?.setList(data)

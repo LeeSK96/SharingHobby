@@ -49,6 +49,7 @@
         android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        app:tint="#FFBA01"
         app:srcCompat="@drawable/star" />
 
 </LinearLayout>

@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OurFriendlyMeeting">
         <activity
+            android:name=".Joinmembership"
+            android:exported="true" />
+        <activity
             android:name=".SetUserPhoto"
             android:exported="true" />
         <activity
