@@ -19,16 +19,23 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_belong_small_group.*
 import java.util.ArrayList
 import com.example.sharinghobby.DBConnector
+import com.google.firebase.firestore.FieldValue
 import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 
 class BelongSmallGroup : AppCompatActivity() {
-    val url1:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021505.jpg?alt=media&token=03f946cf-ba7a-450c-a5d2-199dccae5f0b"
-    val url2:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021427.jpg?alt=media&token=39e460f9-e36b-4361-8943-6d5bae87c829"
-    val url3:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021403.jpg?alt=media&token=fe6d51ef-1430-44a2-8a7e-6a8f023c3750"
-    val url4:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021313.jpg?alt=media&token=e53add8d-845e-493a-8ba8-be0bfdaadcd8"
-    val url5:String="https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021156.jpg?alt=media&token=ae490e40-6d4b-4e8f-a98e-082947ac7515"
-    var urlList=ArrayList<String>()
-    val binding by lazy{ActivityBelongSmallGroupBinding.inflate(layoutInflater)}
+    val url1: String =
+        "https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021505.jpg?alt=media&token=03f946cf-ba7a-450c-a5d2-199dccae5f0b"
+    val url2: String =
+        "https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021427.jpg?alt=media&token=39e460f9-e36b-4361-8943-6d5bae87c829"
+    val url3: String =
+        "https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021403.jpg?alt=media&token=fe6d51ef-1430-44a2-8a7e-6a8f023c3750"
+    val url4: String =
+        "https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021313.jpg?alt=media&token=e53add8d-845e-493a-8ba8-be0bfdaadcd8"
+    val url5: String =
+        "https://firebasestorage.googleapis.com/v0/b/ourfriendlymeetingtest1.appspot.com/o/image%2F20211006021156.jpg?alt=media&token=ae490e40-6d4b-4e8f-a98e-082947ac7515"
+    var urlList = ArrayList<String>()
+    val binding by lazy { ActivityBelongSmallGroupBinding.inflate(layoutInflater) }
     lateinit var teamGallary: team_gallary
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,42 +54,93 @@ class BelongSmallGroup : AppCompatActivity() {
         var groupImage = ""
         var master = ""
         CoroutineScope(Dispatchers.Default).launch {
-            lee = DBConnector().checkBelongGroup(gid!!, uid)!! //얘가 그룹에 속해있으면 false, 아니면 true
-            runBlocking(Dispatchers.Main) {
-                if (!lee) { //속해있으면
-                    val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
-                    val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
-                    adapter.fragmentList = fragmentList
-                    binding.viewPager24.adapter = adapter
+            Firebase.firestore.collection("SmallGroup").document(gid!!)
+                .get()
+                .addOnSuccessListener {
+                    title = it["introduction"].toString()
+                    groupImage = it["photo"].toString()
+                    master = it["master"].toString()
 
-                    binding.chattingButton.visibility
-                } else { // 아니면
-                    val fragmentList = listOf(team_notify(), team_gallary())
-                    val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
-                    adapter.fragmentList = fragmentList
-                    binding.viewPager24.adapter = adapter
-                }
-                val tabTitle = listOf<String>("팀게시글", "갤러리", "팀원목록")
-                TabLayoutMediator(binding.tabLayout3, binding.viewPager24) { tab, position ->
-                    tab.text = tabTitle[position]
-                }.attach()
-            }
+                    binding.GroupTitle.text = title
+                    binding.master.text = master
+                    setImageWithGlide1(groupImage)
+                    if (uid == master)
+                        binding.button3.visibility = View.VISIBLE
+
+                    lee = it["belong_user.$uid"] != null
+                    Log.e("asdf", lee.toString())
+
+                        if (lee) { //속해있으면
+                            val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
+                            val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
+
+                            adapter.fragmentList = fragmentList
+                            binding.viewPager24.adapter = adapter
+
+                            binding.chattingButton.visibility = View.VISIBLE
+                            binding.joinButton.visibility = View.GONE
+                            binding.chattingButton.setOnClickListener {
+                                val intent = Intent(this@BelongSmallGroup, ChatActivity::class.java)
+                                val myid = Firebase.auth.currentUser!!.uid
+                                intent.putExtra("roomID", gid)
+                                intent.putExtra("UID", myid)
+                                startActivity(intent)
+                            }
+                        } else { // 아니면
+                            val fragmentList = listOf(team_notify(), team_gallary())
+                            val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
+                            adapter.fragmentList = fragmentList
+                            binding.viewPager24.adapter = adapter
+
+                            binding.chattingButton.visibility = View.VISIBLE
+                            binding.joinButton.visibility = View.VISIBLE
+                            binding.chattingButton.setOnClickListener {
+                                val intent = Intent(this@BelongSmallGroup, ChatActivity::class.java)
+                                val myid = Firebase.auth.currentUser!!.uid
+                                val roomid = if (myid < master) "$myid|$master"
+                                else "$master|$myid"
+                                intent.putExtra("roomID", roomid)
+                                intent.putExtra("UID", myid)
+                                startActivity(intent)
+                            }
+                            binding.joinButton.setOnClickListener { _ ->
+                                var isAlreadyDone = false
+                                for (joinMember in (it["groupmember_join_list"] as ArrayList<String>)) {
+                                    if (joinMember == uid) {
+                                        isAlreadyDone = true
+                                        break
+                                    }
+                                }
+                                if (!isAlreadyDone) {
+                                    Firebase.firestore.collection("SmallGroup").document(gid)
+                                        .update("groupmember_join_list", FieldValue.arrayUnion(uid))
+                                    Toast.makeText(
+                                        this@BelongSmallGroup,
+                                        "신청이 완료되었습니다. 승인을 기다려주세요.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        this@BelongSmallGroup,
+                                        "이미 신청되어 있습니다.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+                        val tabTitle = listOf<String>("팀게시글", "갤러리", "팀원목록")
+                        TabLayoutMediator(
+                            binding.tabLayout3,
+                            binding.viewPager24
+                        ) { tab, position ->
+                            tab.text = tabTitle[position]
+                        }.attach()
+                    }
+
+
+
         }
 
-        Firebase.firestore.collection("SmallGroup").document(gid!!)
-            .get()
-            .addOnSuccessListener {
-                title = it["introduction"].toString()
-                groupImage = it["photo"].toString()
-                master = it["master"].toString()
-
-                binding.GroupTitle.text=title
-                binding.master.text =master
-                setImageWithGlide1(groupImage)
-                if(uid==master){
-                    binding.button3.visibility= View.VISIBLE
-                }
-            }
         //여기 연결하는 방법 질문
         /*
         //val data: Memo1? =Groupinfo as Memo1
@@ -101,8 +159,8 @@ class BelongSmallGroup : AppCompatActivity() {
             setImageWithGlide1( groupImage)
         }
          */
-
-        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
+        /*
+        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid!!))
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager24.adapter = adapter
@@ -111,65 +169,62 @@ class BelongSmallGroup : AppCompatActivity() {
         TabLayoutMediator(binding.tabLayout3, binding.viewPager24){tab, position->
             tab.text =tabTitle[position]
         }.attach()
-
-       // setFragment()
-       // teamGallary.setValue(groupImage);
+         */
+        // setFragment()
+        // teamGallary.setValue(groupImage);
         binding.button3.setOnClickListener {
-            val intent1=Intent(this,Joinmembership::class.java)
-            intent1.putExtra("gid",gid)
+            val intent1 = Intent(this, Joinmembership::class.java)
+            intent1.putExtra("gid", gid)
             startActivity(intent1);
         }
         binding.imageButton.setOnClickListener {
-            val intent1 = Intent(this,MadeGroup2Activity::class.java)
-            intent1.putExtra("groupId",1)
-            startActivityForResult(intent1,99)
+            val intent1 = Intent(this, MadeGroup2Activity::class.java)
+            intent1.putExtra("groupId", 1)
+            startActivityForResult(intent1, 99)
         }
         binding.bookmark.setOnClickListener {
-            Toast.makeText(this,"즐겨찾기 추가!",Toast.LENGTH_LONG).show()
-            
-        }
-        binding.chattingButton.setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java )
-            val myid = Firebase.auth.currentUser!!.uid
-            intent.putExtra("roomID", gid)
-            intent.putExtra("UID",myid)
-            startActivity(intent)
+            Toast.makeText(this, "즐겨찾기 추가!", Toast.LENGTH_LONG).show()
+
         }
     }
-   /* fun setFragment(){
-        val teamFragment = team_gallary()
-        var bundle =Bundle()
-        bundle.putStringArrayList("key1","")
-        teamFragment.arguments =bundle;
-        val transcation =supportFragmentManager.beginTransaction()
-        transcation.add(R.id.frameLayout,teamFragment)
-        transcation.commit()
-    }*/
+
+    /* fun setFragment(){
+         val teamFragment = team_gallary()
+         var bundle =Bundle()
+         bundle.putStringArrayList("key1","")
+         teamFragment.arguments =bundle;
+         val transcation =supportFragmentManager.beginTransaction()
+         transcation.add(R.id.frameLayout,teamFragment)
+         transcation.commit()
+     }*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode== RESULT_OK){
-            when(requestCode){
-                99->{val image1:String? =data?.getStringExtra("returnUrl")
-                  if(image1==null) Toast.makeText(this,"1111",Toast.LENGTH_LONG).show()
-                    if(image1!=null){
-                    setImageWithGlide1(image1)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                99 -> {
+                    val image1: String? = data?.getStringExtra("returnUrl")
+                    if (image1 == null) Toast.makeText(this, "1111", Toast.LENGTH_LONG).show()
+                    if (image1 != null) {
+                        setImageWithGlide1(image1)
                     }
                 }
             }
         }
     }
-    fun setImageWithGlide1(url:String){
+
+    fun setImageWithGlide1(url: String) {
         Glide.with(binding.root.context)
             .load(url)
             .thumbnail(0.5f)
             .centerCrop()
-            .apply(RequestOptions().override(500,500))
+            .apply(RequestOptions().override(500, 500))
             .into(binding.imageButton)
     }
-    fun goDetail(num:Int){
-        val intent1 = Intent(this,gallaryActivity::class.java)
-        intent1.putStringArrayListExtra("urlcode",urlList)
-        intent1.putExtra("code",num)
+
+    fun goDetail(num: Int) {
+        val intent1 = Intent(this, gallaryActivity::class.java)
+        intent1.putStringArrayListExtra("urlcode", urlList)
+        intent1.putExtra("code", num)
         startActivity(intent1)
     }
 }
