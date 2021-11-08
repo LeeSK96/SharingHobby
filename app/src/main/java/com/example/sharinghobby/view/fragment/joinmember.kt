@@ -53,6 +53,15 @@ class joinmember : Fragment() {
         binding.RecyclerViewjoin.adapter = adapter
 
         val data: MutableList<Memo1> = mutableListOf()
+        Firebase.firestore.collection("SmallGroup").get()
+            .addOnSuccessListener {
+                val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()
+                for (item in it.documents){
+                    newData.add(UserAcceptAdapter.Data(item.id,item["user_image"] as String,item["nickname"] as String, false))
+                }
+                adapter.addData(newData)
+            }
+
         Firebase.firestore.collection("Users").get()
             .addOnSuccessListener {
                 val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()

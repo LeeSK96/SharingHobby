@@ -101,7 +101,7 @@ class BelongSmallGroup : AppCompatActivity() {
         }
          */
 
-        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist())
+        val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager24.adapter = adapter

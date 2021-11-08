@@ -71,7 +71,7 @@ import kotlin.math.*
     private var currentSelectMarker: Marker? = null
     private var changedLocationMarker: Marker? = null
     private var hobbyMakerArr = arrayListOf<Marker>()
-    private var groupMemberList = arrayListOf<String>()
+    private var groupMemberJoinList = arrayListOf<String>()
     private var groupMarkOwnList = arrayListOf<String>()
     private var groupMarkInList = arrayListOf<String>()
     private var groupMarkOwnTitleList = arrayListOf<String>()
@@ -334,7 +334,6 @@ import kotlin.math.*
                         displayMarkers(categoryNumber)
                     }
 
-                    groupMemberList.add(userIndex)
                     // 정상적으로 취미모임 만들어지면 .. -> DB에 값넣기
                     var fireBase = DBConnector();
                     var smallGroupData = SmallGroup(data?.getStringExtra("groupTitle")!!,
@@ -342,12 +341,11 @@ import kotlin.math.*
                     data?.getStringExtra("groupMemberLimit")!!,
                         userIndex, data?.getStringExtra("groupLocationLat")!!,
                         data?.getStringExtra("groupLocationLon")!!,
-                        groupMemberList,
+                        groupMemberJoinList,
                         data?.getStringExtra("groupIntro")!!,
                         "default_photo"
                     )
                     fireBase.setSmallGroupData(smallGroupData);
-                    groupMemberList.clear()
                 }
             }
 

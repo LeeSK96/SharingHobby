@@ -63,6 +63,10 @@ class UserAcceptAdapter(val gid: String) : RecyclerView.Adapter<RecyclerView.Vie
                     db.setBelongUser(gid,it.UID)
                     Toast.makeText(mContext,"Accepted!!",Toast.LENGTH_SHORT).show()
                 }
+
+                binding.rejectButton.setOnClickListener{
+
+                }
             }
         }
     }
