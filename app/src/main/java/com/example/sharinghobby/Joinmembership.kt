@@ -15,7 +15,8 @@ class Joinmembership : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val fragmentList = listOf(joinmember())
+        val gid = intent.getStringExtra("gid")
+        val fragmentList = listOf(joinmember(gid!!))
         val adapter = BelongChartFragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager26.adapter = adapter

@@ -18,14 +18,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class joinmember : Fragment() {
+class joinmember(val gid:String) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentJoinmemberBinding>(inflater, R.layout.fragment_joinmember, container, false)
-        val adapter = UserAcceptAdapter("0SSS4Q0RaA7urbOQKHoo")
+        val adapter = UserAcceptAdapter(gid)
             /*CustomAdapter(onClickTask = {
             val intent = Intent(activity, ChatActivity::class.java )
             val myid = Firebase.auth.currentUser!!.uid
