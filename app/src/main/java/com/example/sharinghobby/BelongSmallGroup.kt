@@ -115,6 +115,7 @@ class BelongSmallGroup : AppCompatActivity() {
        // teamGallary.setValue(groupImage);
         binding.button3.setOnClickListener {
             val intent1=Intent(this,Joinmembership::class.java)
+            intent1.putExtra("gid",gid)
             startActivity(intent1);
         }
         binding.imageButton.setOnClickListener {
