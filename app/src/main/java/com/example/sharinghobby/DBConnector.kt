@@ -8,11 +8,11 @@ import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
 data class Account(val id: String="", val pw: String="", val user_email: String="", val user_phone: String="", val user_image: String="", val nickname: String="",val token: String ="", val groupmark_own_list: ArrayList<String>? = null, val groupmark_in_list: ArrayList<String>? = null)
-data class SmallGroup(val title: String="", val category: String="", val user_limit: String="", val master: String="", val node_lat: String="", val node_lon: String="", val user_list: ArrayList<String>? = null, val introduction: String="", val photo: String=""
+data class SmallGroup(val title: String="", val category: String="", val user_limit: String="", val master: String="", val node_lat: String="", val node_lon: String="", val groupmember_join_list: ArrayList<String>? = null, val introduction: String="", val photo: String=""
                        ,val urlList: ArrayList<String> = arrayListOf())
 data class MyPage(val id: String="", val pw: String="", val mysmallgroup: String="", val cs: String="", val settings: String="", val imageChange: String="")
 data class Node(val gps_x: String="", val gps_y: String="", val category: String="", val nodeName: String="", val nodeImage: String="", val currentOwner: String="")
-data class Administrator(val leader: String="", val imageChange: String="", val groupMemberChange: String="", val groupExplainChange: String="", val groupLocationChange: String="")
+data class Administrator(val leader: String="", val imageChange: String="", val groupmemberChange: String="", val groupExplainChange: String="", val groupLocationChange: String="")
 class DBConnector{
     val db = Firebase.firestore
     fun setAccountData(data: Account, uid: String) {// 해당 함수 부터 아래 4개는 데이터 insert
