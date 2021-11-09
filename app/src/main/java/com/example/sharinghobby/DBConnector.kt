@@ -90,6 +90,7 @@ class DBConnector{
             val ret = arrayListOf<String>()
             for (it in (doc["belong_group"] as Map<String,Boolean>?)?: mapOf())
                 ret.add(it.key)
+
             ret
         } catch (e: FirebaseException) {
             null
