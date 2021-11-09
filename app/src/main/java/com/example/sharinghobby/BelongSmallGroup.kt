@@ -1,6 +1,7 @@
 package com.example.sharinghobby
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -72,7 +73,7 @@ class BelongSmallGroup : AppCompatActivity() {
                     lee = it["belong_user.$uid"] != null
                     Log.e("asdf", lee.toString())
 
-                        if (lee || lee2) { //속해있으면
+                        if (lee) {//|| lee2) { //속해있으면
                             val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
                             val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
 
@@ -94,6 +95,7 @@ class BelongSmallGroup : AppCompatActivity() {
                             adapter.fragmentList = fragmentList
                             binding.viewPager24.adapter = adapter
 
+                            imageButton9.visibility = View.INVISIBLE
                             binding.chattingButton.visibility = View.VISIBLE
                             binding.joinButton.visibility = View.VISIBLE
                             binding.chattingButton.text = "소모임장과 채팅"
