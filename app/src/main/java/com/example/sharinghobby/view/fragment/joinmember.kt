@@ -56,16 +56,27 @@ class joinmember(val gid:String) : Fragment() {
         val data: MutableList<Memo1> = mutableListOf()
         Firebase.firestore.collection("SmallGroup").document(gid).get()
             .addOnSuccessListener {
-                for (item in (it["groupmember_join_list"] as ArrayList<String>)){
+                val groupmember_join_list: ArrayList<String> = it["groupmember_join_list"] as ArrayList<String>
+                for (item in groupmember_join_list){
                     Log.e("uid", item)
-                    Firebase.firestore.collection("Users").document(item)
-                        .get()
-                        .addOnSuccessListener { userData ->
-                            Log.e("userdata", userData.toString())
-                            val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()
-                            newData.add(UserAcceptAdapter.Data(userData.id,userData["user_image"] as String,userData["nickname"] as String, false))
-                            adapter.addData(newData)
-                        }
+
+                    if(!groupmember_join_list.isNullOrEmpty()) {
+                        Firebase.firestore.collection("Users").document(item)
+                            .get()
+                            .addOnSuccessListener { userData ->
+                                Log.e("userdata", userData.toString())
+                                val newData: ArrayList<UserAcceptAdapter.Data> = arrayListOf()
+                                newData.add(
+                                    UserAcceptAdapter.Data(
+                                        userData.id,
+                                        userData["user_image"] as String,
+                                        userData["nickname"] as String,
+                                        false
+                                    )
+                                )
+                                adapter.addData(newData)
+                            }
+                    }
                 }
             }
 
