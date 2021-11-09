@@ -37,6 +37,7 @@ class CustomAdapter2(var onClickTask : (memo : Memo1) -> Unit): RecyclerView.Ada
 
 }
 
+
 class Holder2(val binding: ItemRecycler2Binding): RecyclerView.ViewHolder(binding.root){
     lateinit var onClickTask : (memo : Memo1) -> Unit
 

@@ -64,13 +64,15 @@ class BelongSmallGroup : AppCompatActivity() {
                     binding.GroupTitle.text = title
                     binding.master.text = master
                     setImageWithGlide1(groupImage)
-                    if (uid == master)
+                    var lee2:Boolean=false;
+                    if (uid == master){
                         binding.button3.visibility = View.VISIBLE
-
+                       lee2=true
+                    }
                     lee = it["belong_user.$uid"] != null
                     Log.e("asdf", lee.toString())
 
-                        if (lee) { //속해있으면
+                        if (lee || lee2) { //속해있으면
                             val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
                             val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
 
@@ -78,7 +80,7 @@ class BelongSmallGroup : AppCompatActivity() {
                             binding.viewPager24.adapter = adapter
 
                             binding.chattingButton.visibility = View.VISIBLE
-                            binding.joinButton.visibility = View.GONE
+                            //binding.joinButton.visibility = View.GONE
                             binding.chattingButton.setOnClickListener {
                                 val intent = Intent(this@BelongSmallGroup, ChatActivity::class.java)
                                 val myid = Firebase.auth.currentUser!!.uid
