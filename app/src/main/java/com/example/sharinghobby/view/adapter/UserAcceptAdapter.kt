@@ -41,10 +41,13 @@ class UserAcceptAdapter(val gid: String) : RecyclerView.Adapter<RecyclerView.Vie
                     if (it.isStarred) R.drawable.ic_baseline_star_24
                     else              R.drawable.ic_baseline_star_border_24
                 ))
-                Glide.with(mContext)
-                    .load(it.userImage)
-                    .centerCrop()
-                    .into(binding.userImage)
+
+                if(it.userImage != "default_photo") {
+                    Glide.with(mContext)
+                        .load(it.userImage)
+                        .centerCrop()
+                        .into(binding.userImage)
+                }
 
                 binding.container.setOnClickListener { _ ->
                     val intent = Intent(mContext, ChatActivity::class.java )

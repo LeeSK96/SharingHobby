@@ -54,10 +54,13 @@ class Holder2(val binding: ItemRecycler2Binding): RecyclerView.ViewHolder(bindin
         /* binding.bookmarker.setOnClickListener {
              bookmarker1(memo)
          }*/
-        Glide.with(binding.root.context)
-            .load(memo.url)
-            .thumbnail(0.5f)
-            .centerCrop()
-            .into(binding.imageView4)
+
+        if(memo.url != "default_photo") {
+            Glide.with(binding.root.context)
+                .load(memo.url)
+                .thumbnail(0.5f)
+                .centerCrop()
+                .into(binding.imageView4)
+        }
     }
 }
