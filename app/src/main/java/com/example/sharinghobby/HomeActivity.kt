@@ -193,13 +193,14 @@ import kotlin.math.*
                         }
                     }
                 }
+
                 val groupMarkOwnMenu = binding.navigationView.menu.addSubMenu("내가 만든 모임")
                 if(!groupMarkOwnList.isNullOrEmpty()) {
                     for (i in groupMarkOwnList.indices) {
                         groupMarkOwnMenu.add(0, i+1, 0, groupMarkOwnTitleList[i]).setIcon(android.R.drawable.star_on)
                     }
                 }else{
-                    groupMarkOwnMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
+                    groupMarkOwnMenu.add(0,0,0,"만든 모임이 없습니다.")
                 }
                 val groupMarkInMenu = binding.navigationView.menu.addSubMenu("내가 가입한 모임")
                 if(!groupMarkInList.isNullOrEmpty()){
@@ -341,7 +342,7 @@ import kotlin.math.*
                         data?.getStringExtra("groupIntro")!!,
                         "default_photo"
                     )
-                    fireBase.setSmallGroupData(smallGroupData);
+                    fireBase.setSmallGroupData(smallGroupData, userIndex);
                 }
             }
 

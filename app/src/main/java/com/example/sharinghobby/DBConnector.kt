@@ -23,9 +23,15 @@ class DBConnector{
     }
     // 로그인(이메일 비번) -> uid -> uid로 AccountData에서 데이터를 가져옴(전화번호, 성별 등등...)
 
-    fun setSmallGroupData(data : SmallGroup) {
-        db.collection("SmallGroup").document()
-            .set(data)
+    fun setSmallGroupData(data : SmallGroup, userIndex: String) {
+        db.collection("SmallGroup")
+            .add(data)
+            .addOnSuccessListener {
+                db.collection("Users").document(userIndex)
+                    .update(mapOf(
+                        "made_group."+ it.id to false
+                    ))
+            }
     }
 
     fun setMyPageData(data : MyPage) {
