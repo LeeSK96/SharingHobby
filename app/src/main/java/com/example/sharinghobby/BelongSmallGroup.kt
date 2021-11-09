@@ -68,12 +68,12 @@ class BelongSmallGroup : AppCompatActivity() {
                     var lee2:Boolean=false;
                     if (uid == master){
                         binding.button3.visibility = View.VISIBLE
-                       lee2=true
+                        lee2=true
                     }
                     lee = it["belong_user.$uid"] != null
                     Log.e("asdf", lee.toString())
 
-                        if (lee) {//|| lee2) { //속해있으면
+                        if (lee || lee2) { //속해있으면
                             val fragmentList = listOf(team_notify(), team_gallary(), Teamlist(gid))
                             val adapter = BelongChartFragmentAdapter(this@BelongSmallGroup)
 
@@ -106,6 +106,7 @@ class BelongSmallGroup : AppCompatActivity() {
                                 else "$master|$myid"
                                 intent.putExtra("roomID", roomid)
                                 intent.putExtra("UID", myid)
+                               // intent.putExtra("intro",title)
                                 startActivity(intent)
                             }
                             binding.joinButton.setOnClickListener { _ ->

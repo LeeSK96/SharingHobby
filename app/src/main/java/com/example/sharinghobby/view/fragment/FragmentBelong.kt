@@ -39,8 +39,6 @@ class FragmentBelong : Fragment() {
         })
         binding.RecyclerView.adapter = adapter
 
-
-
         Firebase.firestore.collection("Users").document(uid).get()
             .addOnSuccessListener {
                 CoroutineScope(Dispatchers.Default) .launch {

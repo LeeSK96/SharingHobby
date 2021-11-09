@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -20,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 class ChatActivity : AppCompatActivity() {
     lateinit var roomID : String
     lateinit var UID : String
+    lateinit var title : String
     lateinit var binding : ActivityChatBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +39,13 @@ class ChatActivity : AppCompatActivity() {
         if (intent.hasExtra("roomID") && intent.hasExtra("UID")) {
             roomID = intent.getStringExtra("roomID")!!
             UID = intent.getStringExtra("UID")!!
+           // title = intent.getStringExtra("intro")!!
+            //Log.d("from1",title)
         }
         else {
             Toast.makeText(this,"잘못된 요청입니다.",Toast.LENGTH_SHORT).show()
             finish() // 액티비티 종료
         }
-
         val adapter = ChatRecyclerAdapter(UID)
         with(binding.recycler){
             layoutManager = LinearLayoutManager(this@ChatActivity).apply { reverseLayout = true }
