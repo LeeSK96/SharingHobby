@@ -75,7 +75,7 @@ class Join1Activity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(binding.userEmail.text.toString(),binding.password.text.toString())
                 .addOnSuccessListener {
                     var OurDB = DBConnector();
-                    var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"NoPhoto",binding.nickname.text.toString());
+                    var accountdata = Account(userId,binding.password.text.toString(),binding.userEmail.text.toString(),binding.telnumber.text.toString(),"default_photo",binding.nickname.text.toString());
                     OurDB.setAccountData(accountdata,auth.currentUser!!.uid);
                     Toast.makeText(this, "회원가입완료!", Toast.LENGTH_SHORT).show()
                 }
