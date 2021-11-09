@@ -37,6 +37,7 @@ class CustomAdapter2(var onClickTask : (memo : Memo1) -> Unit): RecyclerView.Ada
 
 }
 
+
 class Holder2(val binding: ItemRecycler2Binding): RecyclerView.ViewHolder(binding.root){
     lateinit var onClickTask : (memo : Memo1) -> Unit
 
@@ -54,6 +55,7 @@ class Holder2(val binding: ItemRecycler2Binding): RecyclerView.ViewHolder(bindin
         /* binding.bookmarker.setOnClickListener {
              bookmarker1(memo)
          }*/
+
         Glide.with(binding.root.context)
             .load(memo.url)
             .thumbnail(0.5f)
