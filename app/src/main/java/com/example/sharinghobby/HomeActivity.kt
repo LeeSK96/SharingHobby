@@ -663,7 +663,7 @@ import kotlin.math.*
                         data!!.introduction
                 }
 
-                if(!group_image.isNullOrEmpty()) {
+                if(group_image != "default_photo" && !group_image.isNullOrEmpty()) {
                     setImageWithGlide(
                         group_image,
                         hobbyInfoDialogView.context,
