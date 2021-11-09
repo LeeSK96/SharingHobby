@@ -96,6 +96,7 @@ class BelongSmallGroup : AppCompatActivity() {
 
                             binding.chattingButton.visibility = View.VISIBLE
                             binding.joinButton.visibility = View.VISIBLE
+                            binding.chattingButton.text = "소모임장과 채팅"
                             binding.chattingButton.setOnClickListener {
                                 val intent = Intent(this@BelongSmallGroup, ChatActivity::class.java)
                                 val myid = Firebase.auth.currentUser!!.uid
