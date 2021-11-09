@@ -39,7 +39,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_create_hobby.*
 import kotlinx.android.synthetic.main.activity_home.*
@@ -50,7 +52,9 @@ import kotlinx.android.synthetic.main.dialog_hobby_info.*
 import kotlinx.android.synthetic.main.dialog_hobby_info.group_member_limit
 import kotlinx.android.synthetic.main.dialog_hobby_info.group_title
 import kotlinx.android.synthetic.main.dialog_hobby_info.view.*
+import kotlinx.android.synthetic.main.recycler_chatbubble_left.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import org.w3c.dom.Text
 import java.lang.NumberFormatException
 import kotlin.coroutines.CoroutineContext
@@ -168,12 +172,13 @@ import kotlin.math.*
                     binding.drawerLayout.header_user_nickname.text = user_data.nickname
                     binding.drawerLayout.header_user_email.text = user_data.user_email
 
-                    if(user_data.groupmark_own_list != null) {
-                        groupMarkOwnList = user_data.groupmark_own_list
-                    }
-                    if(user_data.groupmark_in_list != null) {
-                        groupMarkInList = user_data.groupmark_in_list
-                    }
+                    groupMarkOwnList.clear()
+                    groupMarkInList.clear()
+                    groupMarkInTitleList.clear()
+                    groupMarkOwnTitleList.clear()
+
+                    groupMarkInList = getSmallGroupList(userIndex, "belong_group")!!
+                    groupMarkOwnList = getSmallGroupList(userIndex, "made_group")!!
 
                     if(!groupMarkOwnList.isNullOrEmpty()){
                         for(item in groupMarkOwnList){
@@ -205,7 +210,7 @@ import kotlin.math.*
                 val groupMarkInMenu = binding.navigationView.menu.addSubMenu("내가 가입한 모임")
                 if(!groupMarkInList.isNullOrEmpty()){
                     for (i in groupMarkInList.indices){
-                        groupMarkInMenu.add(0, i+6, 0, groupMarkInTitleList[i]).setIcon(android.R.drawable.star_on)
+                        groupMarkInMenu.add(0, i+(groupMarkOwnList.size + 1), 0, groupMarkInTitleList[i]).setIcon(android.R.drawable.star_on)
                     }
                 }else{
                     groupMarkInMenu.add(0,0,0,"즐겨찾기한 모임이 없습니다.")
@@ -250,14 +255,14 @@ import kotlin.math.*
         binding.navigationView.setNavigationItemSelectedListener { MenuItem ->
             binding.drawerLayout.closeDrawers()
             if (MenuItem.itemId != 0) {
-                if(MenuItem.itemId in 1..5){
+                if(MenuItem.itemId in 1..groupMarkOwnList.size){
                     startActivity(Intent(this, BelongSmallGroup::class.java).apply {
                         putExtra("gid", groupMarkOwnList[MenuItem.itemId - 1])
                     })
                 }
-                else if(MenuItem.itemId in 6..10){
+                else if(MenuItem.itemId in (groupMarkOwnList.size + 1)..(groupMarkInList.size + (groupMarkOwnList.size + 1 ))){
                     startActivity(Intent(this, BelongSmallGroup::class.java).apply {
-                        putExtra("gid", groupMarkInList[MenuItem.itemId - 6])
+                        putExtra("gid", groupMarkInList[MenuItem.itemId - (groupMarkOwnList.size + 1)])
                     })
                 }
             }
@@ -726,6 +731,28 @@ import kotlin.math.*
              .thumbnail(0.5f)
              .centerCrop()
              .into(imageLocation)
+     }
+
+    // 속한 모임 맵, 만든 모임 맵 가져오는 코드
+     private suspend fun getSmallGroupList(uid:String, type: String) : ArrayList<String>?{
+         return try {
+             var doc = Firebase.firestore.collection("Users").document(uid)
+                 .get().await()
+             val ret = arrayListOf<String>()
+             for (it in (doc[type] as Map<String,Boolean>?)?: mapOf())
+                 if(type == "belong_group") {
+                     if (it.value) {
+                         ret.add(it.key)
+                     }
+                 }else{
+                     if (!it.value) {
+                         ret.add(it.key)
+                     }
+                 }
+             ret
+         } catch (e: FirebaseException) {
+             null
+         }
      }
 
 

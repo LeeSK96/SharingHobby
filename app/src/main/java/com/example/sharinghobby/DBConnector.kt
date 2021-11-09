@@ -1,5 +1,6 @@
 package com.example.sharinghobby
 
+import android.text.BoringLayout
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -7,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 data class Category(val selection: Int)
-data class Account(val id: String="", val pw: String="", val user_email: String="", val user_phone: String="", val user_image: String="", val nickname: String="",val token: String ="", val groupmark_own_list: ArrayList<String>? = null, val groupmark_in_list: ArrayList<String>? = null)
+data class Account(val id: String="", val pw: String="", val user_email: String="", val user_phone: String="", val user_image: String="", val nickname: String="",val token: String ="", val belong_group: Map<String,Boolean> = mapOf(), val made_group: Map<String,Boolean> = mapOf(), val private_chat_list: Map<String, Boolean> = mapOf() )
 data class SmallGroup(val title: String="", val category: String="", val user_limit: String="", val master: String="", val node_lat: String="", val node_lon: String="", val groupmember_join_list: ArrayList<String>? = null, val introduction: String="", val photo: String=""
                        ,val urlList: ArrayList<String> = arrayListOf())
 data class MyPage(val id: String="", val pw: String="", val mysmallgroup: String="", val cs: String="", val settings: String="", val imageChange: String="")
