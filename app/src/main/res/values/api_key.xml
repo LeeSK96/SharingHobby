@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="google_map">AIzaSyADn7raAF8CtsySffXmm8nj2vBhUpxjRg8</string>
+    <!-- 구글맵 키 -->
+    <string name="google_map"></string>
 </resources>
